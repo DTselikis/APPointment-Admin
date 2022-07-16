@@ -15,6 +15,7 @@
         tools:context=".ui.hub.customers.CustomersFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/users_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"

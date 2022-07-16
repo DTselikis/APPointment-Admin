@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.customer.profile.CustomerProfileActivity">
+        tools:context=".ui.customer.CustomerProfileActivity">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/photo_card"

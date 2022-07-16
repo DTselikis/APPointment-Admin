@@ -16,7 +16,7 @@
     </fragment>
     <activity
         android:id="@+id/customerProfileActivity"
-        android:name="com.homelab.appointmentadmin.ui.customer.profile.CustomerProfileActivity"
+        android:name="com.homelab.appointmentadmin.ui.customer.CustomerProfileActivity"
         android:label="CustomerProfileActivity"
         tools:layout="@layout/activity_customer_profile">
         <argument

@@ -1,4 +1,4 @@
-package com.homelab.appointmentadmin.ui.customer.profile
+package com.homelab.appointmentadmin.ui.customer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.ActivityCustomerProfileBinding
+import com.homelab.appointmentadmin.ui.customer.contact.CustomerProfileSharedViewModel
 
 class CustomerProfileActivity : AppCompatActivity() {
 

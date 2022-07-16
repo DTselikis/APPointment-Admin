@@ -1,4 +1,4 @@
-package com.homelab.appointmentadmin.ui.customer.profile
+package com.homelab.appointmentadmin.ui.customer.contact
 
 import android.view.View
 import androidx.databinding.BindingAdapter

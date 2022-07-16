@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@id/profile_contact_item"
-        android:name="com.homelab.appointmentadmin.ui.customer.profile.CustomerContactFragment"
+        android:name="com.homelab.appointmentadmin.ui.customer.contact.CustomerContactFragment"
         android:label="CustomerContactFragment"
         tools:layout="@layout/fragment_customer_contact"/>
 </navigation>

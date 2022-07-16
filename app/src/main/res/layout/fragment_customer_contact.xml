@@ -11,7 +11,7 @@
 
         <variable
             name="fragmentCustomerContact"
-            type="com.homelab.appointmentadmin.ui.customer.profile.CustomerContactFragment" />
+            type="com.homelab.appointmentadmin.ui.customer.contact.CustomerContactFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

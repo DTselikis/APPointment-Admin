@@ -9,5 +9,18 @@
         android:id="@+id/customersFragment"
         android:name="com.homelab.appointmentadmin.ui.hub.customers.CustomersFragment"
         android:label="CustomersFragment"
-        tools:layout="@layout/fragment_customers"/>
+        tools:layout="@layout/fragment_customers">
+        <action
+            android:id="@+id/action_customersFragment_to_customerProfileActivity"
+            app:destination="@id/customerProfileActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/customerProfileActivity"
+        android:name="com.homelab.appointmentadmin.ui.customer.profile.CustomerProfileActivity"
+        android:label="CustomerProfileActivity"
+        tools:layout="@layout/activity_customer_profile">
+        <argument
+            android:name="user"
+            app:argType="com.homelab.appointmentadmin.data.User" />
+    </activity>
 </navigation>

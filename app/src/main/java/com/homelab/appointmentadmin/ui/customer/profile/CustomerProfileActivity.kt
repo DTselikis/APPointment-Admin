@@ -2,7 +2,9 @@ package com.homelab.appointmentadmin.ui.customer.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.homelab.appointmentadmin.R
@@ -10,6 +12,8 @@ import com.homelab.appointmentadmin.databinding.ActivityCustomerProfileBinding
 
 class CustomerProfileActivity : AppCompatActivity() {
 
+    val args: CustomerProfileActivityArgs by navArgs<CustomerProfileActivityArgs>()
+    private val sharedViewModel: CustomerProfileSharedViewModel by viewModels()
     private lateinit var binding: ActivityCustomerProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +22,7 @@ class CustomerProfileActivity : AppCompatActivity() {
         binding = ActivityCustomerProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sharedViewModel.user = args.user
 
         setupNavigation()
     }

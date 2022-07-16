@@ -23,6 +23,7 @@ class CustomerProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedViewModel.user = args.user
+        binding.user = args.user
 
         setupNavigation()
     }

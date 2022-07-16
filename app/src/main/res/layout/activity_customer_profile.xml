@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="user"
+            type="com.homelab.appointmentadmin.data.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +45,7 @@
                     app:layout_constraintStart_toStartOf="@id/customer_profile_pic"
                     app:layout_constraintTop_toBottomOf="@id/customer_profile_pic"
                     app:layout_constraintVertical_bias="0.2"
+                    android:text="@{user.nickname}"
                     tools:text="Customer Customer" />
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView

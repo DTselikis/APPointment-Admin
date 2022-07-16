@@ -9,6 +9,9 @@
             name="user"
             type="com.homelab.appointmentadmin.data.User" />
 
+        <variable
+            name="fragmentCustomerContact"
+            type="com.homelab.appointmentadmin.ui.customer.profile.CustomerContactFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +25,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
+            android:onClick="@{() -> fragmentCustomerContact.callCustomer()}"
             app:cardCornerRadius="8dp"
             app:cardElevation="10dp"
             app:layout_constraintBottom_toTopOf="@id/fb_card"
@@ -130,6 +134,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
+            android:onClick="@{() -> fragmentCustomerContact.sendEmail()}"
             app:cardCornerRadius="8dp"
             app:cardElevation="10dp"
             app:layout_constraintBottom_toTopOf="@id/notification_card"

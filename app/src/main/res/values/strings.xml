@@ -3,4 +3,10 @@
     <string name="send_notification">Send notification</string>
     <string name="profile_contact_item">Contact</string>
     <string name="profile_notes_item">Notes</string>
+
+    <string name="email_signature">Salon Litsa\n2102717756\nΕλ Αλαμέιν 46</string>
+
+    <string name="opening_app_problem">Something went wrong! Ensure that you are logged in to %s and try again</string>
+    <string name="dismiss_warning_dialog">Dismiss</string>
+    <string name="dial_app">Dial</string>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@id/customerContactFragment">
+
+    <fragment
+        android:id="@+id/customerContactFragment"
+        android:name="com.homelab.appointmentadmin.ui.customer.profile.CustomerContactFragment"
+        android:label="CustomerContactFragment"
+        tools:layout="@layout/fragment_customer_contact"/>
+</navigation>

@@ -48,5 +48,16 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:layout_constraintTop_toBottomOf="@id/photo_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/profile_nav_graph" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

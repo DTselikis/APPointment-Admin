@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.CustomerHubItemBinding
 
-class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(Diffcallback) {
+class UserAdapter(
+    private val customersFragment: CustomersFragment
+) : ListAdapter<User, UserAdapter.UserViewHolder>(Diffcallback) {
 
     inner class UserViewHolder(
         private val binding: CustomerHubItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             binding.user = user
+            binding.customerFragment = customersFragment
         }
     }
 

@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.FragmentCustomersBinding
 
 class CustomersFragment : Fragment() {
@@ -31,10 +33,16 @@ class CustomersFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@CustomersFragment.viewModel
-            usersRv.adapter = UserAdapter()
+            usersRv.adapter = UserAdapter(this@CustomersFragment)
         }
 
         viewModel.fetchUsersFromDB()
+    }
+
+    fun navigate(user: User) {
+        val action =
+            CustomersFragmentDirections.actionCustomersFragmentToCustomerProfileActivity(user)
+        findNavController().navigate(action)
     }
 
 }

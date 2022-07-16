@@ -7,6 +7,9 @@
         <variable
             name="user"
             type="com.homelab.appointmentadmin.data.User" />
+        <variable
+            name="customerFragment"
+            type="com.homelab.appointmentadmin.ui.hub.customers.CustomersFragment" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -14,7 +17,8 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        android:onClick="@{() -> customerFragment.navigate(user)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

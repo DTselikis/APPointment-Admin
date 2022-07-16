@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">APPointment Admin</string>
+    <string name="send_notification">Send notification</string>
 </resources>

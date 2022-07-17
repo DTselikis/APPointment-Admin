@@ -16,4 +16,7 @@
     <string name="e_mail_hint">E-mail</string>
     <string name="fb_profile_hint">FB Profile</string>
     <string name="save_edits_btn_text">Save</string>
+
+    <string name="save_successful">Changes saved!</string>
+    <string name="save_failed">Changes not saved!</string>
 </resources>

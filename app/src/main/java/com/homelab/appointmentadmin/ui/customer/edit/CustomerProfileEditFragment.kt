@@ -1,5 +1,6 @@
 package com.homelab.appointmentadmin.ui.customer.edit
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentCustomerContactBinding
 import com.homelab.appointmentadmin.databinding.FragmentCustomerProfileEditBinding
@@ -41,6 +44,7 @@ class CustomerProfileEditFragment : Fragment() {
         }
 
         observeForEdits()
+        observeSaveStatus()
     }
 
     fun saveChanges() {
@@ -58,5 +62,23 @@ class CustomerProfileEditFragment : Fragment() {
         viewModel.fbName.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
     }
 
+    private fun observeSaveStatus() {
+        viewModel.changesSaved.observe(viewLifecycleOwner) { saved ->
+            val text: String
+            val color: Int
+
+            if (saved) {
+                text = getString(R.string.save_successful)
+                color = Color.parseColor(getString(R.color.teal_200))
+            } else {
+                text = getString(R.string.save_failed)
+                color = Color.parseColor(getString(R.color.email_red))
+            }
+
+            Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)
+                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+                .setBackgroundTint(color)
+        }
+    }
 
 }

@@ -3,9 +3,11 @@ package com.homelab.appointmentadmin.ui.customer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navArgs
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.ActivityCustomerProfileBinding
@@ -24,6 +26,7 @@ class CustomerProfileActivity : AppCompatActivity() {
 
         sharedViewModel.user = args.user
         binding.user = args.user
+        binding.customerProfileActivity = this@CustomerProfileActivity
 
         setupNavigation()
     }
@@ -38,5 +41,13 @@ class CustomerProfileActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         navView.setupWithNavController(navController)
+
+    }
+
+    fun navigateToProfileEdit() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.profile_nav_host) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.action_profile_contact_item_to_customerProfileEditFragment)
     }
 }

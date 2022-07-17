@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.homelab.appointmentadmin.data.User" />
+
+        <variable
+            name="customerProfileActivity"
+            type="com.homelab.appointmentadmin.ui.customer.CustomerProfileActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +32,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> customerProfileActivity.navigateToProfileEdit()}"
+                    android:src="@drawable/ic_edit_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.97"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.05" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/customer_profile_pic"
                     android:layout_width="120dp"
@@ -40,12 +57,12 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{user.nickname}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
                     app:layout_constraintStart_toStartOf="@id/customer_profile_pic"
                     app:layout_constraintTop_toBottomOf="@id/customer_profile_pic"
                     app:layout_constraintVertical_bias="0.2"
-                    android:text="@{user.nickname}"
                     tools:text="Customer Customer" />
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView

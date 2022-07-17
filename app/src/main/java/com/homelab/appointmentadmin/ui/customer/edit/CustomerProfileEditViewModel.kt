@@ -19,8 +19,6 @@ class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
     private val _changesSaved = MutableLiveData<Boolean>()
     val changesSaved: LiveData<Boolean> = _changesSaved
 
-    private var modified = false
-
     fun getUser(): User = User(
         user.uid,
         firstname.value,
@@ -54,10 +52,11 @@ class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
         return changes
     }
 
-    fun acknowledgeModifications() {
-        modified = true
-    }
 
-    fun isModified(): Boolean = modified
+    fun isModified(): Boolean {
+        val changes = getChanges()
+
+        return !changes.isEmpty()
+    }
 
 }

@@ -42,7 +42,6 @@ class CustomerProfileEditFragment : Fragment() {
             customerProfileEditFragment = this@CustomerProfileEditFragment
         }
 
-        observeForEdits()
         observeSaveStatus()
     }
 
@@ -56,14 +55,6 @@ class CustomerProfileEditFragment : Fragment() {
         findNavController().navigateUp()
     }
 
-    private fun observeForEdits() {
-        viewModel.firstname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
-        viewModel.lastname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
-        viewModel.nickname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
-        viewModel.phone.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
-        viewModel.email.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
-        viewModel.fbName.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
-    }
 
     private fun observeSaveStatus() {
         viewModel.changesSaved.observe(viewLifecycleOwner) { saved ->

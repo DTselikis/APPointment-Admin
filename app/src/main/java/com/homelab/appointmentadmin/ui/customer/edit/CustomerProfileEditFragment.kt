@@ -43,6 +43,12 @@ class CustomerProfileEditFragment : Fragment() {
         observeForEdits()
     }
 
+    fun saveChanges() {
+        if (viewModel.isModified()) {
+            viewModel.storeChangesToDB()
+        }
+    }
+
     private fun observeForEdits() {
         viewModel.firstname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
         viewModel.lastname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
@@ -51,4 +57,6 @@ class CustomerProfileEditFragment : Fragment() {
         viewModel.email.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
         viewModel.fbName.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
     }
+
+
 }

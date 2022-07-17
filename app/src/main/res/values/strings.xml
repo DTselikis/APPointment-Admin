@@ -9,4 +9,11 @@
     <string name="opening_app_problem">Something went wrong! Ensure that you are logged in to %s and try again</string>
     <string name="dismiss_warning_dialog">Dismiss</string>
     <string name="dial_app">Dial</string>
+    <string name="firstname_hint">Firstname</string>
+    <string name="lastname_hint">Lastname</string>
+    <string name="nickname_hint">Nickname</string>
+    <string name="phone_hint">Phone</string>
+    <string name="e_mail_hint">E-mail</string>
+    <string name="fb_profile_hint">FB Profile</string>
+    <string name="save_edits_btn_text">Save</string>
 </resources>

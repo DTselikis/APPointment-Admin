@@ -88,6 +88,7 @@ class CustomerProfileEditFragment : Fragment() {
                         closeEditsFragment()
                     }
                 })
+                .show()
         }
     }
 

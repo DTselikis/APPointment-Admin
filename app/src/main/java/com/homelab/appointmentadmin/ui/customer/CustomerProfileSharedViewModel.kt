@@ -1,4 +1,4 @@
-package com.homelab.appointmentadmin.ui.customer.contact
+package com.homelab.appointmentadmin.ui.customer
 
 import androidx.lifecycle.ViewModel
 import com.homelab.appointmentadmin.data.User

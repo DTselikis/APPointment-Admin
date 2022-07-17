@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.ActivityCustomerProfileBinding
-import com.homelab.appointmentadmin.ui.customer.contact.CustomerProfileSharedViewModel
 
 class CustomerProfileActivity : AppCompatActivity() {
 

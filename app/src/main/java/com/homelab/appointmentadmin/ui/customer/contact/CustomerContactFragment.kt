@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentCustomerContactBinding
+import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 
 class CustomerContactFragment : Fragment() {
 

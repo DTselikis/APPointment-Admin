@@ -1,7 +1,6 @@
 package com.homelab.appointmentadmin.ui.customer.edit
 
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,9 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
-import com.homelab.appointmentadmin.databinding.FragmentCustomerContactBinding
 import com.homelab.appointmentadmin.databinding.FragmentCustomerProfileEditBinding
-import com.homelab.appointmentadmin.ui.customer.contact.CustomerProfileSharedViewModel
+import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 
 class CustomerProfileEditFragment : Fragment() {
 

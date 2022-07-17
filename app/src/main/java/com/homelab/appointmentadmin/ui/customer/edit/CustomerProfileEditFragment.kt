@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
@@ -53,6 +54,10 @@ class CustomerProfileEditFragment : Fragment() {
         }
     }
 
+    private fun closeEditsFragment() {
+        findNavController().navigateUp()
+    }
+
     private fun observeForEdits() {
         viewModel.firstname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
         viewModel.lastname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
@@ -78,6 +83,17 @@ class CustomerProfileEditFragment : Fragment() {
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(color)
+                .setAction("Ok") { closeEditsFragment() }
+                .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    override fun onShown(transientBottomBar: Snackbar?) {
+                        super.onShown(transientBottomBar)
+                    }
+
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                        closeEditsFragment()
+                    }
+                })
         }
     }
 

@@ -21,4 +21,8 @@
     <string name="save_failed">Changes not saved!</string>
     <string name="profile_edit_item">Edit</string>
     <string name="no_edits_made">No changes were made</string>
+    <string name="unsaved_changes_warning_title">Unsaved changes</string>
+    <string name="unsaved_changes_warning_msg">Proceed without saving?</string>
+    <string name="dialog_yes_btn">Yes</string>
+    <string name="dialog_no_btn">No</string>
 </resources>

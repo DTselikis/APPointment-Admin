@@ -1,5 +1,6 @@
 package com.homelab.appointmentadmin.ui.customer.edit
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -31,6 +33,17 @@ class CustomerProfileEditFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_customer_profile_edit, null, false)
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.isModified() && viewModel.changesSaved.value == false) {
+                    showWarningMessage()
+                }
+                else {
+                    closeEditsFragment()
+                }
+            }
+        })
         return binding.root
     }
 
@@ -90,6 +103,23 @@ class CustomerProfileEditFragment : Fragment() {
                 })
                 .show()
         }
+    }
+
+    private fun showWarningMessage() {
+        activity?.let {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(it)
+            builder.apply {
+                setTitle(getString(R.string.unsaved_changes_warning_title))
+                setMessage(getString(R.string.unsaved_changes_warning_msg))
+                setPositiveButton(getString(R.string.dialog_yes_btn)) { dialog, id ->
+                    closeEditsFragment()
+                }
+                setNegativeButton(getString(R.string.dialog_no_btn)) { dialog, id ->
+
+                }
+            }
+                .create()
+        }?.show()
     }
 
 }

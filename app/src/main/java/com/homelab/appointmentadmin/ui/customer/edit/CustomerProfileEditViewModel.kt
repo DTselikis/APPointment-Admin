@@ -16,7 +16,7 @@ class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
     val email = MutableLiveData<String>(user.email)
     val fbName = MutableLiveData<String>(user.fbName)
 
-    private val _changesSaved = MutableLiveData<Boolean>()
+    private val _changesSaved = MutableLiveData<Boolean>(false)
     val changesSaved: LiveData<Boolean> = _changesSaved
 
     fun getUser(): User = User(

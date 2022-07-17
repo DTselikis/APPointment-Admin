@@ -27,7 +27,7 @@ class UserAdapter(
         }
 
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.lastName == newItem.lastName
+            return oldItem.lastname == newItem.lastname
         }
 
     }

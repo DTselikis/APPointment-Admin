@@ -42,7 +42,7 @@
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="@id/customer_hub_pic"
                 app:layout_constraintTop_toTopOf="@id/customer_hub_pic"
-                android:text='@{user.firstName + " " + user.lastName}'
+                android:text='@{user.firstname + " " + user.lastname}'
                 tools:text="Customer Customer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,8 +38,7 @@ class CustomerProfileEditFragment : Fragment() {
             override fun handleOnBackPressed() {
                 if (viewModel.isModified() && viewModel.changesSaved.value == false) {
                     showWarningMessage()
-                }
-                else {
+                } else {
                     closeEditsFragment()
                 }
             }
@@ -56,11 +55,11 @@ class CustomerProfileEditFragment : Fragment() {
             customerProfileEditFragment = this@CustomerProfileEditFragment
         }
 
-        observeSaveStatus()
     }
 
     fun saveChanges() {
         if (viewModel.isModified()) {
+            observeSaveStatus()
             viewModel.storeChangesToDB()
         } else {
             Toast.makeText(requireContext(), getString(R.string.no_edits_made), Toast.LENGTH_SHORT)

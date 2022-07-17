@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -48,6 +49,10 @@ class CustomerProfileEditFragment : Fragment() {
     fun saveChanges() {
         if (viewModel.isModified()) {
             viewModel.storeChangesToDB()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.no_edits_made), Toast.LENGTH_SHORT)
+                .show()
+            closeEditsFragment()
         }
     }
 

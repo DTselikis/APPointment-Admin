@@ -20,4 +20,5 @@
     <string name="save_successful">Changes saved!</string>
     <string name="save_failed">Changes not saved!</string>
     <string name="profile_edit_item">Edit</string>
+    <string name="no_edits_made">No changes were made</string>
 </resources>

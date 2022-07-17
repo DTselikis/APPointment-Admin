@@ -26,7 +26,8 @@ class CustomerProfileEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_customer_profile_edit, null, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_customer_profile_edit, null, false)
         return binding.root
     }
 
@@ -38,7 +39,16 @@ class CustomerProfileEditFragment : Fragment() {
             viewModel = this@CustomerProfileEditFragment.viewModel
             customerProfileEditFragment = this@CustomerProfileEditFragment
         }
+
+        observeForEdits()
     }
 
-
+    private fun observeForEdits() {
+        viewModel.firstname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
+        viewModel.lastname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
+        viewModel.nickname.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
+        viewModel.phone.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
+        viewModel.email.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
+        viewModel.fbName.observe(viewLifecycleOwner) { viewModel.acknowledgeModifications() }
+    }
 }

@@ -12,6 +12,8 @@ class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
     val email = MutableLiveData<String>(user.email)
     val fbName = MutableLiveData<String>(user.fbName)
 
+    private var modified = false
+
     fun getUser(): User = User(
         user.uid,
         firstname.value,
@@ -22,5 +24,11 @@ class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
         fbName.value,
         user.token
     )
+
+    fun acknowledgeModifications() {
+        modified = true
+    }
+
+    fun isModified(): Boolean = modified
 
 }

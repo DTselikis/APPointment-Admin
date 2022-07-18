@@ -55,4 +55,8 @@ class CustomerProfileFragment : Fragment() {
         }.attach()
     }
 
+    fun openEditTab() {
+        binding.viewPager.currentItem = 1
+    }
+
 }

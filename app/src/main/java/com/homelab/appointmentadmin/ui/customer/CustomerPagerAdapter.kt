@@ -6,7 +6,7 @@ import com.homelab.appointmentadmin.ui.customer.contact.CustomerContactFragment
 import com.homelab.appointmentadmin.ui.customer.edit.CustomerProfileEditFragment
 
 class CustomerPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {

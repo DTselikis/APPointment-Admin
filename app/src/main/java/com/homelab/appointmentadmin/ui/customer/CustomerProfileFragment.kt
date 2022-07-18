@@ -88,7 +88,7 @@ class CustomerProfileFragment : Fragment() {
     private fun observeCustomButtons() {
         sharedViewModel.backBtnPressed.observe(viewLifecycleOwner) { pressed ->
             if (pressed) {
-                binding.viewPager.currentItem = Tab.CONTACT.code
+                exitProfileEdit()
             }
             sharedViewModel.unpressBackBtn()
         }

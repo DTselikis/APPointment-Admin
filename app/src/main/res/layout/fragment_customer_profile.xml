@@ -49,7 +49,7 @@
                     android:id="@+id/card_edit_btn_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> customerProfileFragment.navigateToProfileEdit()}"
+                    android:onClick="@{() -> customerProfileFragment.openEditTab()}"
                     android:src="@drawable/ic_edit_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
                     tools:text="Customer Customer" />
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/table_layout"
+                    android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"

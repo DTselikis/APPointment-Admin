@@ -5,10 +5,6 @@
 
     <data>
 
-    </data>
-
-    <data>
-
         <variable
             name="sharedViewModel"
             type="com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel" />
@@ -102,9 +98,9 @@
                     android:id="@+id/table_layout"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -114,10 +110,10 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/photo_card"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/photo_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

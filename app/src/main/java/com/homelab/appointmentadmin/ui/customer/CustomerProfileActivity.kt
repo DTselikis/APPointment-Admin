@@ -35,9 +35,11 @@ class CustomerProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedViewModel.setUser(args.user)
-        binding.lifecycleOwner = this
-        binding.sharedViewModel = this@CustomerProfileActivity.sharedViewModel
-        binding.customerProfileActivity = this@CustomerProfileActivity
+        binding.apply {
+            lifecycleOwner = this@CustomerProfileActivity
+            sharedViewModel = this@CustomerProfileActivity.sharedViewModel
+            customerProfileActivity = this@CustomerProfileActivity
+        }
 
         setupNavigation()
     }

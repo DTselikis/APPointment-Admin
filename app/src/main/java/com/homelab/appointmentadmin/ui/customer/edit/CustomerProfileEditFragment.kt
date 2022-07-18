@@ -43,6 +43,10 @@ class CustomerProfileEditFragment : Fragment() {
                 }
             }
         })
+
+        observeSaveStatus()
+
+
         return binding.root
     }
 
@@ -59,7 +63,6 @@ class CustomerProfileEditFragment : Fragment() {
 
     fun saveChanges() {
         if (viewModel.isModified()) {
-            observeSaveStatus()
             viewModel.storeChangesToDB()
         } else {
             Toast.makeText(requireContext(), getString(R.string.no_edits_made), Toast.LENGTH_SHORT)

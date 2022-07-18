@@ -45,7 +45,7 @@ class CustomerProfileEditFragment : Fragment() {
         })
 
         observeSaveStatus()
-
+        observeNavHostSaveBtn()
 
         return binding.root
     }
@@ -104,6 +104,15 @@ class CustomerProfileEditFragment : Fragment() {
                     }
                 })
                 .show()
+        }
+    }
+
+    private fun observeNavHostSaveBtn() {
+        sharedViewModel.saveBtnPressed.observe(viewLifecycleOwner) { pressed ->
+            if (pressed) {
+                saveChanges()
+            }
+            sharedViewModel.unpressSaveBtn()
         }
     }
 

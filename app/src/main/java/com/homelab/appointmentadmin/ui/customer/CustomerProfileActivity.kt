@@ -68,6 +68,10 @@ class CustomerProfileActivity : AppCompatActivity() {
         maximizeCard()
     }
 
+    fun pressSaveBtn() {
+        sharedViewModel.pressSaveBtn()
+    }
+
     private fun maximizeCard() {
         TransitionManager.beginDelayedTransition(
             binding.photoCard as ViewGroup,

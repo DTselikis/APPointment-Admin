@@ -62,6 +62,7 @@
                     android:id="@+id/card_save_btn_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> customerProfileActivity.pressSaveBtn()}"
                     android:src="@drawable/ic_save_24"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -36,7 +36,7 @@ class CustomerProfileEditFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (viewModel.isModified() && viewModel.changesSaved.value == false) {
+                if (viewModel.isModified()) {
                     showWarningMessage()
                 } else {
                     closeEditsFragment()

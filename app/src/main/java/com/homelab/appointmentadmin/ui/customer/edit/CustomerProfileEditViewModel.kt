@@ -8,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 
-class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
+class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
     val firstname = MutableLiveData<String>(user.firstname)
     val lastname = MutableLiveData<String>(user.lastname)
     val nickname = MutableLiveData<String>(user.nickname)
@@ -35,6 +35,7 @@ class CustomerProfileEditViewModel(private val user: User) : ViewModel() {
 
         Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!).update(changes)
             .addOnCompleteListener { task ->
+                this.user = getUser()
                 _changesSaved.value = task.isSuccessful
             }
     }

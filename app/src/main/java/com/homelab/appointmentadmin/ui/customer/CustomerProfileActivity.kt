@@ -52,6 +52,13 @@ class CustomerProfileActivity : AppCompatActivity() {
 
         navView.setupWithNavController(navController)
 
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            when (destination.id) {
+                R.id.profile_contact_item -> maximizeCard()
+                R.id.customerProfileEditFragment -> minimizeCardForEdit()
+            }
+        }
+
     }
 
     fun navigateToProfileEdit() {
@@ -59,13 +66,10 @@ class CustomerProfileActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.profile_nav_host) as NavHostFragment
         val navController = navHostFragment.navController
         navController.navigate(R.id.action_profile_contact_item_to_customerProfileEditFragment)
-
-        minimizeCardForEdit()
     }
 
     fun exitProfileEdit() {
         onBackPressed()
-        maximizeCard()
     }
 
     fun pressSaveBtn() {

@@ -72,8 +72,8 @@ class CustomerProfileEditFragment : Fragment() {
     }
 
     private fun closeEditsFragment() {
-        findNavController().navigateUp()
         sharedViewModel.setUser(viewModel.getUser())
+        sharedViewModel.pressBackBtn()
     }
 
 

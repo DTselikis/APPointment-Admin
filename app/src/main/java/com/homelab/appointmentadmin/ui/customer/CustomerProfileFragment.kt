@@ -55,7 +55,7 @@ class CustomerProfileFragment : Fragment() {
 
         pager.adapter = CustomerPagerAdapter(this@CustomerProfileFragment)
         TabLayoutMediator(tabLayout, pager) { tab, position ->
-            tab.text = when(position) {
+            tab.text = when (position) {
                 Tab.CONTACT.code -> getString(R.string.profile_contact_item)
                 else -> getString(R.string.profile_edit_item)
             }
@@ -63,16 +63,31 @@ class CustomerProfileFragment : Fragment() {
 
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                when(position) {
+                when (position) {
                     Tab.CONTACT.code -> maximizeCard()
                     Tab.EDIT.code -> minimizeCardForEdit()
                 }
             }
         })
+
+        observeCustomButtons()
     }
 
     fun openEditTab() {
         binding.viewPager.currentItem = 1
+    }
+
+    fun pressSaveBtn() {
+        sharedViewModel.pressSaveBtn()
+    }
+
+    private fun observeCustomButtons() {
+        sharedViewModel.backBtnPressed.observe(viewLifecycleOwner) { pressed ->
+            if (pressed) {
+                binding.viewPager.currentItem = Tab.CONTACT.code
+            }
+            sharedViewModel.unpressBackBtn()
+        }
     }
 
     private fun maximizeCard() {

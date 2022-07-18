@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="user"
-            type="com.homelab.appointmentadmin.data.User" />
+            name="sharedViewModel"
+            type="com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel" />
 
         <variable
             name="customerProfileActivity"
@@ -86,7 +86,7 @@
                     android:id="@+id/customer_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.nickname}"
+                    android:text="@{sharedViewModel.user.nickname}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
                     app:layout_constraintStart_toStartOf="@id/customer_profile_pic"

@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModel
 import com.homelab.appointmentadmin.data.User
 
 class CustomerProfileSharedViewModel : ViewModel() {
-    lateinit var user: User
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> = _user
 
     private val _saveBtnPressed = MutableLiveData<Boolean>()
     val saveBtnPressed: LiveData<Boolean> = _saveBtnPressed
+
+    fun setUser(user: User) {
+        _user.value = user
+    }
 
     fun unpressSaveBtn() {
         if (_saveBtnPressed.value!!) {

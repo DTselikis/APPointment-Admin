@@ -34,13 +34,13 @@ class CustomerContactFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            user = sharedViewModel.user
+            sharedViewModel = this@CustomerContactFragment.sharedViewModel
             fragmentCustomerContact = this@CustomerContactFragment
         }
     }
 
     fun callCustomer() {
-        val phone = Uri.parse("tel:${sharedViewModel.user.phone}")
+        val phone = Uri.parse("tel:${sharedViewModel.user.value!!.phone}")
         val phoneIntent = Intent(Intent.ACTION_DIAL, phone)
         phoneIntent.resolveActivity(requireContext().packageManager)?.let {
             try {
@@ -53,7 +53,7 @@ class CustomerContactFragment : Fragment() {
     }
 
     fun sendEmail() {
-        val email = Uri.parse("mailto:${sharedViewModel.user.email}")
+        val email = Uri.parse("mailto:${sharedViewModel.user.value!!.email}")
         val emailIntent = Intent(Intent.ACTION_SENDTO, email)
             .putExtra(Intent.EXTRA_TEXT, getString(R.string.email_signature))
         emailIntent.resolveActivity(requireContext().packageManager)?.let {

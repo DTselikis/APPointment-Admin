@@ -23,7 +23,7 @@ class CustomerProfileEditFragment : Fragment() {
 
     private val sharedViewModel: CustomerProfileSharedViewModel by activityViewModels()
     private val viewModel: CustomerProfileEditViewModel by viewModels {
-        CustomerProfileEditViewModelFactory(sharedViewModel.user)
+        CustomerProfileEditViewModelFactory(sharedViewModel.user.value!!)
     }
     private lateinit var binding: FragmentCustomerProfileEditBinding
 
@@ -73,6 +73,7 @@ class CustomerProfileEditFragment : Fragment() {
 
     private fun closeEditsFragment() {
         findNavController().navigateUp()
+        sharedViewModel.setUser(viewModel.getUser())
     }
 
 

@@ -11,21 +11,9 @@
         android:label="CustomersFragment"
         tools:layout="@layout/fragment_customers">
         <action
-            android:id="@+id/action_customersFragment_to_customerProfileActivity"
-            app:destination="@id/customerProfileActivity" />
-        <action
             android:id="@+id/action_customersFragment_to_customerProfileFragment"
             app:destination="@id/customerProfileFragment" />
     </fragment>
-    <activity
-        android:id="@+id/customerProfileActivity"
-        android:name="com.homelab.appointmentadmin.ui.customer.CustomerProfileActivity"
-        android:label="CustomerProfileActivity"
-        tools:layout="@layout/activity_customer_profile">
-        <argument
-            android:name="user"
-            app:argType="com.homelab.appointmentadmin.data.User" />
-    </activity>
     <fragment
         android:id="@+id/customerProfileFragment"
         android:name="com.homelab.appointmentadmin.ui.customer.CustomerProfileFragment"

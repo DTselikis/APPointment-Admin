@@ -41,7 +41,7 @@ class CustomersFragment : Fragment() {
 
     fun navigate(user: User) {
         val action =
-            CustomersFragmentDirections.actionCustomersFragmentToCustomerProfileActivity(user)
+            CustomersFragmentDirections.actionCustomersFragmentToCustomerProfileFragment(user)
         findNavController().navigate(action)
     }
 

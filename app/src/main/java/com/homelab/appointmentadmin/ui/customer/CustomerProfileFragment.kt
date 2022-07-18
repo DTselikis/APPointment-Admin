@@ -25,14 +25,18 @@ class CustomerProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewPager()
+    }
+
+    private fun setupViewPager() {
         val pager = binding.viewPager
         val tabLayout = binding.tableLayout
 
         pager.adapter = CustomerPagerAdapter(this@CustomerProfileFragment)
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             tab.text = when(position) {
-                0 -> getString(R.id.profile_contact_item)
-                else -> getString(R.id.profile_edit_item)
+                0 -> getString(R.string.profile_contact_item)
+                else -> getString(R.string.profile_edit_item)
             }
         }.attach()
     }

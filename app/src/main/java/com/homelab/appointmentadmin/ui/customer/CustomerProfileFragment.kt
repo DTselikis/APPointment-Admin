@@ -19,6 +19,7 @@ import androidx.navigation.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.Tab
 import com.homelab.appointmentadmin.databinding.FragmentCustomerProfileBinding
 
 class CustomerProfileFragment : Fragment() {
@@ -55,7 +56,7 @@ class CustomerProfileFragment : Fragment() {
         pager.adapter = CustomerPagerAdapter(this@CustomerProfileFragment)
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             tab.text = when(position) {
-                0 -> getString(R.string.profile_contact_item)
+                Tab.CONTACT.code -> getString(R.string.profile_contact_item)
                 else -> getString(R.string.profile_edit_item)
             }
         }.attach()
@@ -63,8 +64,8 @@ class CustomerProfileFragment : Fragment() {
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when(position) {
-                    0 -> maximizeCard()
-                    1 -> minimizeCardForEdit()
+                    Tab.CONTACT.code -> maximizeCard()
+                    Tab.EDIT.code -> minimizeCardForEdit()
                 }
             }
         })

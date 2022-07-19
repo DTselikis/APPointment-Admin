@@ -1,6 +1,5 @@
 package com.homelab.appointmentadmin.ui.customer.edit
 
-import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
@@ -27,6 +25,8 @@ class CustomerProfileEditFragment : Fragment() {
     }
     private lateinit var binding: FragmentCustomerProfileEditBinding
 
+    private lateinit var backPressedCallback: OnBackPressedCallback
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +34,7 @@ class CustomerProfileEditFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_customer_profile_edit, null, false)
 
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+        backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (viewModel.isModified()) {
                     showWarningMessage()
@@ -42,7 +42,9 @@ class CustomerProfileEditFragment : Fragment() {
                     closeEditsFragment()
                 }
             }
-        })
+
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
         observeSaveStatus()
         observeNavHostSaveBtn()
@@ -59,6 +61,16 @@ class CustomerProfileEditFragment : Fragment() {
             customerProfileEditFragment = this@CustomerProfileEditFragment
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        backPressedCallback.isEnabled = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        backPressedCallback.isEnabled = false
     }
 
     fun saveChanges() {
@@ -136,5 +148,4 @@ class CustomerProfileEditFragment : Fragment() {
                 .create()
         }?.show()
     }
-
 }

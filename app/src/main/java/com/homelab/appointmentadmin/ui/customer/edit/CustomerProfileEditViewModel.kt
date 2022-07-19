@@ -46,7 +46,7 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
         val changes = mutableMapOf<String, String>()
 
         if (user.firstname != firstname.value) changes["firstname"] = firstname.value!!
-        if (user.lastname != lastname.value) changes["lastName"] = lastname.value!!
+        if (user.lastname != lastname.value) changes["lastname"] = lastname.value!!
         if (user.nickname != nickname.value) changes["nickname"] = nickname.value!!
         if (user.phone != phone.value) changes["phone"] = phone.value!!
         if (user.email != email.value) changes["email"] = email.value!!

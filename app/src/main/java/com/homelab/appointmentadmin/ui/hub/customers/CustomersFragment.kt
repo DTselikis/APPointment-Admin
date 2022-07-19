@@ -45,4 +45,10 @@ class CustomersFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    private fun observeForResult() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>("user")?.observe(viewLifecycleOwner) { updatedUser ->
+            viewModel.updateUser(updatedUser)
+        }
+    }
+
 }

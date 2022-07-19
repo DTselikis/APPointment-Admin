@@ -14,6 +14,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -47,6 +48,11 @@ class CustomerProfileFragment : Fragment() {
             sharedViewModel = this@CustomerProfileFragment.sharedViewModel
             customerProfileFragment = this@CustomerProfileFragment
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        findNavController().previousBackStackEntry?.savedStateHandle?.set("user", sharedViewModel.user)
     }
 
     private fun setupViewPager() {

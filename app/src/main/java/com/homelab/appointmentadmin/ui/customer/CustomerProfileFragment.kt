@@ -53,7 +53,7 @@ class CustomerProfileFragment : Fragment() {
         val pager = binding.viewPager
         val tabLayout = binding.tabLayout
 
-        pager.adapter = CustomerPagerAdapter(this@CustomerProfileFragment)
+        pager.adapter = CustomerPagerAdapter(childFragmentManager, lifecycle)
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             tab.text = when (position) {
                 Tab.CONTACT.code -> getString(R.string.profile_contact_item)

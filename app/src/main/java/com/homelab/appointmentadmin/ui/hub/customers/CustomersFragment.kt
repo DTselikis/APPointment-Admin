@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.FragmentCustomersBinding
 
@@ -46,7 +47,7 @@ class CustomersFragment : Fragment() {
     }
 
     private fun observeForResult() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>("user")?.observe(viewLifecycleOwner) { updatedUser ->
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(USER_NAV_KEY)?.observe(viewLifecycleOwner) { updatedUser ->
             viewModel.updateUser(updatedUser)
         }
     }

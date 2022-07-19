@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.Tab
+import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.databinding.FragmentCustomerProfileBinding
 
 class CustomerProfileFragment : Fragment() {
@@ -52,7 +53,7 @@ class CustomerProfileFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        findNavController().previousBackStackEntry?.savedStateHandle?.set("user", sharedViewModel.user)
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(USER_NAV_KEY, sharedViewModel.user)
     }
 
     private fun setupViewPager() {

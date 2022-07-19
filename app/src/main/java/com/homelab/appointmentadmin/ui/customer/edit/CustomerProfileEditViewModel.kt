@@ -35,7 +35,9 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
 
         Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!).update(changes)
             .addOnCompleteListener { task ->
-                this.user = getUser()
+                if (task.isSuccessful) {
+                    this.user = getUser()
+                }
                 _changesSaved.value = task.isSuccessful
             }
     }

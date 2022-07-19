@@ -72,7 +72,6 @@ class CustomerProfileEditFragment : Fragment() {
     }
 
     private fun closeEditsFragment() {
-        sharedViewModel.setUser(viewModel.getUser())
         sharedViewModel.pressBackBtn()
     }
 
@@ -93,7 +92,10 @@ class CustomerProfileEditFragment : Fragment() {
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(color)
-                .setAction("Ok") { closeEditsFragment() }
+                .setAction("Ok") {
+                    sharedViewModel.setUser(viewModel.getUser())
+                    closeEditsFragment()
+                }
                 .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     override fun onShown(transientBottomBar: Snackbar?) {
                         super.onShown(transientBottomBar)
@@ -101,6 +103,7 @@ class CustomerProfileEditFragment : Fragment() {
 
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                         super.onDismissed(transientBottomBar, event)
+                        sharedViewModel.setUser(viewModel.getUser())
                         closeEditsFragment()
                     }
                 })

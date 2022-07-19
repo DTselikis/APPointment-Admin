@@ -71,6 +71,10 @@ class CustomerProfileEditFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         backPressedCallback.isEnabled = false
+
+        if (viewModel.isModified()) {
+            viewModel.revertChanges()
+        }
     }
 
     fun saveChanges() {

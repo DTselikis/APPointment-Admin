@@ -82,13 +82,13 @@ class CustomerProfileFragment : Fragment() {
     }
 
     fun exitProfileEdit() {
-        binding.viewPager.currentItem = Tab.CONTACT.code
+        requireActivity().onBackPressed()
     }
 
     private fun observeCustomButtons() {
         sharedViewModel.backBtnPressed.observe(viewLifecycleOwner) { pressed ->
             if (pressed) {
-                exitProfileEdit()
+                binding.viewPager.currentItem = Tab.CONTACT.code
             }
             sharedViewModel.unpressBackBtn()
         }

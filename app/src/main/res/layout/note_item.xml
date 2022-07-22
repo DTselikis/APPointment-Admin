@@ -10,8 +10,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="4dp">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_margin="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             <ImageView
                 android:id="@+id/note_thumbnail_image"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@id/note_thumbnail_codes"
                 app:layout_constraintEnd_toEndOf="parent"

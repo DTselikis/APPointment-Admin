@@ -5,6 +5,13 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.homelab.appointmentadmin.ui.customer.note.NotesViewModel" />
+
+        <variable
+            name="NotesFragment"
+            type="com.homelab.appointmentadmin.ui.customer.note.NotesFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

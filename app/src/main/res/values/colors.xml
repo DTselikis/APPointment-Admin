@@ -12,4 +12,6 @@
     <color name="fb_blue">#4267B2</color>
     <color name="email_red">#EA4335</color>
     <color name="notification_cyan">#43ACE6</color>
+
+    <color name="add_note_yellow">#F5E85B</color>
 </resources>

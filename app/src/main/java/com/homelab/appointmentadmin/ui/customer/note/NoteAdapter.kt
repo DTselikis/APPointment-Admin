@@ -16,12 +16,11 @@ class NoteAdapter(
     inner class NoteViewHolder(
         private val binding: NoteItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        lateinit var view: View
 
         fun bind(note: Note) {
             binding.note = note
             binding.itemCard.setOnClickListener {
-                notesFragment.showNote(view.x, view.y)
+                notesFragment.showNote()
             }
         }
     }
@@ -44,7 +43,6 @@ class NoteAdapter(
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.view = holder.itemView
         holder.bind(getItem(position))
     }
 }

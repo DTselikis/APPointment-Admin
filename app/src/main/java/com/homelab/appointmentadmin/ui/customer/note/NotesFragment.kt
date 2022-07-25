@@ -45,7 +45,7 @@ class NotesFragment : Fragment() {
         viewModel.fetchNotes()
     }
 
-    fun showNote(x: Float, y: Float) {
+    fun showNote() {
         binding.cardFrame.apply {
             scaleX = 0f
             scaleY = 0f

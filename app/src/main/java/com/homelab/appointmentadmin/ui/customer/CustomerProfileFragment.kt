@@ -64,6 +64,7 @@ class CustomerProfileFragment : Fragment() {
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             tab.text = when (position) {
                 Tab.CONTACT.code -> getString(R.string.profile_contact_item)
+                Tab.NOTES.code -> getString(R.string.profile_notes_item)
                 else -> getString(R.string.profile_edit_item)
             }
         }.attach()

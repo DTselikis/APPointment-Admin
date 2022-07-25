@@ -53,7 +53,10 @@ class CustomerProfileFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        findNavController().previousBackStackEntry?.savedStateHandle?.set(USER_NAV_KEY, sharedViewModel.user)
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            USER_NAV_KEY,
+            sharedViewModel.user
+        )
     }
 
     private fun setupViewPager() {
@@ -74,6 +77,7 @@ class CustomerProfileFragment : Fragment() {
                 when (position) {
                     Tab.CONTACT.code -> maximizeCard()
                     Tab.EDIT.code -> minimizeCardForEdit()
+                    Tab.NOTES.code -> hideCard()
                 }
             }
         })
@@ -192,6 +196,22 @@ class CustomerProfileFragment : Fragment() {
             cardEditBtnIcon.visibility = View.GONE
             cardBackBtnIcon.visibility = View.VISIBLE
             cardSaveBtnIcon.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideCard() {
+        TransitionManager.beginDelayedTransition(
+            binding.photoCard as ViewGroup,
+            AutoTransition()
+        )
+        binding.apply {
+            photoCard.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                height = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    1f,
+                    resources.displayMetrics
+                ).toInt()
+            }
         }
     }
 

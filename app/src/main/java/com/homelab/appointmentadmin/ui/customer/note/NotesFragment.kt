@@ -7,13 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
+import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 
 class NotesFragment : Fragment() {
 
-    private val viewModel: NotesViewModel by viewModels()
+    private val sharedViewModel: CustomerProfileSharedViewModel by activityViewModels()
+    private val viewModel: NotesViewModel by viewModels {
+        NotesViewModelFactory(sharedViewModel.user.value!!)
+    }
     private lateinit var binding: FragmentNotesBinding
 
     override fun onCreateView(
@@ -30,9 +35,12 @@ class NotesFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            notesRv.adapter = NoteAdapter()
             viewModel = this@NotesFragment.viewModel
             notesFragment = this@NotesFragment
         }
+
+        viewModel.fetchNotes()
     }
 
 }

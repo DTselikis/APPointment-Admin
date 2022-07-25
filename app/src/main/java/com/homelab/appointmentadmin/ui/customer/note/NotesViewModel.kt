@@ -36,6 +36,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun setSelectedNote(note: Note) {
         selectedNote = note
+        isNew = false
         title.value = note.title
         description.value = note.description
     }

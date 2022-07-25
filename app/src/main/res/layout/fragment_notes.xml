@@ -10,7 +10,7 @@
             type="com.homelab.appointmentadmin.ui.customer.note.NotesViewModel" />
 
         <variable
-            name="NotesFragment"
+            name="notesFragment"
             type="com.homelab.appointmentadmin.ui.customer.note.NotesFragment" />
     </data>
 
@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/add_note_yellow"
             android:src="@drawable/ic_add_40"
+            android:onClick="@{() -> notesFragment.createNote()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.92"
@@ -61,13 +62,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:id="@+id/card_frame_back_btn_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> notesFragment.back()}"
+                    android:src="@drawable/ic_arrow_back_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.03"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.02" />
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/frame_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@={viewModel.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/card_frame_back_btn_icon" />
 
                 <View
                     android:id="@+id/frame_title_divider"
@@ -80,6 +95,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@={viewModel.description}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/frame_title_divider" />

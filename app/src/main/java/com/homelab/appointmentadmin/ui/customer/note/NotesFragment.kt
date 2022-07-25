@@ -46,6 +46,8 @@ class NotesFragment : Fragment() {
     }
 
     fun showNote() {
+//        viewModel.setSelectedNote(note)
+
         binding.cardFrame.apply {
             scaleX = 0f
             scaleY = 0f
@@ -61,4 +63,14 @@ class NotesFragment : Fragment() {
         animator.start()
     }
 
+    fun back() {
+        if (viewModel.isNewNote()) {
+            viewModel.storeNewNoteToDB()
+        }
+    }
+
+    fun createNote() {
+        viewModel.setNewNoteState()
+        showNote()
+    }
 }

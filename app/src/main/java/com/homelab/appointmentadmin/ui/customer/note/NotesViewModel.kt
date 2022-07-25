@@ -62,9 +62,13 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun storeNewNoteToDB() {
         val newNote = Note(description = description.value, photos = null, title = title.value)
+        storeToDB(newNote, newNote.hashCode().toString())
+    }
+
+    private fun storeToDB(note: Note, hash: String) {
         val data = mapOf<String, Map<String, Note>>(
             "notes" to mapOf<String, Note>(
-                newNote.hashCode().toString() to newNote
+                hash to note
             )
         )
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!)

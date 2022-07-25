@@ -46,7 +46,12 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun storeChangesToDB() {
         val note =
-            Note(title = title.value, description = description.value, photos = selectedNote.photos)
+            Note(
+                title = title.value,
+                description = description.value,
+                photos = selectedNote.photos,
+                hash = selectedNote.hash
+            )
         storeToDB(note, selectedNote.hash!!)
     }
 

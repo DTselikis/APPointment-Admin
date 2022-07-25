@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -43,6 +44,8 @@ class NotesFragment : Fragment() {
         }
 
         viewModel.fetchNotes()
+
+        observeChangedStoredtoDB()
     }
 
     fun showNote() {
@@ -79,5 +82,14 @@ class NotesFragment : Fragment() {
     fun editNote(note: Note) {
         viewModel.setSelectedNote(note)
         showNote()
+    }
+
+    private fun observeChangedStoredtoDB() {
+        viewModel.updatesStored.observe(viewLifecycleOwner) { stored ->
+            val msg =
+                if (stored) getString(R.string.note_saved) else getString(R.string.note_not_saved)
+
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        }
     }
 }

@@ -25,4 +25,6 @@
     <string name="unsaved_changes_warning_msg">Proceed without saving?</string>
     <string name="dialog_yes_btn">Yes</string>
     <string name="dialog_no_btn">No</string>
+    <string name="note_saved">Saved</string>
+    <string name="note_not_saved">Not saved</string>
 </resources>

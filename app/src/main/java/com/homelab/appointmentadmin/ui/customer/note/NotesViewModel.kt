@@ -66,8 +66,12 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 hash to note
             )
         )
+
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!)
             .set(data, SetOptions.merge())
+            .addOnCompleteListener { task ->
+                _updatesStored.value = task.isSuccessful
+            }
     }
 
     fun setNewNoteState() {

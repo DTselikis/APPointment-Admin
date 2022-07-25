@@ -23,7 +23,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 _notes.value = result.map { mapEntry ->
                     Note(
                         mapEntry["description"],
-                        mapEntry["photos"] as List<String>,
+                        mapEntry["photos"] as List<String>?,
                         mapEntry["timestamp"] as Timestamp,
                         mapEntry["title"]
                     )

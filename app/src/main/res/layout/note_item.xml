@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="note"
             type="com.homelab.appointmentadmin.model.network.Note" />
@@ -26,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
+                android:visibility="@{note.photos == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toTopOf="@id/note_thumbnail_codes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

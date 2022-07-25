@@ -8,5 +8,6 @@ data class Note(
     val photos: List<String>? = null,
     @ServerTimestamp
     val timestamp: Timestamp? = null,
-    val title: String? = null
+    val title: String? = null,
+    val hash: String? = null
 )

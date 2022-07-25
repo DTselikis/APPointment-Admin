@@ -3,6 +3,8 @@ package com.homelab.appointmentadmin.ui.customer.note
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTI0N
@@ -15,8 +17,17 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!).get()
-            .addOnSuccessListener { result ->
-                _notes.value = result["notes"] as List<Note>
+            .addOnSuccessListener {
+                val result = it["notes"] as List<Map<String, String>>
+
+                _notes.value = result.map { mapEntry ->
+                    Note(
+                        mapEntry["description"],
+                        mapEntry["photos"] as List<String>,
+                        mapEntry["timestamp"] as Timestamp,
+                        mapEntry["title"]
+                    )
+                }
             }
     }
 }

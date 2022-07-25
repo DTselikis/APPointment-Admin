@@ -1,6 +1,7 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,13 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.homelab.appointmentadmin.databinding.NoteItemBinding
 import com.homelab.appointmentadmin.model.network.Note
 
-class NoteAdapter : ListAdapter<Note, NoteAdapter.NoteViewHolder>(Diffcallback) {
+class NoteAdapter(
+    private val notesFragment: NotesFragment
+) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(Diffcallback) {
 
     inner class NoteViewHolder(
         private val binding: NoteItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        lateinit var view: View
+
         fun bind(note: Note) {
             binding.note = note
+            binding.itemCard.setOnClickListener {
+                notesFragment.showNote(view.x, view.y)
+            }
         }
     }
 
@@ -36,6 +44,7 @@ class NoteAdapter : ListAdapter<Note, NoteAdapter.NoteViewHolder>(Diffcallback) 
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        holder.view = holder.itemView
         holder.bind(getItem(position))
     }
 }

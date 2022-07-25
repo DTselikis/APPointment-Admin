@@ -1,6 +1,7 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
-import androidx.lifecycle.ViewModelProvider
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
+import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 
 class NotesFragment : Fragment() {
@@ -35,12 +37,28 @@ class NotesFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            notesRv.adapter = NoteAdapter()
+            notesRv.adapter = NoteAdapter(this@NotesFragment)
             viewModel = this@NotesFragment.viewModel
             notesFragment = this@NotesFragment
         }
 
         viewModel.fetchNotes()
+    }
+
+    fun showNote(x: Float, y: Float) {
+        binding.cardFrame.apply {
+            scaleX = 0f
+            scaleY = 0f
+            alpha = 0f
+            visibility = View.VISIBLE
+        }
+
+        val scaleX = PropertyValuesHolder.ofFloat("scaleX", 1f)
+        val scaleY = PropertyValuesHolder.ofFloat("scaleY", 1f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 1f)
+        val animator =
+            ObjectAnimator.ofPropertyValuesHolder(binding.cardFrame, scaleX, scaleY, alpha)
+        animator.start()
     }
 
 }

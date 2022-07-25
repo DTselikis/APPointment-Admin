@@ -1,5 +1,6 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
+import android.icu.text.Transliterator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,11 @@ import com.homelab.appointmentadmin.model.network.Note
 class NotesViewModel(private val user: User) : ViewModel() {
     private val _notes = MutableLiveData<List<Note>>()
     val notes: LiveData<List<Note>> = _notes
+
+    val title = MutableLiveData<String>()
+    val description = MutableLiveData<String>()
+
+    private var notePosition = 0
 
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!).get()
@@ -30,4 +36,14 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 }
             }
     }
+
+    fun setNote(note: Note) {
+        title.value = note.title
+        description.value = note.description
+    }
+
+    fun setNotePosition(position: Int) {
+        this.notePosition = position
+    }
+
 }

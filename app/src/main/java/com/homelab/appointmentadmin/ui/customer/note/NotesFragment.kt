@@ -2,6 +2,7 @@ package com.homelab.appointmentadmin.ui.customer.note
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.icu.text.Transliterator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -45,7 +46,10 @@ class NotesFragment : Fragment() {
         viewModel.fetchNotes()
     }
 
-    fun showNote(x: Float, y: Float) {
+    fun showNote(x: Float, y: Float, note: Note, position: Int) {
+        viewModel.setNote(note)
+        viewModel.setNotePosition(position)
+
         binding.cardFrame.apply {
             scaleX = 0f
             scaleY = 0f

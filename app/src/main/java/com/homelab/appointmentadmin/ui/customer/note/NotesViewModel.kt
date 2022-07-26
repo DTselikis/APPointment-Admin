@@ -30,7 +30,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .addOnSuccessListener { result ->
                 _notes.value = result.toObject<Notes>()!!.notes!!.map { entry ->
                     entry.value
-                }.toMutableList()
+                }.sortedByDescending { it.timestamp }.toMutableList()
             }
     }
 

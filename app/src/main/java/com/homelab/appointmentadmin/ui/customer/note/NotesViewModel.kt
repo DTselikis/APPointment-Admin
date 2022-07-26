@@ -13,8 +13,8 @@ import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
 
 class NotesViewModel(private val user: User) : ViewModel() {
-    private val _notes = MutableLiveData<List<Note>>()
-    val notes: LiveData<List<Note>> = _notes
+    private val _notes = MutableLiveData<MutableList<Note>>()
+    val notes: LiveData<MutableList<Note>> = _notes
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
@@ -30,7 +30,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .addOnSuccessListener { result ->
                 _notes.value = result.toObject<Notes>()!!.notes!!.map { entry ->
                     entry.value
-                }
+                }.toMutableList()
             }
     }
 
@@ -53,11 +53,18 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 hash = selectedNote.hash
             )
         storeToDB(note, selectedNote.hash!!)
+
+        updateExistingNote(note)
     }
 
     fun storeNewNoteToDB() {
-        val newNote = Note(description = description.value, photos = null, title = title.value)
-        storeToDB(newNote, newNote.hashCode().toString())
+        val newNote =
+            Note(description = description.value, photos = null, title = title.value).also {
+                it.hash = it.hashCode().toString()
+            }
+        storeToDB(newNote, newNote.hash!!)
+
+        insertNoteToList(newNote)
     }
 
     private fun storeToDB(note: Note, hash: String) {
@@ -72,6 +79,16 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .addOnCompleteListener { task ->
                 _updatesStored.value = task.isSuccessful
             }
+    }
+
+    private fun insertNoteToList(note: Note) {
+        _notes.value!!.add(note)
+    }
+
+    private fun updateExistingNote(note: Note) {
+        val existingNote = _notes.value!!.find { it.hash == note.hash }
+        val index = _notes.value!!.indexOf(existingNote)
+        _notes.value!![index] = note
     }
 
     fun setNewNoteState() {

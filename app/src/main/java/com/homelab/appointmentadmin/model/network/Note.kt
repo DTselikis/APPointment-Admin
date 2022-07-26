@@ -9,5 +9,5 @@ data class Note(
     @ServerTimestamp
     val timestamp: Timestamp? = null,
     val title: String? = null,
-    val hash: String? = null
+    var hash: String? = null
 )

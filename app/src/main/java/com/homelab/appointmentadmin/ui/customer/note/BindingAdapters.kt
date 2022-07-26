@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.homelab.appointmentadmin.model.network.Note
 
 @BindingAdapter("notes")
-fun bindNotes(recyclerView: RecyclerView, notes: List<Note>?) {
+fun bindNotes(recyclerView: RecyclerView, notes: MutableList<Note>?) {
     val adapter = recyclerView.adapter as NoteAdapter
 
     adapter.submitList(notes)

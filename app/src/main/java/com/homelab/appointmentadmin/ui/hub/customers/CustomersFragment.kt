@@ -19,6 +19,8 @@ class CustomersFragment : Fragment() {
     private lateinit var binding: FragmentCustomersBinding
     private val viewModel: CustomersViewModel by viewModels()
 
+    private lateinit var userAdapter: UserAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,13 +33,15 @@ class CustomersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        userAdapter = UserAdapter(this@CustomersFragment)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@CustomersFragment.viewModel
-            usersRv.adapter = UserAdapter(this@CustomersFragment)
+            usersRv.adapter = userAdapter
         }
 
         viewModel.fetchUsersFromDB()
+        observeForResult()
     }
 
     fun navigate(user: User) {
@@ -47,9 +51,11 @@ class CustomersFragment : Fragment() {
     }
 
     private fun observeForResult() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(USER_NAV_KEY)?.observe(viewLifecycleOwner) { updatedUser ->
-            viewModel.updateUser(updatedUser)
-        }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(USER_NAV_KEY)
+            ?.observe(viewLifecycleOwner) { updatedUser ->
+                val position = viewModel.updateUser(updatedUser)
+                userAdapter.notifyItemChanged(position)
+            }
     }
 
 }

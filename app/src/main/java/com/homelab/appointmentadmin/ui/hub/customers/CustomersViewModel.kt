@@ -23,6 +23,11 @@ class CustomersViewModel : ViewModel() {
             }
     }
 
-    fun updateUser(updatedUser: User) {
+    fun updateUser(updatedUser: User): Int {
+        val existingUser = _users.value!!.find { it.uid == updatedUser.uid }
+        val index = _users.value!!.indexOf(existingUser)
+        _users.value!![index] = updatedUser
+
+        return index
     }
 }

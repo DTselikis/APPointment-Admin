@@ -10,20 +10,19 @@ import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 
 class CustomersViewModel : ViewModel() {
-    private val _users = MutableLiveData<List<MutableLiveData<User>>>()
-    val users: LiveData<List<MutableLiveData<User>>> = _users
+    private val _users = MutableLiveData<MutableList<User>>()
+    val users: LiveData<MutableList<User>> = _users
 
     fun fetchUsersFromDB() {
         Firebase.firestore.collection(USERS_COLLECTION)
             .get()
             .addOnSuccessListener { result ->
                 _users.value = result.map { document ->
-                    MutableLiveData<User>(document.toObject<User>())
-                }
+                    document.toObject<User>()
+                }.toMutableList()
             }
     }
 
     fun updateUser(updatedUser: User) {
-        _users.value?.find { it.value?.uid == updatedUser.uid }?.value = updatedUser
     }
 }

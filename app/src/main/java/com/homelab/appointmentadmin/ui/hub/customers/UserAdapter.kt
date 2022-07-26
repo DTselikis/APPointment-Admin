@@ -11,24 +11,24 @@ import com.homelab.appointmentadmin.databinding.CustomerHubItemBinding
 
 class UserAdapter(
     private val customersFragment: CustomersFragment
-) : ListAdapter<MutableLiveData<User>, UserAdapter.UserViewHolder>(Diffcallback) {
+) : ListAdapter<User, UserAdapter.UserViewHolder>(Diffcallback) {
 
     inner class UserViewHolder(
         private val binding: CustomerHubItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: MutableLiveData<User>) {
-            binding.user = user.value
+        fun bind(user: User) {
+            binding.user = user
             binding.customerFragment = customersFragment
         }
     }
 
-    companion object Diffcallback : DiffUtil.ItemCallback<MutableLiveData<User>>() {
-        override fun areItemsTheSame(oldItem: MutableLiveData<User>, newItem: MutableLiveData<User>): Boolean {
-            return oldItem.value!!.uid == newItem.value!!.uid
+    companion object Diffcallback : DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem.uid == newItem.uid
         }
 
-        override fun areContentsTheSame(oldItem: MutableLiveData<User>, newItem: MutableLiveData<User>): Boolean {
-            return oldItem.value!!.lastname == newItem.value!!.lastname
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem.lastname == newItem.lastname
         }
 
     }

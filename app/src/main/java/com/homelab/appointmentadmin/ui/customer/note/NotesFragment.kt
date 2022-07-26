@@ -79,6 +79,7 @@ class NotesFragment : Fragment() {
 
             override fun onAnimationEnd(p0: Animator?) {
                 binding.cardFrame.visibility = View.GONE
+                updateAdapter()
             }
 
             override fun onAnimationCancel(p0: Animator?) {}
@@ -88,17 +89,6 @@ class NotesFragment : Fragment() {
     }
 
     fun back() {
-        val index: Int
-        viewModel.apply {
-            if (isNewNote()) {
-                index = storeNewNoteToDB()
-                adapter.notifyItemInserted(index)
-            } else if (isModified()) {
-                index = storeChangesToDB()
-                adapter.notifyItemChanged(index)
-                adapter.notifyItemMoved(index, 0)
-            }
-        }
         hideNote()
     }
 
@@ -110,6 +100,20 @@ class NotesFragment : Fragment() {
     fun editNote(note: Note) {
         viewModel.setSelectedNote(note)
         showNote()
+    }
+
+    private fun updateAdapter() {
+        val index: Int
+        viewModel.apply {
+            if (isNewNote()) {
+                index = storeNewNoteToDB()
+                adapter.notifyItemInserted(index)
+            } else if (isModified()) {
+                index = storeChangesToDB()
+                adapter.notifyItemChanged(index)
+                adapter.notifyItemMoved(index, 0)
+            }
+        }
     }
 
     private fun observeChangedStoredtoDB() {

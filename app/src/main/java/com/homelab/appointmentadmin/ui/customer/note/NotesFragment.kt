@@ -23,6 +23,7 @@ class NotesFragment : Fragment() {
         NotesViewModelFactory(sharedViewModel.user.value!!)
     }
     private lateinit var binding: FragmentNotesBinding
+    private lateinit var adapter: NoteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,9 +37,10 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = NoteAdapter(this@NotesFragment)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            notesRv.adapter = NoteAdapter(this@NotesFragment)
+            notesRv.adapter = adapter
             viewModel = this@NotesFragment.viewModel
             notesFragment = this@NotesFragment
         }
@@ -82,6 +84,7 @@ class NotesFragment : Fragment() {
             }
         }
         hideNote()
+        updateAdapter()
     }
 
     fun createNote() {
@@ -92,6 +95,10 @@ class NotesFragment : Fragment() {
     fun editNote(note: Note) {
         viewModel.setSelectedNote(note)
         showNote()
+    }
+
+    private fun updateAdapter() {
+        adapter.notifyDataSetChanged()
     }
 
     private fun observeChangedStoredtoDB() {

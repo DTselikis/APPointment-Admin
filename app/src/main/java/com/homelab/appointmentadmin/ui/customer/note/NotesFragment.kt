@@ -64,6 +64,15 @@ class NotesFragment : Fragment() {
         animator.start()
     }
 
+    private fun hideNote() {
+        val scaleX = PropertyValuesHolder.ofFloat("scaleX", 0f)
+        val scaleY = PropertyValuesHolder.ofFloat("scaleY", 0f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f)
+        val animator =
+            ObjectAnimator.ofPropertyValuesHolder(binding.cardFrame, scaleX, scaleY, alpha)
+        animator.start()
+    }
+
     fun back() {
         viewModel.apply {
             if (isNewNote()) {
@@ -72,6 +81,7 @@ class NotesFragment : Fragment() {
                 storeChangesToDB()
             }
         }
+        hideNote()
     }
 
     fun createNote() {

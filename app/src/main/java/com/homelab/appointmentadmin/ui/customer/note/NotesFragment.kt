@@ -1,5 +1,6 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
+import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.os.Bundle
@@ -73,6 +74,17 @@ class NotesFragment : Fragment() {
         val animator =
             ObjectAnimator.ofPropertyValuesHolder(binding.cardFrame, scaleX, scaleY, alpha)
         animator.start()
+        animator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator?) {}
+
+            override fun onAnimationEnd(p0: Animator?) {
+                binding.cardFrame.visibility = View.GONE
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {}
+
+            override fun onAnimationRepeat(p0: Animator?) {}
+        })
     }
 
     fun back() {

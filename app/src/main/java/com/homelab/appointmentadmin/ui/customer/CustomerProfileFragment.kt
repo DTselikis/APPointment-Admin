@@ -51,14 +51,6 @@ class CustomerProfileFragment : Fragment() {
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        findNavController().previousBackStackEntry?.savedStateHandle?.set(
-            USER_NAV_KEY,
-            sharedViewModel.user
-        )
-    }
-
     private fun setupViewPager() {
         val pager = binding.viewPager
         val tabLayout = binding.tabLayout
@@ -75,7 +67,10 @@ class CustomerProfileFragment : Fragment() {
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    Tab.CONTACT.code -> maximizeCard()
+                    Tab.CONTACT.code -> {
+                        maximizeCard()
+                        updateCustomerObject()
+                    }
                     Tab.EDIT.code -> minimizeCardForEdit()
                     Tab.NOTES.code -> hideCard()
                 }
@@ -104,6 +99,13 @@ class CustomerProfileFragment : Fragment() {
             }
             sharedViewModel.unpressBackBtn()
         }
+    }
+
+    private fun updateCustomerObject() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            USER_NAV_KEY,
+            sharedViewModel.user.value
+        )
     }
 
     private fun maximizeCard() {

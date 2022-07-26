@@ -90,7 +90,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private fun updateExistingNote(note: Note): Int {
         val existingNote = _notes.value!!.find { it.hash == note.hash }
         val index = _notes.value!!.indexOf(existingNote)
-        _notes.value!![index] = note
+        _notes.value!!.remove(existingNote)
+
+        insertNoteToList(note)
 
         return index
     }

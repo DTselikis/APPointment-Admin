@@ -96,6 +96,7 @@ class NotesFragment : Fragment() {
             } else if (isModified()) {
                 index = storeChangesToDB()
                 adapter.notifyItemChanged(index)
+                adapter.notifyItemMoved(index, 0)
             }
         }
         hideNote()

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -26,11 +27,24 @@ class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
     private lateinit var adapter: NoteAdapter
 
+    private lateinit var backPressedCallback: OnBackPressedCallback
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, null, false)
+
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.isNoteVisible()) {
+                    back()
+                } else {
+                    sharedViewModel.pressBackBtn()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
         return binding.root
     }
@@ -51,7 +65,19 @@ class NotesFragment : Fragment() {
         observeChangedStoredtoDB()
     }
 
+    override fun onResume() {
+        super.onResume()
+        backPressedCallback.isEnabled = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        backPressedCallback.isEnabled = false
+    }
+
     fun showNote() {
+        viewModel.setNoteVisible(true)
+
         binding.cardFrame.apply {
             scaleX = 0f
             scaleY = 0f
@@ -90,6 +116,7 @@ class NotesFragment : Fragment() {
 
     fun back() {
         hideNote()
+        viewModel.setNoteVisible(false)
     }
 
     fun createNote() {

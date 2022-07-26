@@ -25,6 +25,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private lateinit var selectedNote: Note
     private var isNew = false
 
+    private var isNoteVisible = false
+
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!).get()
             .addOnSuccessListener { result ->
@@ -104,4 +106,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
     }
 
     fun isNewNote(): Boolean = isNew
+
+    fun setNoteVisible(visible: Boolean) {
+        isNoteVisible = visible
+    }
+
+    fun isNoteVisible(): Boolean = isNoteVisible
 }

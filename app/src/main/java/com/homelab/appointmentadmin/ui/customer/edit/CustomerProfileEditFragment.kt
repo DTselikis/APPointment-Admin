@@ -34,7 +34,7 @@ class CustomerProfileEditFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_customer_profile_edit, null, false)
 
-        backPressedCallback = object : OnBackPressedCallback(true) {
+        backPressedCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 if (viewModel.isModified()) {
                     showWarningMessage()

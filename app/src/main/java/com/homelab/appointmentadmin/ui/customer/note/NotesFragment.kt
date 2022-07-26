@@ -35,7 +35,7 @@ class NotesFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, null, false)
 
-        backPressedCallback = object : OnBackPressedCallback(true) {
+        backPressedCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 if (viewModel.isNoteVisible()) {
                     back()

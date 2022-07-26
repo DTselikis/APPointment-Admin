@@ -7,7 +7,7 @@ data class Note(
     val description: String? = null,
     val photos: List<String>? = null,
     @ServerTimestamp
-    val timestamp: Timestamp? = null,
+    val timestamp: Timestamp? = Timestamp.now(),
     val title: String? = null,
     var hash: String? = null
 )

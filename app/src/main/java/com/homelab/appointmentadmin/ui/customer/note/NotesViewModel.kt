@@ -44,7 +44,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun isModified(): Boolean =
         title.value != selectedNote.title || description.value != selectedNote.description
 
-    fun storeChangesToDB() {
+    fun storeChangesToDB(): Int {
         val note =
             Note(
                 title = title.value,
@@ -54,17 +54,17 @@ class NotesViewModel(private val user: User) : ViewModel() {
             )
         storeToDB(note, selectedNote.hash!!)
 
-        updateExistingNote(note)
+        return updateExistingNote(note)
     }
 
-    fun storeNewNoteToDB() {
+    fun storeNewNoteToDB(): Int {
         val newNote =
             Note(description = description.value, photos = null, title = title.value).also {
                 it.hash = it.hashCode().toString()
             }
         storeToDB(newNote, newNote.hash!!)
 
-        insertNoteToList(newNote)
+        return insertNoteToList(newNote)
     }
 
     private fun storeToDB(note: Note, hash: String) {
@@ -81,14 +81,18 @@ class NotesViewModel(private val user: User) : ViewModel() {
             }
     }
 
-    private fun insertNoteToList(note: Note) {
+    private fun insertNoteToList(note: Note): Int {
         _notes.value!!.add(note)
+
+        return _notes.value!!.size - 1
     }
 
-    private fun updateExistingNote(note: Note) {
+    private fun updateExistingNote(note: Note): Int {
         val existingNote = _notes.value!!.find { it.hash == note.hash }
         val index = _notes.value!!.indexOf(existingNote)
         _notes.value!![index] = note
+
+        return index
     }
 
     fun setNewNoteState() {

@@ -88,15 +88,17 @@ class NotesFragment : Fragment() {
     }
 
     fun back() {
+        val index: Int
         viewModel.apply {
             if (isNewNote()) {
-                storeNewNoteToDB()
+                index = storeNewNoteToDB()
+                adapter.notifyItemInserted(index)
             } else if (isModified()) {
-                storeChangesToDB()
+                index = storeChangesToDB()
+                adapter.notifyItemChanged(index)
             }
         }
         hideNote()
-        updateAdapter()
     }
 
     fun createNote() {
@@ -107,10 +109,6 @@ class NotesFragment : Fragment() {
     fun editNote(note: Note) {
         viewModel.setSelectedNote(note)
         showNote()
-    }
-
-    private fun updateAdapter() {
-        adapter.notifyDataSetChanged()
     }
 
     private fun observeChangedStoredtoDB() {

@@ -1,8 +1,12 @@
 package com.homelab.appointmentadmin.ui.hub.create
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 
 class CreateCustomerViewModel : ViewModel() {
@@ -12,10 +16,26 @@ class CreateCustomerViewModel : ViewModel() {
     val phone = MutableLiveData<String>()
     val email = MutableLiveData<String>()
 
+    private val _userStored = MutableLiveData<Boolean>()
+    val userStored: LiveData<Boolean> = _userStored
+
+    private lateinit var user: User
+
     fun createUser() {
+        val user = createUserObject()
+
+        storeUserToDB(user)
     }
 
-    private fun getUser(): User =
+    private fun storeUserToDB(user: User) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!).set(user)
+            .addOnCompleteListener { task ->
+                this@CreateCustomerViewModel.user = user
+                _userStored.value = task.isSuccessful
+            }
+    }
+
+    private fun createUserObject(): User =
         User(
             uid = null,
             firstname.value,
@@ -25,6 +45,6 @@ class CreateCustomerViewModel : ViewModel() {
             email.value,
             registered = false
         ).also {
-            it.uid = "${it.hashCode().toString()}_${Timestamp.now().seconds}"
+            it.uid = "${it.hashCode()}_${Timestamp.now().seconds}"
         }
 }

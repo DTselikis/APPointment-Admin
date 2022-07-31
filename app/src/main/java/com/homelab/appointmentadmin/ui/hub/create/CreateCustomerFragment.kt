@@ -37,6 +37,7 @@ class CreateCustomerFragment : Fragment() {
 
     fun saveCustomer() {
         if (isValid()) {
+            viewModel.createUser()
         }
     }
 

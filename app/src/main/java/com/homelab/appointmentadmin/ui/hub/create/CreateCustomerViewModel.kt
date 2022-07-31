@@ -47,4 +47,6 @@ class CreateCustomerViewModel : ViewModel() {
         ).also {
             it.uid = "${it.hashCode()}_${Timestamp.now().seconds}"
         }
+
+    fun getUser(): User = user
 }

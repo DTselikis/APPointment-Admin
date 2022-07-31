@@ -77,8 +77,28 @@ class CreateCustomerFragment : Fragment() {
             Snackbar.make(binding.saveInfoBtn, text, Snackbar.LENGTH_LONG)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(color)
+                .setAction("Ok") {
+                    informForNewUser()
+                }
+                .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    override fun onShown(transientBottomBar: Snackbar?) {
+                        super.onShown(transientBottomBar)
+                    }
+
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+
+                    }
+                })
                 .show()
         }
+    }
+
+    private fun informForNewUser() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            NEW_USER_NAV_KEY,
+            viewModel.getUser()
+        )
     }
 
 }

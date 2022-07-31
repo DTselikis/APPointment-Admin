@@ -30,9 +30,11 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!).get()
             .addOnSuccessListener { result ->
-                _notes.value = result.toObject<Notes>()!!.notes!!.map { entry ->
-                    entry.value
-                }.sortedByDescending { it.timestamp }.toMutableList()
+                if (result.exists()) {
+                    _notes.value = result.toObject<Notes>()!!.notes!!.map { entry ->
+                        entry.value
+                    }.sortedByDescending { it.timestamp }.toMutableList()
+                }
             }
     }
 

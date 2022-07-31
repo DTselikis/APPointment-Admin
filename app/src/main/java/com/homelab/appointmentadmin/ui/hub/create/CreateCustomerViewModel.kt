@@ -40,7 +40,10 @@ class CreateCustomerViewModel : ViewModel() {
             uid = null,
             firstname.value,
             lastname.value,
-            if (nickname.value.isNullOrBlank()) "${firstname.value} ${lastname.value}" else nickname.value,
+            if (nickname.value.isNullOrBlank())
+                "${if (!firstname.value.isNullOrBlank()) firstname.value else ""} " +
+                        "${if (!lastname.value.isNullOrBlank()) lastname.value else ""}"
+            else nickname.value,
             phone.value,
             email.value,
             registered = false

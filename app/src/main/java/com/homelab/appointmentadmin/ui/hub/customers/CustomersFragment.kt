@@ -73,4 +73,29 @@ class CustomersFragment : Fragment() {
         findNavController().navigate(R.id.action_customersFragment_to_createCustomerFragment)
     }
 
+    fun toggleFilters() {
+        if (binding.showAllFilter.visibility == View.GONE) {
+            binding.apply {
+                filterBtn.animate().rotation(-90f).start()
+                showAllFilter.visibility = View.VISIBLE
+                showAllFilter.animate().alpha(1f).start()
+                showRegisteredFilter.visibility = View.VISIBLE
+                showRegisteredFilter.animate().alpha(1f).start()
+                showUnregisteredFilter.visibility = View.VISIBLE
+                showUnregisteredFilter.animate().alpha(1f).start()
+            }
+        } else {
+            binding.apply {
+                filterBtn.animate().rotation(0f).start()
+                showAllFilter.animate().alpha(0f).start()
+                showAllFilter.visibility = View.GONE
+                showRegisteredFilter.animate().alpha(0f).start()
+                showRegisteredFilter.visibility = View.GONE
+                showUnregisteredFilter.animate().alpha(0f).start()
+                showUnregisteredFilter.visibility = View.GONE
+            }
+
+        }
+    }
+
 }

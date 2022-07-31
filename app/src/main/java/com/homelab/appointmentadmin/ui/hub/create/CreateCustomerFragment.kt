@@ -41,11 +41,11 @@ class CreateCustomerFragment : Fragment() {
     }
 
     private fun isValid(): Boolean {
-        return if (viewModel.firstname.value.isNullOrBlank()) {
-            binding.firstname.error = getString(R.string.fill_field_error_msg)
-            false
-        } else if (viewModel.lastname.value.isNullOrBlank()) {
-            binding.lastname.error = getString(R.string.fill_field_error_msg)
+        return if (viewModel.firstname.value.isNullOrBlank() && viewModel.lastname.value.isNullOrBlank()) {
+            binding.apply {
+                firstname.error = getString(R.string.one_field_requited_err_msg)
+                lastname.error = getString(R.string.one_field_requited_err_msg)
+            }
             false
         } else {
             true

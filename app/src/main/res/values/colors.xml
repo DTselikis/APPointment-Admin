@@ -14,4 +14,6 @@
     <color name="notification_cyan">#43ACE6</color>
 
     <color name="add_note_yellow">#F5E85B</color>
+
+    <color name="circle_stroke">#E6E8E8</color>
 </resources>

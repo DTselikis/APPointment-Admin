@@ -19,6 +19,18 @@
         android:layout_height="match_parent"
         tools:context=".ui.hub.customers.CustomersFragment">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/filter_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/circle_stroke"
+            android:src="@drawable/ic_filter_list_24"
+            app:layout_constraintBottom_toTopOf="@id/users_rv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/users_rv"
             android:layout_width="0dp"
@@ -30,7 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_btn"
             app:users='@{viewModel.users}'
             tools:listitem="@layout/customer_hub_item" />
 

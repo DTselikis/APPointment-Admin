@@ -27,4 +27,5 @@
     <string name="dialog_no_btn">No</string>
     <string name="note_saved">Saved</string>
     <string name="note_not_saved">Not saved</string>
+    <string name="fill_field_error_msg">Please fill this field</string>
 </resources>

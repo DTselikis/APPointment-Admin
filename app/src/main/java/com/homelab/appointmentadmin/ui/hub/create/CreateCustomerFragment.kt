@@ -35,4 +35,21 @@ class CreateCustomerFragment : Fragment() {
         }
     }
 
+    fun saveCustomer() {
+        if (isValid()) {
+        }
+    }
+
+    private fun isValid(): Boolean {
+        return if (viewModel.firstname.value.isNullOrBlank()) {
+            binding.firstname.error = getString(R.string.fill_field_error_msg)
+            false
+        } else if (viewModel.lastname.value.isNullOrBlank()) {
+            binding.lastname.error = getString(R.string.fill_field_error_msg)
+            false
+        } else {
+            true
+        }
+    }
+
 }

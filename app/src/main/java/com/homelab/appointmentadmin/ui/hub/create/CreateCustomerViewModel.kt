@@ -49,4 +49,17 @@ class CreateCustomerViewModel : ViewModel() {
         }
 
     fun getUser(): User = user
+
+    fun isModified(): Boolean {
+        val changes = mutableListOf<Boolean>()
+        changes.add(firstname.value.isNullOrBlank())
+        changes.add(lastname.value.isNullOrBlank())
+        changes.add(nickname.value.isNullOrBlank())
+        changes.add(phone.value.isNullOrBlank())
+        changes.add(email.value.isNullOrBlank())
+
+        return changes.contains(false)
+    }
+
+
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,8 @@ class CreateCustomerFragment : Fragment() {
 
     private val viewModel: CreateCustomerViewModel by viewModels()
     private lateinit var binding: FragmentCreateCustomerBinding
+
+    private lateinit var backPressedCallback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +43,28 @@ class CreateCustomerFragment : Fragment() {
             customerProfileEditFragment = this@CreateCustomerFragment
         }
 
+        backPressedCallback = object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                if (viewModel.isModified()) {
+                    showWarningMessage()
+                } else {
+                    closeFragment()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
+
         observeStoredState()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        backPressedCallback.isEnabled = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        backPressedCallback.isEnabled = false
     }
 
     fun saveCustomer() {
@@ -51,6 +75,10 @@ class CreateCustomerFragment : Fragment() {
 
     fun closeFragment() {
         findNavController().navigateUp()
+    }
+
+    fun pressBack() {
+        requireActivity().onBackPressed()
     }
 
     private fun isValid(): Boolean {
@@ -103,6 +131,23 @@ class CreateCustomerFragment : Fragment() {
             NEW_USER_NAV_KEY,
             viewModel.getUser()
         )
+    }
+
+    private fun showWarningMessage() {
+        activity?.let {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(it)
+            builder.apply {
+                setTitle(getString(R.string.unsaved_changes_warning_title))
+                setMessage(getString(R.string.unsaved_changes_warning_msg))
+                setPositiveButton(getString(R.string.dialog_yes_btn)) { dialog, id ->
+                    closeFragment()
+                }
+                setNegativeButton(getString(R.string.dialog_no_btn)) { dialog, id ->
+
+                }
+            }
+                .create()
+        }?.show()
     }
 
 }

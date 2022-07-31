@@ -23,6 +23,18 @@
             android:layout_height="wrap_content"
             tools:context=".ui.hub.create.CreateCustomerFragment">
 
+            <ImageView
+                android:id="@+id/new_customer_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:onClick="@{() -> customerProfileEditFragment.pressBack()}"
+                android:src="@drawable/ic_arrow_back_24"
+                app:layout_constraintBottom_toTopOf="@id/firstname"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/firstname"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -31,7 +43,7 @@
                 android:layout_marginTop="@dimen/profile_items_margin_top"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/new_customer_back_btn"
                 app:startIconDrawable="@drawable/ic_account_circle_36">
 
                 <com.google.android.material.textfield.TextInputEditText

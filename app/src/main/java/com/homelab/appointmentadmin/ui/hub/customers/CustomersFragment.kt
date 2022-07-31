@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.FragmentCustomersBinding
@@ -42,7 +43,8 @@ class CustomersFragment : Fragment() {
         }
 
         viewModel.fetchUsersFromDB()
-        observeForResult()
+        observeForUserModifications()
+        observeForNewUser()
     }
 
     fun navigateToEditCustomer(user: User) {
@@ -51,12 +53,20 @@ class CustomersFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun observeForResult() {
+    private fun observeForUserModifications() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(USER_NAV_KEY)
             ?.observe(viewLifecycleOwner) { updatedUser ->
                 val position = viewModel.updateUser(updatedUser)
                 userAdapter.notifyItemChanged(position)
             }
+    }
+
+    private fun observeForNewUser() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(
+            NEW_USER_NAV_KEY
+        )?.observe(viewLifecycleOwner) { newUser ->
+            viewModel.insertUser(newUser)
+        }
     }
 
     fun navigateToCreateNewCustomer() {

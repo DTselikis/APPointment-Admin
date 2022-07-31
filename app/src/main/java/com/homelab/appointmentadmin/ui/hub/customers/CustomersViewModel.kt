@@ -30,4 +30,8 @@ class CustomersViewModel : ViewModel() {
 
         return index
     }
+
+    fun insertUser(newUser: User) {
+        _users.value!!.add(newUser)
+    }
 }

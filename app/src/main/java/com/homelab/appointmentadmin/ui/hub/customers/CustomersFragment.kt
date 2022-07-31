@@ -37,6 +37,7 @@ class CustomersFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@CustomersFragment.viewModel
+            fragmentCustomers = this@CustomersFragment
             usersRv.adapter = userAdapter
         }
 

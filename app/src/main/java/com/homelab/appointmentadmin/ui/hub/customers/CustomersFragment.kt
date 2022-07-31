@@ -58,4 +58,8 @@ class CustomersFragment : Fragment() {
             }
     }
 
+    fun createNewCustomer() {
+        findNavController().navigate(R.id.action_customersFragment_to_createCustomerFragment)
+    }
+
 }

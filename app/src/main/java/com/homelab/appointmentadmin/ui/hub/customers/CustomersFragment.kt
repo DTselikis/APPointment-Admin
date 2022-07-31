@@ -44,7 +44,7 @@ class CustomersFragment : Fragment() {
         observeForResult()
     }
 
-    fun navigate(user: User) {
+    fun navigateToEditCustomer(user: User) {
         val action =
             CustomersFragmentDirections.actionCustomersFragmentToCustomerProfileFragment(user)
         findNavController().navigate(action)
@@ -58,7 +58,7 @@ class CustomersFragment : Fragment() {
             }
     }
 
-    fun createNewCustomer() {
+    fun navigateToCreateNewCustomer() {
         findNavController().navigate(R.id.action_customersFragment_to_createCustomerFragment)
     }
 

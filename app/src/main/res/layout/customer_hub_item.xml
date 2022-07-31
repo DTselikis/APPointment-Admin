@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.homelab.appointmentadmin.data.User" />
+
         <variable
             name="customerFragment"
             type="com.homelab.appointmentadmin.ui.hub.customers.CustomersFragment" />
@@ -15,10 +17,10 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> customerFragment.navigateToEditCustomer(user)}"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        android:onClick="@{() -> customerFragment.navigate(user)}">
+        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,12 +39,12 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text='@{user.firstname + " " + user.lastname}'
                 app:layout_constraintBottom_toBottomOf="@id/customer_hub_pic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="@id/customer_hub_pic"
                 app:layout_constraintTop_toTopOf="@id/customer_hub_pic"
-                android:text='@{user.firstname + " " + user.lastname}'
                 tools:text="Customer Customer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

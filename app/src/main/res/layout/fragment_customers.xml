@@ -37,7 +37,7 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> fragmentCustomers.createNewCustomer()}"
+            android:onClick="@{() -> fragmentCustomers.navigateToCreateNewCustomer()}"
             android:src="@drawable/ic_add_40"
             app:backgroundTint="@color/add_note_yellow"
             app:layout_constraintBottom_toBottomOf="parent"

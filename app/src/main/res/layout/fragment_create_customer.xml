@@ -129,7 +129,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/save_edits_btn"
+                android:id="@+id/save_info_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="@dimen/profile_edit_edit_text_width"
                 android:layout_height="wrap_content"

@@ -49,6 +49,10 @@ class CreateCustomerFragment : Fragment() {
         }
     }
 
+    fun closeFragment() {
+        findNavController().navigateUp()
+    }
+
     private fun isValid(): Boolean {
         return if (viewModel.firstname.value.isNullOrBlank() && viewModel.lastname.value.isNullOrBlank()) {
             binding.apply {
@@ -87,7 +91,7 @@ class CreateCustomerFragment : Fragment() {
 
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                         super.onDismissed(transientBottomBar, event)
-
+                        if (stored) closeFragment()
                     }
                 })
                 .show()

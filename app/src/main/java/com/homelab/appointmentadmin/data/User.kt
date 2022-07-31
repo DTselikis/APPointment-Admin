@@ -12,5 +12,6 @@ data class User(
     val phone: String? = null,
     val email: String? = null,
     val fbName: String? = null,
-    val token: String? = null
+    val token: String? = null,
+    val registered: Boolean = false
 ) : Parcelable

@@ -2,6 +2,8 @@ package com.homelab.appointmentadmin.ui.hub.customers
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -98,4 +100,30 @@ class CustomersFragment : Fragment() {
         }
     }
 
+    fun showRegisteredCustomers() {
+        binding.apply {
+            showAllFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+            showUnregisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+            showRegisteredFilter.setCardBackgroundColor(resources.getColor(R.color.selected_filter, requireActivity().theme))
+        }
+        viewModel.filterUsers(registered = true)
+    }
+
+    fun showUnregisteredCustomers() {
+        binding.apply {
+            showAllFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+            showUnregisteredFilter.setCardBackgroundColor(resources.getColor(R.color.selected_filter, requireActivity().theme))
+            showRegisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+        }
+        viewModel.filterUsers(registered = false)
+    }
+
+    fun showAllCustomers() {
+        binding.apply {
+            showAllFilter.setCardBackgroundColor(resources.getColor(R.color.selected_filter, requireActivity().theme))
+            showRegisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+            showUnregisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+        }
+        viewModel.resetFilter()
+    }
 }

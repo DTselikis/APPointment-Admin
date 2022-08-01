@@ -38,8 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:alpha="0"
-            android:backgroundTint="@color/selected_filter"
+            android:onClick="@{() -> fragmentCustomers.showAllCustomers()}"
             android:visibility="gone"
+            app:cardBackgroundColor="@color/selected_filter"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
             app:layout_constraintBottom_toBottomOf="@id/filter_btn"
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:alpha="0"
+            android:onClick="@{() -> fragmentCustomers.showRegisteredCustomers()}"
             android:visibility="gone"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
@@ -87,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:alpha="0"
+            android:onClick="@{() -> fragmentCustomers.showUnregisteredCustomers()}"
             android:visibility="gone"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
@@ -117,7 +120,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filter_btn"
-            app:users='@{viewModel.users}'
+            app:users='@{viewModel.usersForDisplay}'
             tools:listitem="@layout/customer_hub_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

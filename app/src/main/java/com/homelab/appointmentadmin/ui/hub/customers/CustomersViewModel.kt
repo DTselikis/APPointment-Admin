@@ -66,4 +66,19 @@ class CustomersViewModel : ViewModel() {
 
         activeFilter = CustomerFilter.ALL
     }
+
+    fun filterUsersByName(name: CharSequence) {
+        val list = when (activeFilter) {
+            CustomerFilter.ALL -> _users
+            CustomerFilter.REGISTERED -> _registeredUsers
+            else -> _unregisteredUsers
+        }
+
+        _usersForDisplay.value = list.filter {
+            it.nickname?.contains(name, true) == true
+                    || it.firstname?.contains(name, true) == true
+                    || it.lastname?.contains(name, true) == true
+        }
+    }
+
 }

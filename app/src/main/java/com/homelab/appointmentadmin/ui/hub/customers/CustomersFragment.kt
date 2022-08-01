@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -44,6 +45,9 @@ class CustomersFragment : Fragment() {
             viewModel = this@CustomersFragment.viewModel
             fragmentCustomers = this@CustomersFragment
             usersRv.adapter = userAdapter
+            searchText.doOnTextChanged { text, _, _, _ ->
+                this@CustomersFragment.viewModel.filterUsersByName(text!!)
+            }
         }
 
         viewModel.fetchUsersFromDB()

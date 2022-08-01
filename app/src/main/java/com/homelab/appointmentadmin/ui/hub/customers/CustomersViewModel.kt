@@ -11,6 +11,8 @@ import com.homelab.appointmentadmin.data.User
 
 class CustomersViewModel : ViewModel() {
     private lateinit var _users: MutableList<User>
+    private lateinit var _registeredUsers: List<User>
+    private lateinit var _unregisteredUsers: List<User>
 
     private val _usersForDisplay = MutableLiveData<List<User>>()
     val usersForDisplay: LiveData<List<User>> = _usersForDisplay
@@ -24,6 +26,10 @@ class CustomersViewModel : ViewModel() {
                 _users = result.map { document ->
                     document.toObject<User>()
                 }.toMutableList()
+
+                val (registered, unregistered) = _users.partition { it.registered }
+                _registeredUsers = registered
+                _unregisteredUsers = unregistered
 
                 _usersForDisplay.value = _users
             }
@@ -42,11 +48,15 @@ class CustomersViewModel : ViewModel() {
     }
 
     fun filterUsers(registered: Boolean) {
-        _usersForDisplay.value = _users.filter { it.registered == registered }
-
-        activeFilter = when (registered) {
-            true -> CustomerFilter.REGISTERED
-            else -> CustomerFilter.UNREGISTERED
+        when (registered) {
+            true -> {
+                activeFilter = CustomerFilter.REGISTERED
+                _usersForDisplay.value = _registeredUsers
+            }
+            false -> {
+                activeFilter = CustomerFilter.UNREGISTERED
+                _usersForDisplay.value = _unregisteredUsers
+            }
         }
     }
 

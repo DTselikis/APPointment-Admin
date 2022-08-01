@@ -90,7 +90,7 @@ class CreateCustomerFragment : Fragment() {
     }
 
     fun saveCustomer() {
-        if (isValid()) {
+        if (isValid() && hasGender()) {
             viewModel.createUser()
         }
     }
@@ -112,6 +112,21 @@ class CreateCustomerFragment : Fragment() {
             false
         } else {
             true
+        }
+    }
+
+    private fun hasGender(): Boolean {
+        binding.apply {
+            return if (genderGroup.checkedButtonId == -1) {
+                genderGroup.background =
+                    resources.getDrawable(R.drawable.error_stroke, requireActivity().theme)
+                genderErrMsg.visibility = View.VISIBLE
+                false
+            } else {
+                genderGroup.background.setVisible(false, false)
+                genderErrMsg.visibility = View.GONE
+                true
+            }
         }
     }
 

@@ -32,81 +32,76 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/show_all_filter"
+        <LinearLayout
+            android:id="@+id/filters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:alpha="0"
-            android:onClick="@{() -> fragmentCustomers.showAllCustomers()}"
             android:visibility="gone"
-            app:cardBackgroundColor="@color/selected_filter"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@id/filter_btn"
             app:layout_constraintStart_toEndOf="@id/filter_btn"
             app:layout_constraintTop_toTopOf="@id/filter_btn"
             tools:alpha="1"
+            android:minHeight="25dp"
             tools:visibility="visible">
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/show_all_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="@string/all_filter" />
-        </com.google.android.material.card.MaterialCardView>
+                android:layout_marginStart="12dp"
+                android:onClick="@{() -> fragmentCustomers.showAllCustomers()}"
+                app:cardBackgroundColor="@color/selected_filter"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/show_registered_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:alpha="0"
-            android:onClick="@{() -> fragmentCustomers.showRegisteredCustomers()}"
-            android:visibility="gone"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintBottom_toBottomOf="@id/filter_btn"
-            app:layout_constraintStart_toEndOf="@id/show_all_filter"
-            app:layout_constraintTop_toTopOf="@id/filter_btn"
-            tools:alpha="1"
-            tools:visibility="visible">
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:text="@string/all_filter" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/show_registered_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="@string/registered_filter" />
-        </com.google.android.material.card.MaterialCardView>
+                android:layout_marginStart="12dp"
+                android:onClick="@{() -> fragmentCustomers.showRegisteredCustomers()}"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/show_unregistered_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:alpha="0"
-            android:onClick="@{() -> fragmentCustomers.showUnregisteredCustomers()}"
-            android:visibility="gone"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintBottom_toBottomOf="@id/filter_btn"
-            app:layout_constraintStart_toEndOf="@id/show_registered_filter"
-            app:layout_constraintTop_toTopOf="@id/filter_btn"
-            tools:alpha="1"
-            tools:visibility="visible">
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:text="@string/registered_filter" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/show_unregistered_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="@string/unregistered_filter" />
-        </com.google.android.material.card.MaterialCardView>
+                android:layout_marginStart="12dp"
+                android:onClick="@{() -> fragmentCustomers.showUnregisteredCustomers()}"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:text="@string/unregistered_filter" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/users_rv"

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -76,53 +78,104 @@ class CustomersFragment : Fragment() {
     }
 
     fun toggleFilters() {
-        if (binding.showAllFilter.visibility == View.GONE) {
+        if (binding.filters.visibility == View.GONE) {
             binding.apply {
                 filterBtn.animate().rotation(-90f).start()
-                showAllFilter.visibility = View.VISIBLE
-                showAllFilter.animate().alpha(1f).start()
-                showRegisteredFilter.visibility = View.VISIBLE
-                showRegisteredFilter.animate().alpha(1f).start()
-                showUnregisteredFilter.visibility = View.VISIBLE
-                showUnregisteredFilter.animate().alpha(1f).start()
+                filters.visibility = View.VISIBLE
+                filters.animate().alpha(1f).start()
             }
         } else {
             binding.apply {
                 filterBtn.animate().rotation(0f).start()
-                showAllFilter.animate().alpha(0f).start()
-                showAllFilter.visibility = View.GONE
-                showRegisteredFilter.animate().alpha(0f).start()
-                showRegisteredFilter.visibility = View.GONE
-                showUnregisteredFilter.animate().alpha(0f).start()
-                showUnregisteredFilter.visibility = View.GONE
-            }
+                val hideAnimation =
+                    AnimationUtils.loadAnimation(filters.context, R.anim.filter_btn_hide_anim)
+                hideAnimation.apply {
+                    setAnimationListener(object : Animation.AnimationListener {
+                        override fun onAnimationStart(p0: Animation?) {}
 
+                        override fun onAnimationEnd(p0: Animation?) {
+                            filters.apply {
+                                visibility = View.GONE
+                                alpha = 0f
+                            }
+                        }
+
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                    })
+                }
+                filters.startAnimation(hideAnimation)
+            }
         }
     }
 
     fun showRegisteredCustomers() {
         binding.apply {
-            showAllFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
-            showUnregisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
-            showRegisteredFilter.setCardBackgroundColor(resources.getColor(R.color.selected_filter, requireActivity().theme))
+            showAllFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.white,
+                    requireActivity().theme
+                )
+            )
+            showUnregisteredFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.white,
+                    requireActivity().theme
+                )
+            )
+            showRegisteredFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.selected_filter,
+                    requireActivity().theme
+                )
+            )
         }
         viewModel.filterUsers(registered = true)
     }
 
     fun showUnregisteredCustomers() {
         binding.apply {
-            showAllFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
-            showUnregisteredFilter.setCardBackgroundColor(resources.getColor(R.color.selected_filter, requireActivity().theme))
-            showRegisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+            showAllFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.white,
+                    requireActivity().theme
+                )
+            )
+            showUnregisteredFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.selected_filter,
+                    requireActivity().theme
+                )
+            )
+            showRegisteredFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.white,
+                    requireActivity().theme
+                )
+            )
         }
         viewModel.filterUsers(registered = false)
     }
 
     fun showAllCustomers() {
         binding.apply {
-            showAllFilter.setCardBackgroundColor(resources.getColor(R.color.selected_filter, requireActivity().theme))
-            showRegisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
-            showUnregisteredFilter.setCardBackgroundColor(resources.getColor(R.color.white, requireActivity().theme))
+            showAllFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.selected_filter,
+                    requireActivity().theme
+                )
+            )
+            showRegisteredFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.white,
+                    requireActivity().theme
+                )
+            )
+            showUnregisteredFilter.setCardBackgroundColor(
+                resources.getColor(
+                    R.color.white,
+                    requireActivity().theme
+                )
+            )
         }
         viewModel.resetFilter()
     }

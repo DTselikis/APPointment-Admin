@@ -17,26 +17,28 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:onClick="@{() -> customerFragment.navigateToEditCustomer(user)}"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        android:layout_margin="8dp"
         app:stroke="@{user.registered}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/customer_hub_pic"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+                app:civ_circle_background_color="@color/purple_200"
+                app:imgUrl="@{user}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:imgUrl="@{user}"
-                app:civ_circle_background_color="@color/purple_200"
                 tools:src="@drawable/female_placeholder_wo_bg" />
 
             <com.google.android.material.textview.MaterialTextView

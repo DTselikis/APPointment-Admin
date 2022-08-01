@@ -110,6 +110,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/circle_stroke"
+            android:onClick="@{() -> fragmentCustomers.toggleSearch()}"
             android:src="@drawable/ic_search_24"
             app:layout_constraintBottom_toTopOf="@id/users_rv"
             app:layout_constraintEnd_toEndOf="parent"

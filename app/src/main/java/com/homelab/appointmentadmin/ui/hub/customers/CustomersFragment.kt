@@ -179,4 +179,14 @@ class CustomersFragment : Fragment() {
         }
         viewModel.resetFilter()
     }
+
+    fun toggleSearch() {
+        binding.apply {
+            if (filters.visibility == View.VISIBLE) toggleFilters()
+
+            searchText.visibility =
+                if (searchText.visibility == View.GONE) View.VISIBLE else View.GONE
+        }
+
+    }
 }

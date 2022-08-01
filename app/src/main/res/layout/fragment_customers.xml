@@ -50,8 +50,9 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:minWidth="40dp"
                 android:text="@string/all_filter" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -73,8 +74,9 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:minWidth="80dp"
                 android:text="@string/registered_filter" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -96,8 +98,9 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:minWidth="90dp"
                 android:text="@string/unregistered_filter" />
         </com.google.android.material.card.MaterialCardView>
 

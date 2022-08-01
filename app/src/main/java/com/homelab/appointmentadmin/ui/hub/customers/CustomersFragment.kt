@@ -106,6 +106,8 @@ class CustomersFragment : Fragment() {
 
     fun toggleFilters() {
         if (binding.filters.visibility == View.GONE) {
+            if (binding.searchText.visibility == View.VISIBLE) toggleSearch()
+
             binding.apply {
                 filterBtn.animate().rotation(-90f).start()
                 filters.visibility = View.VISIBLE

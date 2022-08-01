@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.Gender
+import com.homelab.appointmentadmin.data.GenderBtnId
 import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.databinding.FragmentCreateCustomerBinding
@@ -53,6 +55,21 @@ class CreateCustomerFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
+
+        binding.genderGroup.addOnButtonCheckedListener { button, checkedId, isChecked ->
+            when (checkedId) {
+                GenderBtnId.FEMALE.code -> {
+                    if (isChecked) {
+                        viewModel.setGender(GenderBtnId.FEMALE)
+                    }
+                }
+                GenderBtnId.MALE.code -> {
+                    if (isChecked) {
+                        viewModel.setGender(GenderBtnId.MALE)
+                    }
+                }
+            }
+        }
 
         observeStoredState()
     }

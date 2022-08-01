@@ -11,3 +11,13 @@ enum class CustomerFilter(val code: Int) {
     REGISTERED(1),
     UNREGISTERED(2)
 }
+
+enum class GenderBtnId(val code: Int) {
+    FEMALE(1),
+    MALE(2)
+}
+
+enum class Gender(val code: String) {
+    FEMALE("F"),
+    MALE("M")
+}

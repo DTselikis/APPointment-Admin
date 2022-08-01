@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.homelab.appointmentadmin.data.CustomerFilter
 import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 
@@ -17,7 +18,7 @@ class CustomersViewModel : ViewModel() {
     private val _usersForDisplay = MutableLiveData<List<User>>()
     val usersForDisplay: LiveData<List<User>> = _usersForDisplay
 
-    private lateinit var activeFilter: CustomerFilter
+    private var activeFilter = CustomerFilter.ALL
 
     fun fetchUsersFromDB() {
         Firebase.firestore.collection(USERS_COLLECTION)

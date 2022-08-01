@@ -35,4 +35,6 @@
     <string name="registered_filter">Registered</string>
     <string name="unregistered_filter">Unregistered</string>
     <string name="search_customer_hint">Dimitriakos</string>
+    <string name="female_gender_btn">Female</string>
+    <string name="male_gender_btn">Male</string>
 </resources>

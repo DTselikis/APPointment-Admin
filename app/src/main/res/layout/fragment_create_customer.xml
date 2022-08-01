@@ -140,6 +140,30 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/gender_group"
+                android:layout_width="@dimen/profile_edit_edit_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_items_margin_top"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/email"
+                app:singleSelection="true">
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female_gender_btn" />
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male_gender_btn" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_info_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -150,7 +174,7 @@
                 android:text="@string/save_edits_btn_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email" />
+                app:layout_constraintTop_toBottomOf="@id/gender_group" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

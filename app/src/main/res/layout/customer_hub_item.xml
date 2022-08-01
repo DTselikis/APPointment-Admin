@@ -20,7 +20,8 @@
         android:onClick="@{() -> customerFragment.navigateToEditCustomer(user)}"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:layout_margin="8dp"
+        app:stroke="@{user.registered}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

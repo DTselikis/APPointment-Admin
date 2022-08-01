@@ -34,4 +34,5 @@
     <string name="all_filter">All</string>
     <string name="registered_filter">Registered</string>
     <string name="unregistered_filter">Unregistered</string>
+    <string name="search_customer_hint">Dimitriakos</string>
 </resources>

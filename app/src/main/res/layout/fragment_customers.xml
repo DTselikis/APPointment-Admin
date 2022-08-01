@@ -120,6 +120,7 @@
             android:id="@+id/search_text"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
+            android:completionThreshold="2"
             android:hint="@string/search_customer_hint"
             android:inputType="textPersonName"
             android:visibility="gone"

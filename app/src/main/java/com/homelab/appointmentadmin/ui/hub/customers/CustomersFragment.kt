@@ -1,19 +1,19 @@
 package com.homelab.appointmentadmin.ui.hub.customers
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ListAdapter
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
@@ -39,14 +39,37 @@ class CustomersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        val autocompleteAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line
+        )
+
+
         userAdapter = UserAdapter(this@CustomersFragment)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@CustomersFragment.viewModel
             fragmentCustomers = this@CustomersFragment
             usersRv.adapter = userAdapter
-            searchText.doOnTextChanged { text, _, _, _ ->
-                this@CustomersFragment.viewModel.filterUsersByName(text!!)
+            searchText.apply {
+                setAdapter(autocompleteAdapter)
+                doOnTextChanged { text, _, _, _ ->
+                    this@CustomersFragment.viewModel.filterUsersByName(text!!)
+
+                    autocompleteAdapter.clear()
+                    val namesList =
+                        this@CustomersFragment.viewModel.usersForDisplay.value
+                            ?.map { "${it.firstname ?: ""} ${it.lastname ?: ""} (${it.nickname})" }
+                    namesList?.forEach { name ->
+                        autocompleteAdapter.add(name)
+                    }
+                }
+                setOnItemClickListener { _, _, position, _ ->
+                    val name = autocompleteAdapter.getItem(position)
+                    val index = name?.indexOf('(')?.minus(1)
+                    setText(name?.subSequence(0, index!!))
+                }
             }
         }
 

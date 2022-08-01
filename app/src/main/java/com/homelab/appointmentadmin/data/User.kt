@@ -13,5 +13,6 @@ data class User(
     val email: String? = null,
     val fbName: String? = null,
     val token: String? = null,
+    val profilePic: String? = null,
     val registered: Boolean = false
 ) : Parcelable

@@ -212,7 +212,12 @@ class CustomersFragment : Fragment() {
             if (filters.visibility == View.VISIBLE) toggleFilters()
 
             searchText.visibility =
-                if (searchText.visibility == View.GONE) View.VISIBLE else View.GONE
+                if (searchText.visibility == View.GONE) {
+                    View.VISIBLE
+                } else {
+                    searchText.setText("")
+                    View.GONE
+                }
         }
 
     }

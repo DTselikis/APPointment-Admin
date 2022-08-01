@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.ktx.Firebase
@@ -47,6 +48,8 @@ fun bindProfilePic(circleImageView: CircleImageView, user: User?) {
         circleImageView.load(user.profilePic) {
             placeholder(placeholder)
             error(placeholder)
+            memoryCachePolicy(CachePolicy.ENABLED)
+            diskCachePolicy(CachePolicy.ENABLED)
         }
     }
 }

@@ -41,7 +41,7 @@ class CreateCustomerViewModel : ViewModel() {
             firstname.value,
             lastname.value,
             if (nickname.value.isNullOrBlank())
-                "${if (!firstname.value.isNullOrBlank()) firstname.value else ""} " +
+                "${if (!firstname.value.isNullOrBlank()) firstname.value else ""}" +
                         "${if (!lastname.value.isNullOrBlank()) lastname.value else ""}"
             else nickname.value,
             phone.value,

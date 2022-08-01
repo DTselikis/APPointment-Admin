@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:alpha="0"
+            android:backgroundTint="@color/selected_filter"
             android:visibility="gone"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"

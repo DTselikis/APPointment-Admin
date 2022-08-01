@@ -15,6 +15,8 @@ class CustomersViewModel : ViewModel() {
     private val _usersForDisplay = MutableLiveData<List<User>>()
     val usersForDisplay: LiveData<List<User>> = _usersForDisplay
 
+    private lateinit var activeFilter: CustomerFilter
+
     fun fetchUsersFromDB() {
         Firebase.firestore.collection(USERS_COLLECTION)
             .get()
@@ -41,9 +43,16 @@ class CustomersViewModel : ViewModel() {
 
     fun filterUsers(registered: Boolean) {
         _usersForDisplay.value = _users.filter { it.registered == registered }
+
+        activeFilter = when (registered) {
+            true -> CustomerFilter.REGISTERED
+            else -> CustomerFilter.UNREGISTERED
+        }
     }
 
     fun resetFilter() {
         _usersForDisplay.value = _users
+
+        activeFilter = CustomerFilter.ALL
     }
 }

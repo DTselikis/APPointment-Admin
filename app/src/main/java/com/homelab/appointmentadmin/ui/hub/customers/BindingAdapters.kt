@@ -44,16 +44,9 @@ fun bindProfilePic(circleImageView: CircleImageView, user: User?) {
             else -> R.drawable.female_placeholder_wo_bg
         }
 
-        circleImageView.load(placeholder)
-
-        it.profilePic?.let { uri ->
-            Firebase.storage.getReferenceFromUrl(uri).downloadUrl.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    circleImageView.load(task.result) {
-                        placeholder(R.drawable.male_placeholder_wo_bg)
-                    }
-                }
-            }
+        circleImageView.load(user.profilePic) {
+            placeholder(placeholder)
+            error(placeholder)
         }
     }
 }

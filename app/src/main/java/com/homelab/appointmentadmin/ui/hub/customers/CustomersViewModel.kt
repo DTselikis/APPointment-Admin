@@ -74,11 +74,21 @@ class CustomersViewModel : ViewModel() {
             else -> _unregisteredUsers
         }
 
-        _usersForDisplay.value = list.filter {
-            it.nickname?.contains(name, true) == true
-                    || it.firstname?.contains(name, true) == true
-                    || it.lastname?.contains(name, true) == true
+        val mergedList = mutableListOf<User>()
+
+        name.split(" ").forEach { part ->
+            val subList = list.filter {
+                it.nickname?.contains(part, true) == true
+                        || it.firstname?.contains(part, true) == true
+                        || it.lastname?.contains(part, true) == true
+            }
+
+            subList.forEach { user ->
+                if (user !in mergedList) mergedList.add(user)
+            }
         }
+
+        _usersForDisplay.value = mergedList
     }
 
 }

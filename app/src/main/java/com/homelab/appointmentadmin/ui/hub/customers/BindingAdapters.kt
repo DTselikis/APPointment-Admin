@@ -37,11 +37,21 @@ fun bindStroke(materialCardView: MaterialCardView, registered: Boolean?) {
 }
 
 @BindingAdapter("imgUrl")
-fun bindProfilePic(circleImageView: CircleImageView, imgUrl: String?) {
-    imgUrl?.let {
-        Firebase.storage.getReferenceFromUrl(imgUrl).downloadUrl.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                circleImageView.load(task.result) {
+fun bindProfilePic(circleImageView: CircleImageView, user: User?) {
+    user?.let {
+        val placeholder = when (it.gender) {
+            "M" -> R.drawable.male_placeholder_wo_bg
+            else -> R.drawable.female_placeholder_wo_bg
+        }
+
+        circleImageView.load(placeholder)
+
+        it.profilePic?.let { uri ->
+            Firebase.storage.getReferenceFromUrl(uri).downloadUrl.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    circleImageView.load(task.result) {
+                        placeholder(R.drawable.male_placeholder_wo_bg)
+                    }
                 }
             }
         }

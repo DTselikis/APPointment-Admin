@@ -74,7 +74,8 @@ class CreateCustomerViewModel : ViewModel() {
 
     private fun getGender(): String = when (gender) {
         GenderBtnId.FEMALE -> Gender.FEMALE.code
-        else -> Gender.MALE.code
+        GenderBtnId.MALE -> Gender.MALE.code
+        else -> Gender.ANY.code
     }
 
 

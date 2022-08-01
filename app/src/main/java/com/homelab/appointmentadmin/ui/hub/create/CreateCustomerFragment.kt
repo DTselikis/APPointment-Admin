@@ -68,6 +68,11 @@ class CreateCustomerFragment : Fragment() {
                         viewModel.setGender(GenderBtnId.MALE)
                     }
                 }
+                GenderBtnId.ANY.code -> {
+                    if (isChecked) {
+                        viewModel.setGender(GenderBtnId.ANY)
+                    }
+                }
             }
         }
 

@@ -37,4 +37,5 @@
     <string name="search_customer_hint">Dimitriakos</string>
     <string name="female_gender_btn">Female</string>
     <string name="male_gender_btn">Male</string>
+    <string name="any_gender_btn">Any</string>
 </resources>

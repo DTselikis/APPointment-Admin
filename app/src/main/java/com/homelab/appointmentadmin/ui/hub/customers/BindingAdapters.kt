@@ -41,8 +41,9 @@ fun bindStroke(materialCardView: MaterialCardView, registered: Boolean?) {
 fun bindProfilePic(circleImageView: CircleImageView, user: User?) {
     user?.let {
         val placeholder = when (it.gender) {
+            "F" -> R.drawable.female_placeholder_wo_bg
             "M" -> R.drawable.male_placeholder_wo_bg
-            else -> R.drawable.female_placeholder_wo_bg
+            else -> R.drawable.any_placeholder_wo_bg
         }
 
         circleImageView.load(user.profilePic) {

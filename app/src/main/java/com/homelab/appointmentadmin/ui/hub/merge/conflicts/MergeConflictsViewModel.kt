@@ -23,6 +23,7 @@ class MergeConflictsViewModel : ViewModel() {
     private lateinit var userToBeMergedWith: User
 
     private lateinit var conflicts: List<Conflict>
+    private val conflictChoices = mapOf<Conflict, String>()
 
     fun setMergingUsers(userToBeMerged: User, userToBeMergedWith: User) {
         this.userToBeMerged = userToBeMerged
@@ -67,5 +68,17 @@ class MergeConflictsViewModel : ViewModel() {
         }
 
         _currentConflict.value = currentConflict.value?.plus(1)
+    }
+
+    fun saveChoice(choice: Int) {
+        val value = if (choice == 0) userToBeMerged else userToBeMergedWith
+        val key = when (conflicts[_currentConflict.value!!]) {
+            Conflict.FIRSTNAME -> Conflict.FIRSTNAME
+            Conflict.LASTNAME -> Conflict.LASTNAME
+            Conflict.EMAIL -> Conflict.EMAIL
+            Conflict.PHONE -> Conflict.PHONE
+        }
+
+        conflictChoices[key] to value
     }
 }

@@ -38,4 +38,11 @@ class MergeConflictsFragment : Fragment() {
 
         viewModel.setMergingUsers(args.userToBeMerged, args.usetToBeMergedWith)
     }
+
+    fun saveChoice() {
+        val choice = if (binding.unregisteredBtn.isChecked) 0 else 1
+
+        viewModel.saveChoice(choice)
+        viewModel.nextConflict()
+    }
 }

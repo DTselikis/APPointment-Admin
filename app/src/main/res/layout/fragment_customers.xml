@@ -32,6 +32,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:onClick="@{() -> fragmentCustomers.deactivateMergeMode()}"
+            android:src="@drawable/ic_arrow_back_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/users_rv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:id="@+id/filters"
             android:layout_width="wrap_content"

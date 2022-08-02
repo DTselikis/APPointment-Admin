@@ -124,11 +124,23 @@ class CustomersFragment : Fragment() {
         binding.apply {
             filterBtn.visibility = View.GONE
             mergeHint.visibility = View.VISIBLE
+            backBtn.visibility = View.VISIBLE
         }
         viewModel.setUserToBeMerged(user)
         viewModel.mergeMode = true
 
         showRegisteredCustomers()
+    }
+
+    fun deactivateMergeMode() {
+        binding.apply {
+            filterBtn.visibility = View.VISIBLE
+            mergeHint.visibility = View.GONE
+            backBtn.visibility = View.GONE
+        }
+        viewModel.mergeMode = false
+
+        showAllCustomers()
     }
 
     fun toggleFilters() {
@@ -239,6 +251,7 @@ class CustomersFragment : Fragment() {
     fun toggleSearch() {
         binding.apply {
             if (filters.visibility == View.VISIBLE) toggleFilters()
+            mergeHint.visibility = View.GONE
 
             searchText.visibility =
                 if (searchText.visibility == View.GONE) {

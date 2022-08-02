@@ -37,6 +37,8 @@ class MergeConflictsFragment : Fragment() {
         }
 
         viewModel.setMergingUsers(args.userToBeMerged, args.usetToBeMergedWith)
+
+        observeCurrentConflict()
     }
 
     fun saveChoice() {
@@ -46,5 +48,18 @@ class MergeConflictsFragment : Fragment() {
         viewModel.nextConflict()
 
         binding.conflictsRadioGroup.clearCheck()
+    }
+
+    private fun observeCurrentConflict() {
+        viewModel.currentConflict.observe(viewLifecycleOwner) { current ->
+            if (current > viewModel.numOfConflicts.value!!) {
+                viewModel.populateFields()
+
+                binding.apply {
+                    conflictsGroup.visibility = View.GONE
+                    mergeResult.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }

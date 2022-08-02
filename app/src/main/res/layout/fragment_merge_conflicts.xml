@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="conflicts_progress, conflict_msg, conflicts_radio_group, save_choice_btn"
-            tools:visibility="gone" />
+            tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/conflicts_progress"
@@ -52,74 +52,61 @@
             android:id="@+id/conflicts_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginStart="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/conflict_msg">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/registered_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/unregistered"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-
-                        android:hint="@string/firstname_conflict_unregistered"
-                        android:text="@{viewModel.unregisteredText}"
-                        android:textSize="@dimen/text_size"
-                        tools:text="Customer" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/unregistered_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@id/unregistered"
-                    app:layout_constraintEnd_toEndOf="@id/unregistered"
-                    app:layout_constraintHorizontal_bias="0.05"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/unregistered" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/registered"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toEndOf="@id/unregistered"
-                    app:layout_constraintStart_toStartOf="@id/unregistered"
-                    app:layout_constraintTop_toBottomOf="@id/unregistered">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-
-                        android:hint="@string/firstname_conflict_registered"
-                        android:text="@{viewModel.registeredText}"
-                        android:textSize="@dimen/text_size"
-                        tools:text="Customer" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/registered_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@id/registered"
-                    app:layout_constraintEnd_toEndOf="@id/unregistered_btn"
-                    app:layout_constraintStart_toStartOf="@id/unregistered_btn"
-                    app:layout_constraintTop_toTopOf="@id/registered" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/unregistered_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp" />
         </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/unregistered"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/conflicts_radio_group">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/firstname_conflict_unregistered"
+                android:text="@{viewModel.unregisteredText}"
+                android:textSize="@dimen/text_size"
+                tools:text="Customer" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registered"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@id/unregistered"
+            app:layout_constraintStart_toStartOf="@id/unregistered"
+            app:layout_constraintTop_toBottomOf="@id/unregistered">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/firstname_conflict_registered"
+                android:text="@{viewModel.registeredText}"
+                android:textSize="@dimen/text_size"
+                tools:text="Customer" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save_choice_btn"
@@ -143,7 +130,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

@@ -41,6 +41,31 @@ class MergeConflictsViewModel : ViewModel() {
 
         this.conflicts = conflicts
         _numOfConflicts.value = conflicts.size
-        _currentConflict.value = 1
+        _currentConflict.value = 0
+
+        nextConflict()
+    }
+
+    fun nextConflict() {
+        when (conflicts[_currentConflict.value!!]) {
+            Conflict.FIRSTNAME -> {
+                _unregisteredText.value = userToBeMerged.firstname!!
+                _registeredText.value = userToBeMergedWith.firstname!!
+            }
+            Conflict.LASTNAME -> {
+                _unregisteredText.value = userToBeMerged.lastname!!
+                _registeredText.value = userToBeMergedWith.lastname!!
+            }
+            Conflict.EMAIL -> {
+                _unregisteredText.value = userToBeMerged.email!!
+                _registeredText.value = userToBeMergedWith.email!!
+            }
+            Conflict.PHONE -> {
+                _unregisteredText.value = userToBeMerged.phone!!
+                _registeredText.value = userToBeMergedWith.phone!!
+            }
+        }
+
+        _currentConflict.value = currentConflict.value?.plus(1)
     }
 }

@@ -41,4 +41,7 @@
     <string name="select_gender_err">You must select a gender</string>
     <string name="merge_customers">Merge</string>
     <string name="merge_profile_hint">Choose profile to merge with</string>
+    <string name="firstname_conflict_unregistered">Firstname unregistered</string>
+    <string name="firstname_conflict_registered">Firstname registered</string>
+    <string name="save_btn">Save</string>
 </resources>

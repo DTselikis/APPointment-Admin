@@ -53,6 +53,7 @@ class UserAdapter(
             if (!user.registered) {
                 contextMenu.add(view.context.getString(R.string.merge_customers))
                     .setOnMenuItemClickListener {
+                        customersFragment.navigateToMergeUsers(user)
                         true
                     }
             }

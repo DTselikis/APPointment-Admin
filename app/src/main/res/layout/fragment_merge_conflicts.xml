@@ -317,7 +317,7 @@
                     android:layout_width="@dimen/profile_edit_edit_text_width"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/merge_results_margin_top"
-
+                    android:onClick="@{() -> mergeConflictsFragment.mergeUsers()}"
                     android:text="@string/save_edits_btn_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

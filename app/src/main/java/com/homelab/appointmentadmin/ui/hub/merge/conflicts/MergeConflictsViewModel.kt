@@ -3,9 +3,10 @@ package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.homelab.appointmentadmin.data.Conflict
-import com.homelab.appointmentadmin.data.GenderBtnId
-import com.homelab.appointmentadmin.data.User
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.homelab.appointmentadmin.data.*
 
 class MergeConflictsViewModel : ViewModel() {
     val firstname = MutableLiveData<String>()
@@ -132,9 +133,35 @@ class MergeConflictsViewModel : ViewModel() {
         profilePic.value = userToBeMergedWith
     }
 
+    fun mergeUsers() {
+        val user = User(
+            uid = userToBeMergedWith.uid,
+            firstname.value,
+            lastname.value,
+            nickname.value,
+            phone.value,
+            email.value,
+            gender = getGender(),
+            registered = true
+        )
+
+        storeMergedUserToDB(user)
+    }
+
+    private fun storeMergedUserToDB(mergedUser: User) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(mergedUser.uid!!)
+            .set(mergedUser, SetOptions.merge())
+    }
+
     fun getUserToBeMerged(): User = userToBeMerged
 
     fun setGender(gender: GenderBtnId) {
         this.gender = gender
+    }
+
+    private fun getGender(): String = when (gender) {
+        GenderBtnId.FEMALE -> Gender.FEMALE.code
+        GenderBtnId.MALE -> Gender.MALE.code
+        else -> Gender.ANY.code
     }
 }

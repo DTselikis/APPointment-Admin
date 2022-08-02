@@ -67,6 +67,10 @@ class MergeConflictsFragment : Fragment() {
         }
     }
 
+    fun mergeUsers() {
+        viewModel.mergeUsers()
+    }
+
     private fun showMergeResult() {
         viewModel.populateFields()
         checkGenderButton()

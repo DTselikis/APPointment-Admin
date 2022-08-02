@@ -114,6 +114,16 @@ class CustomersFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    fun activateMergeMode(user: User) {
+        binding.apply {
+            filterBtn.visibility = View.GONE
+            mergeHint.visibility = View.VISIBLE
+        }
+        viewModel.setUserToBeMerged(user)
+
+        showRegisteredCustomers()
+    }
+
     fun toggleFilters() {
         if (binding.filters.visibility == View.GONE) {
             if (binding.searchText.visibility == View.VISIBLE) toggleSearch()

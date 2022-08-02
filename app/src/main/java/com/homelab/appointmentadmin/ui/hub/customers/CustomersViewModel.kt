@@ -20,6 +20,8 @@ class CustomersViewModel : ViewModel() {
 
     private var activeFilter = CustomerFilter.ALL
 
+    private lateinit var userToBeMerged: User
+
     fun fetchUsersFromDB() {
         Firebase.firestore.collection(USERS_COLLECTION)
             .get()
@@ -90,6 +92,12 @@ class CustomersViewModel : ViewModel() {
 
         _usersForDisplay.value = mergedList
     }
+
+    fun setUserToBeMerged(user: User) {
+        this.userToBeMerged = user
+    }
+
+    fun getUserToBeMerged(): User = userToBeMerged
 
     fun getRegisteredUsers(): List<User> = _registeredUsers
 

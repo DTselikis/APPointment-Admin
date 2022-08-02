@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.homelab.appointmentadmin.data.Conflict
+import com.homelab.appointmentadmin.data.GenderBtnId
 import com.homelab.appointmentadmin.data.User
 
 class MergeConflictsViewModel : ViewModel() {
@@ -14,6 +15,7 @@ class MergeConflictsViewModel : ViewModel() {
     val email = MutableLiveData<String>()
     val fbName = MutableLiveData<String>()
     val profilePic = MutableLiveData<User>()
+    private lateinit var gender: GenderBtnId
 
     private val _numOfConflicts = MutableLiveData<Int>()
     val numOfConflicts: LiveData<Int> = _numOfConflicts
@@ -122,4 +124,8 @@ class MergeConflictsViewModel : ViewModel() {
     }
 
     fun getUserToBeMerged(): User = userToBeMerged
+
+    fun setGender(gender: GenderBtnId) {
+        this.gender = gender
+    }
 }

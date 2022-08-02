@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.Gender
+import com.homelab.appointmentadmin.data.GenderBtnId
 import com.homelab.appointmentadmin.databinding.FragmentMergeConflictsBinding
 
 class MergeConflictsFragment : Fragment() {
@@ -35,6 +36,19 @@ class MergeConflictsFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@MergeConflictsFragment.viewModel
             mergeConflictsFragment = this@MergeConflictsFragment
+        }
+
+        binding.genderGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    GenderBtnId.FEMALE.code ->
+                        viewModel.setGender(GenderBtnId.FEMALE)
+                    GenderBtnId.MALE.code ->
+                        viewModel.setGender(GenderBtnId.MALE)
+                    GenderBtnId.ANY.code ->
+                        viewModel.setGender(GenderBtnId.ANY)
+                }
+            }
         }
 
         viewModel.setMergingUsers(args.userToBeMerged, args.usetToBeMergedWith)
@@ -65,13 +79,14 @@ class MergeConflictsFragment : Fragment() {
 
     private fun checkGenderButton() {
         binding.apply {
-            val id = when (viewModel!!.getUserToBeMerged().gender) {
-                Gender.FEMALE.code -> R.id.female_option
-                Gender.MALE.code -> R.id.male_option
-                else -> R.id.any_option
+            val (id, gender) = when (viewModel!!.getUserToBeMerged().gender) {
+                Gender.FEMALE.code -> Pair(R.id.female_option, GenderBtnId.FEMALE)
+                Gender.MALE.code -> Pair(R.id.male_option, GenderBtnId.MALE)
+                else -> Pair(R.id.any_option, GenderBtnId.ANY)
             }
 
             genderGroup.check(id)
+            viewModel.setGender(gender)
         }
 
     }

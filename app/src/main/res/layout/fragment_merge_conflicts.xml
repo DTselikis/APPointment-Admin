@@ -23,7 +23,8 @@
             android:id="@+id/conflicts_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="conflicts_progress, conflict_msg, conflicts_radio_group, save_choice_btn"
+            app:constraint_referenced_ids="conflicts_progress, conflict_msg,
+            conflicts_radio_group, save_choice_btn, unregistered, registered"
             tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView

@@ -107,7 +107,7 @@ class CustomersFragment : Fragment() {
     }
 
     fun navigateToMergeUsers(user: User) {
-        sharedViewModel.unregisteredUsers = viewModel.getUnregisteredUsers()
+        sharedViewModel.registeredUsers = viewModel.getRegisteredUsers()
 
         val action =
             CustomersFragmentDirections.actionCustomersFragmentToMergeCustomersFragment(user)

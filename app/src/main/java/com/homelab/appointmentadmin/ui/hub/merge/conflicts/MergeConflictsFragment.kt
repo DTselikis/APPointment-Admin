@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.ConflictChoice
 import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.data.GenderBtnId
 import com.homelab.appointmentadmin.databinding.FragmentMergeConflictsBinding
@@ -55,7 +56,8 @@ class MergeConflictsFragment : Fragment() {
     }
 
     fun saveChoice() {
-        val choice = if (binding.unregisteredBtn.isChecked) 0 else 1
+        val choice =
+            if (binding.unregisteredBtn.isChecked) ConflictChoice.UNREGISTERD else ConflictChoice.REGISTERED
 
         viewModel.saveChoice(choice)
         binding.conflictsRadioGroup.clearCheck()

@@ -101,8 +101,8 @@ class MergeConflictsViewModel : ViewModel() {
         _currentConflict.value = currentConflict.value?.plus(1)
     }
 
-    fun saveChoice(choice: Int) {
-        val user = if (choice == 0) userToBeMerged else userToBeMergedWith
+    fun saveChoice(choice: ConflictChoice) {
+        val user = if (choice == ConflictChoice.UNREGISTERD) userToBeMerged else userToBeMergedWith
         val (key, value) = when (conflicts[_currentConflict.value!!.minus(1)]) {
             Conflict.FIRSTNAME -> Pair(Conflict.FIRSTNAME, user.firstname)
             Conflict.LASTNAME -> Pair(Conflict.LASTNAME, user.lastname)

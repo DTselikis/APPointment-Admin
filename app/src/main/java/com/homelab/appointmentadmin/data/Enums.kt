@@ -31,3 +31,8 @@ enum class Conflict(val code: Int) {
     PHONE(3),
     EMAIL(4)
 }
+
+enum class ConflictChoice(val code: Int) {
+    UNREGISTERD(0),
+    REGISTERED(1)
+}

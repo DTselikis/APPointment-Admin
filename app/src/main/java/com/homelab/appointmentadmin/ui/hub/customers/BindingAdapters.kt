@@ -1,16 +1,11 @@
 package com.homelab.appointmentadmin.ui.hub.customers
 
 import android.util.TypedValue
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.CachePolicy
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.textview.MaterialTextView
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.User
 import de.hdodenhof.circleimageview.CircleImageView

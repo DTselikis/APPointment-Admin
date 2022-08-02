@@ -44,5 +44,7 @@ class MergeConflictsFragment : Fragment() {
 
         viewModel.saveChoice(choice)
         viewModel.nextConflict()
+
+        binding.conflictsRadioGroup.clearCheck()
     }
 }

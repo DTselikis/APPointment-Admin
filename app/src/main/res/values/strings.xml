@@ -39,4 +39,5 @@
     <string name="male_gender_btn">Male</string>
     <string name="any_gender_btn">Any</string>
     <string name="select_gender_err">You must select a gender</string>
+    <string name="merge_customers">Merge</string>
 </resources>

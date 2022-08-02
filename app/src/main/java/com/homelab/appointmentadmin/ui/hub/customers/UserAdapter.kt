@@ -1,11 +1,12 @@
 package com.homelab.appointmentadmin.ui.hub.customers
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.CustomerHubItemBinding
 
@@ -40,6 +41,21 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val user = getItem(position)
+
+        addContextMenu(holder.itemView, user)
+
+        holder.bind(user)
+    }
+
+    private fun addContextMenu(itemView: View, user: User) {
+        itemView.setOnCreateContextMenuListener { contextMenu, view, _ ->
+            if (!user.registered) {
+                contextMenu.add(view.context.getString(R.string.merge_customers))
+                    .setOnMenuItemClickListener {
+                        true
+                    }
+            }
+        }
     }
 }

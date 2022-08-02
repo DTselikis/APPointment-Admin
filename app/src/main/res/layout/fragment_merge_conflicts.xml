@@ -136,11 +136,11 @@
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scrollbars="none">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -151,6 +151,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:civ_circle_background_color="@color/purple_200"
+                    app:imgUrl="@{viewModel.profilePic}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -172,8 +173,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
-
                         android:hint="@string/firstname_hint"
+                        android:text="@={viewModel.firstname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
 
@@ -193,8 +194,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
-
                         android:hint="@string/lastname_hint"
+                        android:text="@={viewModel.lastname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
 
@@ -214,8 +215,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
-
                         android:hint="@string/nickname_hint"
+                        android:text="@={viewModel.nickname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
 
@@ -235,8 +236,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
-
                         android:hint="@string/phone_hint"
+                        android:text="@={viewModel.phone}"
                         android:textSize="@dimen/text_size"
                         tools:text="6985201472" />
 
@@ -257,6 +258,7 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail_hint"
+                        android:text="@={viewModel.email}"
                         android:textSize="@dimen/text_size"
                         tools:text="me@me.com" />
 
@@ -276,8 +278,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
-
                         android:hint="@string/fb_profile_hint"
+                        android:text="@={viewModel.fbName}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer Customer" />
 
@@ -289,6 +291,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/merge_results_margin_top"
                     android:gravity="center"
+                    app:checkedButton="@{viewModel.gender}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fb_edit"
@@ -296,18 +299,21 @@
                     app:singleSelection="true">
 
                     <Button
+                        android:id="@+id/female_option"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/female_gender_btn" />
 
                     <Button
+                        android:id="@+id/male_option"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/male_gender_btn" />
 
                     <Button
+                        android:id="@+id/any_option"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

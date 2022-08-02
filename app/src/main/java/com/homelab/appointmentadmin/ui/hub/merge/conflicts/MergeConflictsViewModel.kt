@@ -3,10 +3,21 @@ package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.Conflict
+import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.data.User
 
 class MergeConflictsViewModel : ViewModel() {
+    val firstname = MutableLiveData<String>()
+    val lastname = MutableLiveData<String>()
+    val nickname = MutableLiveData<String>()
+    val phone = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
+    val fbName = MutableLiveData<String>()
+    val profilePic = MutableLiveData<User>()
+    val gender = MutableLiveData<Int>()
+
     private val _numOfConflicts = MutableLiveData<Int>()
     val numOfConflicts: LiveData<Int> = _numOfConflicts
 
@@ -80,5 +91,31 @@ class MergeConflictsViewModel : ViewModel() {
         }
 
         conflictChoices[key] to value
+    }
+
+    fun populateFields() {
+        firstname.value = conflictChoices.getOrElse(Conflict.FIRSTNAME) {
+            userToBeMergedWith.firstname ?: userToBeMerged.firstname
+        }
+        lastname.value = conflictChoices.getOrElse(Conflict.LASTNAME) {
+            userToBeMergedWith.lastname ?: userToBeMerged.lastname
+        }
+        phone.value = conflictChoices.getOrElse(Conflict.PHONE) {
+            userToBeMergedWith.phone ?: userToBeMerged.phone
+        }
+        email.value = conflictChoices.getOrElse(Conflict.EMAIL) {
+            userToBeMergedWith.email ?: userToBeMerged.email
+        }
+
+        nickname.value = userToBeMerged.nickname ?: ""
+        fbName.value = userToBeMergedWith.fbName ?: ""
+        profilePic.value = userToBeMergedWith
+
+        gender.value = when (userToBeMergedWith.gender) {
+            Gender.FEMALE.code -> R.id.female_option
+            Gender.MALE.code -> R.id.male_option
+            Gender.ANY.code -> R.id.any_option
+            else -> -1
+        }
     }
 }

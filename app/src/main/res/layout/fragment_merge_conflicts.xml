@@ -33,12 +33,12 @@
             android:id="@+id/conflict_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/choice_conflict"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            tools:text="Choose one name" />
+            app:layout_constraintVertical_bias="0.3" />
 
         <RadioGroup
             android:id="@+id/radio_group"

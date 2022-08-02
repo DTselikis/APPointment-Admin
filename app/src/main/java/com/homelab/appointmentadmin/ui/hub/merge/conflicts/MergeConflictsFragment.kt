@@ -38,30 +38,28 @@ class MergeConflictsFragment : Fragment() {
         }
 
         viewModel.setMergingUsers(args.userToBeMerged, args.usetToBeMergedWith)
-
-        observeCurrentConflict()
     }
 
     fun saveChoice() {
         val choice = if (binding.unregisteredBtn.isChecked) 0 else 1
 
         viewModel.saveChoice(choice)
-        viewModel.nextConflict()
-
         binding.conflictsRadioGroup.clearCheck()
+
+        if (viewModel.currentConflict.value != viewModel.numOfConflicts.value) {
+            viewModel.nextConflict()
+        } else {
+            showMergeResult()
+        }
     }
 
-    private fun observeCurrentConflict() {
-        viewModel.currentConflict.observe(viewLifecycleOwner) { current ->
-            if (current > viewModel.numOfConflicts.value!!) {
-                viewModel.populateFields()
-                checkGenderButton()
+    private fun showMergeResult() {
+        viewModel.populateFields()
+        checkGenderButton()
 
-                binding.apply {
-                    conflictsGroup.visibility = View.GONE
-                    mergeResult.visibility = View.VISIBLE
-                }
-            }
+        binding.apply {
+            conflictsGroup.visibility = View.GONE
+            mergeResult.visibility = View.VISIBLE
         }
     }
 

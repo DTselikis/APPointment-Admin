@@ -91,12 +91,12 @@ class MergeConflictsViewModel : ViewModel() {
     }
 
     fun saveChoice(choice: Int) {
-        val value = if (choice == 0) userToBeMerged else userToBeMergedWith
-        val key = when (conflicts[_currentConflict.value!!.minus(1)]) {
-            Conflict.FIRSTNAME -> Conflict.FIRSTNAME
-            Conflict.LASTNAME -> Conflict.LASTNAME
-            Conflict.EMAIL -> Conflict.EMAIL
-            Conflict.PHONE -> Conflict.PHONE
+        val user = if (choice == 0) userToBeMerged else userToBeMergedWith
+        val (key, value) = when (conflicts[_currentConflict.value!!.minus(1)]) {
+            Conflict.FIRSTNAME -> Pair(Conflict.FIRSTNAME, user.firstname)
+            Conflict.LASTNAME -> Pair(Conflict.LASTNAME, user.lastname)
+            Conflict.EMAIL -> Pair(Conflict.EMAIL, user.email)
+            Conflict.PHONE -> Pair(Conflict.PHONE, user.phone)
         }
 
         conflictChoices[key] to value

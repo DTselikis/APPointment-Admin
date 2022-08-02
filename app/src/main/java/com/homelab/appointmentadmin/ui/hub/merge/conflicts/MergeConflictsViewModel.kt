@@ -43,10 +43,18 @@ class MergeConflictsViewModel : ViewModel() {
     private fun findConflicts() {
         val conflicts = mutableListOf<Conflict>()
 
-        if (userToBeMerged.firstname != userToBeMergedWith.firstname) conflicts.add(Conflict.FIRSTNAME)
-        if (userToBeMerged.lastname != userToBeMergedWith.lastname) conflicts.add(Conflict.LASTNAME)
-        if (userToBeMerged.email != userToBeMergedWith.email) conflicts.add(Conflict.EMAIL)
-        if (userToBeMerged.phone != userToBeMergedWith.phone) conflicts.add(Conflict.PHONE)
+        if (userToBeMerged.firstname != null && userToBeMergedWith.firstname != null &&
+            userToBeMerged.firstname != userToBeMergedWith.firstname)
+            conflicts.add(Conflict.FIRSTNAME)
+        if (userToBeMerged.lastname != null && userToBeMergedWith.lastname != null &&
+            userToBeMerged.lastname != userToBeMergedWith.lastname)
+            conflicts.add(Conflict.LASTNAME)
+        if (userToBeMerged.email != null && userToBeMergedWith.email != null &&
+            userToBeMerged.email != userToBeMergedWith.email)
+            conflicts.add(Conflict.EMAIL)
+        if (userToBeMerged.phone != null && userToBeMergedWith.phone != null &&
+            userToBeMerged.phone != userToBeMergedWith.phone)
+            conflicts.add(Conflict.PHONE)
 
         this.conflicts = conflicts
         _numOfConflicts.value = conflicts.size

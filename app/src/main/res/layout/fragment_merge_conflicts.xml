@@ -5,6 +5,12 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsViewModel" />
+        <variable
+            name="mergeConflictsFragment"
+            type="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

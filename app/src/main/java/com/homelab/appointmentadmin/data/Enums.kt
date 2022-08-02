@@ -27,6 +27,7 @@ enum class Gender(val code: String) {
 enum class Conflict(val code: Int) {
     FIRSTNAME(0),
     LASTNAME(1),
-    PHONE(2),
-    EMAIL(3)
+    NICKNAME(2),
+    PHONE(3),
+    EMAIL(4)
 }

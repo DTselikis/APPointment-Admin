@@ -57,6 +57,10 @@ class MergeConflictsViewModel : ViewModel() {
             userToBeMerged.email != userToBeMergedWith.email
         )
             conflicts.add(Conflict.EMAIL)
+        if (userToBeMerged.nickname != null && userToBeMergedWith.nickname != null &&
+            userToBeMerged.nickname != userToBeMergedWith.nickname
+        )
+            conflicts.add(Conflict.NICKNAME)
         if (userToBeMerged.phone != null && userToBeMergedWith.phone != null &&
             userToBeMerged.phone != userToBeMergedWith.phone
         )
@@ -79,6 +83,10 @@ class MergeConflictsViewModel : ViewModel() {
                 _unregisteredText.value = userToBeMerged.lastname!!
                 _registeredText.value = userToBeMergedWith.lastname!!
             }
+            Conflict.NICKNAME -> {
+                _unregisteredText.value = userToBeMerged.nickname!!
+                _registeredText.value = userToBeMergedWith.nickname!!
+            }
             Conflict.EMAIL -> {
                 _unregisteredText.value = userToBeMerged.email!!
                 _registeredText.value = userToBeMergedWith.email!!
@@ -97,6 +105,7 @@ class MergeConflictsViewModel : ViewModel() {
         val (key, value) = when (conflicts[_currentConflict.value!!.minus(1)]) {
             Conflict.FIRSTNAME -> Pair(Conflict.FIRSTNAME, user.firstname)
             Conflict.LASTNAME -> Pair(Conflict.LASTNAME, user.lastname)
+            Conflict.NICKNAME -> Pair(Conflict.NICKNAME, user.nickname)
             Conflict.EMAIL -> Pair(Conflict.EMAIL, user.email)
             Conflict.PHONE -> Pair(Conflict.PHONE, user.phone)
         }

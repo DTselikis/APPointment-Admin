@@ -65,8 +65,8 @@
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:enabled="false"
+                        android:hint="@string/firstname_conflict_unregistered"
                         android:textSize="@dimen/text_size"
-                        tools:hint="@string/firstname_conflict_unregistered"
                         tools:text="Customer" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +94,8 @@
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:enabled="false"
+                        android:hint="@string/firstname_conflict_registered"
                         android:textSize="@dimen/text_size"
-                        tools:hint="@string/firstname_conflict_registered"
                         tools:text="Customer" />
                 </com.google.android.material.textfield.TextInputLayout>
 

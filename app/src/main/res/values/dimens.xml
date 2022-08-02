@@ -3,4 +3,6 @@
     <dimen name="text_size">20sp</dimen>
     <dimen name="profile_edit_edit_text_width">350dp</dimen>
     <dimen name="profile_items_margin_top">30dp</dimen>
+
+    <dimen name="merge_results_margin_top">10dp</dimen>
 </resources>

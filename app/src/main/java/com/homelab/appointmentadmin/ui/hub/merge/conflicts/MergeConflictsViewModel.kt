@@ -44,16 +44,20 @@ class MergeConflictsViewModel : ViewModel() {
         val conflicts = mutableListOf<Conflict>()
 
         if (userToBeMerged.firstname != null && userToBeMergedWith.firstname != null &&
-            userToBeMerged.firstname != userToBeMergedWith.firstname)
+            userToBeMerged.firstname != userToBeMergedWith.firstname
+        )
             conflicts.add(Conflict.FIRSTNAME)
         if (userToBeMerged.lastname != null && userToBeMergedWith.lastname != null &&
-            userToBeMerged.lastname != userToBeMergedWith.lastname)
+            userToBeMerged.lastname != userToBeMergedWith.lastname
+        )
             conflicts.add(Conflict.LASTNAME)
         if (userToBeMerged.email != null && userToBeMergedWith.email != null &&
-            userToBeMerged.email != userToBeMergedWith.email)
+            userToBeMerged.email != userToBeMergedWith.email
+        )
             conflicts.add(Conflict.EMAIL)
         if (userToBeMerged.phone != null && userToBeMergedWith.phone != null &&
-            userToBeMerged.phone != userToBeMergedWith.phone)
+            userToBeMerged.phone != userToBeMergedWith.phone
+        )
             conflicts.add(Conflict.PHONE)
 
         this.conflicts = conflicts
@@ -88,7 +92,7 @@ class MergeConflictsViewModel : ViewModel() {
 
     fun saveChoice(choice: Int) {
         val value = if (choice == 0) userToBeMerged else userToBeMergedWith
-        val key = when (conflicts[_currentConflict.value!!]) {
+        val key = when (conflicts[_currentConflict.value!!.minus(1)]) {
             Conflict.FIRSTNAME -> Conflict.FIRSTNAME
             Conflict.LASTNAME -> Conflict.LASTNAME
             Conflict.EMAIL -> Conflict.EMAIL

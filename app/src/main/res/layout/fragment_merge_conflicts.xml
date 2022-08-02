@@ -134,13 +134,16 @@
             app:layout_constraintTop_toBottomOf="@id/conflicts_radio_group" />
 
         <ScrollView
+            android:id="@+id/merge_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbars="none"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -278,8 +281,9 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="@string/fb_profile_hint"
-                        android:text="@={viewModel.fbName}"
+                        android:text="@{viewModel.fbName}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer Customer" />
 

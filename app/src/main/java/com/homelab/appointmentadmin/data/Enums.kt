@@ -23,3 +23,10 @@ enum class Gender(val code: String) {
     MALE("M"),
     ANY("A")
 }
+
+enum class Conflict(val code: Int) {
+    FIRSTNAME(0),
+    LASTNAME(1),
+    PHONE(2),
+    EMAIL(3)
+}

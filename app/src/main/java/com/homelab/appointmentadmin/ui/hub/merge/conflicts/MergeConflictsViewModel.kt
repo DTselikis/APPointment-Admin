@@ -1,10 +1,18 @@
 package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.homelab.appointmentadmin.data.Conflict
 import com.homelab.appointmentadmin.data.User
 
 class MergeConflictsViewModel : ViewModel() {
+    private val _numOfConflicts = MutableLiveData<Int>()
+    val numOfConflicts: LiveData<Int> = _numOfConflicts
+
+    private val _currentConflict = MutableLiveData<Int>()
+    val currentConflict: LiveData<Int> = _currentConflict
+
     private lateinit var userToBeMerged: User
     private lateinit var userToBeMergedWith: User
 
@@ -26,5 +34,7 @@ class MergeConflictsViewModel : ViewModel() {
         if (userToBeMerged.phone != userToBeMergedWith.phone) conflicts.add(Conflict.PHONE)
 
         this.conflicts = conflicts
+        _numOfConflicts.value = conflicts.size
+        _currentConflict.value = 1
     }
 }

@@ -8,6 +8,7 @@
         <variable
             name="viewModel"
             type="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsViewModel" />
+
         <variable
             name="mergeConflictsFragment"
             type="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsFragment" />
@@ -17,6 +18,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.hub.merge.conflicts.MergeConflictsFragment">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/number_of_conflicts(viewModel.currentConflict, viewModel.numOfConflicts )}"
+            app:layout_constraintBottom_toTopOf="@id/conflict_msg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/conflict_msg"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1/4" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/conflict_msg"

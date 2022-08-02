@@ -2,7 +2,6 @@ package com.homelab.appointmentadmin.ui.hub.customers
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,9 @@ import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ListAdapter
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
@@ -102,6 +101,12 @@ class CustomersFragment : Fragment() {
 
     fun navigateToCreateNewCustomer() {
         findNavController().navigate(R.id.action_customersFragment_to_createCustomerFragment)
+    }
+
+    fun navigateToMergeUsers(user: User) {
+        val action =
+            CustomersFragmentDirections.actionCustomersFragmentToMergeCustomersFragment(user)
+        findNavController().navigate(action)
     }
 
     fun toggleFilters() {

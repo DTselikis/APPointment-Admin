@@ -91,4 +91,6 @@ class CustomersViewModel : ViewModel() {
         _usersForDisplay.value = mergedList
     }
 
+    fun getUnregisteredUsers(): List<User> = _unregisteredUsers
+
 }

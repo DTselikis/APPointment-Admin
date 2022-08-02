@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.homelab.appointmentadmin.R
@@ -18,11 +19,13 @@ import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.FragmentCustomersBinding
+import com.homelab.appointmentadmin.ui.hub.HubSharedViewModel
 
 class CustomersFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomersBinding
     private val viewModel: CustomersViewModel by viewModels()
+    private val sharedViewModel: HubSharedViewModel by activityViewModels()
 
     private lateinit var userAdapter: UserAdapter
 
@@ -104,6 +107,8 @@ class CustomersFragment : Fragment() {
     }
 
     fun navigateToMergeUsers(user: User) {
+        sharedViewModel.unregisteredUsers = viewModel.getUnregisteredUsers()
+
         val action =
             CustomersFragmentDirections.actionCustomersFragmentToMergeCustomersFragment(user)
         findNavController().navigate(action)

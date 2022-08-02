@@ -13,6 +13,12 @@ class MergeConflictsViewModel : ViewModel() {
     private val _currentConflict = MutableLiveData<Int>()
     val currentConflict: LiveData<Int> = _currentConflict
 
+    private val _registeredText = MutableLiveData<String>()
+    val registeredText: LiveData<String> = _registeredText
+
+    private val _unregisteredText = MutableLiveData<String>()
+    val unregisteredText: LiveData<String> = _unregisteredText
+
     private lateinit var userToBeMerged: User
     private lateinit var userToBeMergedWith: User
 

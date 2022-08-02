@@ -66,6 +66,7 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:hint="@string/firstname_conflict_unregistered"
+                        android:text="@{viewModel.unregisteredText}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -95,6 +96,7 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:hint="@string/firstname_conflict_registered"
+                        android:text="@{viewModel.registeredText}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
                 </com.google.android.material.textfield.TextInputLayout>

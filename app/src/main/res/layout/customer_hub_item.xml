@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:onClick="@{() -> customerFragment.navigateToEditCustomer(user)}"
+        android:onClick="@{() -> customerFragment.navigate(user)}"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:stroke="@{user.registered}">

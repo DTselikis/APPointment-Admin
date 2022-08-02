@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_customersFragment_to_createCustomerFragment"
             app:destination="@id/createCustomerFragment" />
+        <action
+            android:id="@+id/action_customersFragment_to_mergeConflictsFragment"
+            app:destination="@id/mergeConflictsFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerProfileFragment"
@@ -31,4 +34,16 @@
         android:name="com.homelab.appointmentadmin.ui.hub.create.CreateCustomerFragment"
         android:label="CreateCustomerFragment"
         tools:layout="@layout/fragment_create_customer" />
+    <fragment
+        android:id="@+id/mergeConflictsFragment"
+        android:name="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsFragment"
+        android:label="fragment_merge_conflicts"
+        tools:layout="@layout/fragment_merge_conflicts" >
+        <argument
+            android:name="userToBeMerged"
+            app:argType="com.homelab.appointmentadmin.data.User" />
+        <argument
+            android:name="usetToBeMergedWith"
+            app:argType="com.homelab.appointmentadmin.data.User" />
+    </fragment>
 </navigation>

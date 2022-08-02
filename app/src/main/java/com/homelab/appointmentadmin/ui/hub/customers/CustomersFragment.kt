@@ -77,10 +77,13 @@ class CustomersFragment : Fragment() {
         observeForNewUser()
     }
 
-    fun navigateToEditCustomer(user: User) {
-        val action =
-            CustomersFragmentDirections.actionCustomersFragmentToCustomerProfileFragment(user)
-        findNavController().navigate(action)
+    fun navigate(user: User) {
+        if (viewModel.mergeMode) {
+            navigateToMergeConflicts(user)
+        } else {
+            navigateToCustomerProfile(user)
+        }
+
     }
 
     private fun observeForUserModifications() {
@@ -103,12 +106,27 @@ class CustomersFragment : Fragment() {
         findNavController().navigate(R.id.action_customersFragment_to_createCustomerFragment)
     }
 
+    private fun navigateToMergeConflicts(user: User) {
+        val action = CustomersFragmentDirections.actionCustomersFragmentToMergeConflictsFragment(
+            viewModel.getUserToBeMerged(),
+            user
+        )
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToCustomerProfile(user: User) {
+        val action =
+            CustomersFragmentDirections.actionCustomersFragmentToCustomerProfileFragment(user)
+        findNavController().navigate(action)
+    }
+
     fun activateMergeMode(user: User) {
         binding.apply {
             filterBtn.visibility = View.GONE
             mergeHint.visibility = View.VISIBLE
         }
         viewModel.setUserToBeMerged(user)
+        viewModel.mergeMode = true
 
         showRegisteredCustomers()
     }

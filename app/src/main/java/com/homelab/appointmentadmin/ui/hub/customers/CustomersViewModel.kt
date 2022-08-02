@@ -20,6 +20,7 @@ class CustomersViewModel : ViewModel() {
 
     private var activeFilter = CustomerFilter.ALL
 
+    var mergeMode = false
     private lateinit var userToBeMerged: User
 
     fun fetchUsersFromDB() {

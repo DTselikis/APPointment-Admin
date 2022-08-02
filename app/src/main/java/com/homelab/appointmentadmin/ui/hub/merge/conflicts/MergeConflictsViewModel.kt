@@ -44,7 +44,7 @@ class MergeConflictsViewModel : ViewModel() {
         val conflicts = mutableListOf<Conflict>()
 
         if (userToBeMerged.firstname != userToBeMergedWith.firstname) conflicts.add(Conflict.FIRSTNAME)
-        if (userToBeMerged.firstname != userToBeMergedWith.lastname) conflicts.add(Conflict.LASTNAME)
+        if (userToBeMerged.lastname != userToBeMergedWith.lastname) conflicts.add(Conflict.LASTNAME)
         if (userToBeMerged.email != userToBeMergedWith.email) conflicts.add(Conflict.EMAIL)
         if (userToBeMerged.phone != userToBeMergedWith.phone) conflicts.add(Conflict.PHONE)
 

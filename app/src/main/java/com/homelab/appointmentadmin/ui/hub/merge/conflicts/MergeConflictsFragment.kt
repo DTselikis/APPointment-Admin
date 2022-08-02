@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.databinding.FragmentMergeConflictsBinding
 
 class MergeConflictsFragment : Fragment() {
@@ -54,6 +55,7 @@ class MergeConflictsFragment : Fragment() {
         viewModel.currentConflict.observe(viewLifecycleOwner) { current ->
             if (current > viewModel.numOfConflicts.value!!) {
                 viewModel.populateFields()
+                checkGenderButton()
 
                 binding.apply {
                     conflictsGroup.visibility = View.GONE
@@ -61,5 +63,18 @@ class MergeConflictsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun checkGenderButton() {
+        binding.apply {
+            val id = when (viewModel!!.getUserToBeMerged().gender) {
+                Gender.FEMALE.code -> R.id.female_option
+                Gender.MALE.code -> R.id.male_option
+                else -> R.id.any_option
+            }
+
+            genderGroup.check(id)
+        }
+
     }
 }

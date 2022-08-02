@@ -295,7 +295,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/merge_results_margin_top"
                     android:gravity="center"
-                    app:checkedButton="@{viewModel.gender}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fb_edit"

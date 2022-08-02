@@ -3,9 +3,7 @@ package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.Conflict
-import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.data.User
 
 class MergeConflictsViewModel : ViewModel() {
@@ -16,7 +14,6 @@ class MergeConflictsViewModel : ViewModel() {
     val email = MutableLiveData<String>()
     val fbName = MutableLiveData<String>()
     val profilePic = MutableLiveData<User>()
-    val gender = MutableLiveData<Int>()
 
     private val _numOfConflicts = MutableLiveData<Int>()
     val numOfConflicts: LiveData<Int> = _numOfConflicts
@@ -110,12 +107,7 @@ class MergeConflictsViewModel : ViewModel() {
         nickname.value = userToBeMerged.nickname ?: ""
         fbName.value = userToBeMergedWith.fbName ?: ""
         profilePic.value = userToBeMergedWith
-
-        gender.value = when (userToBeMergedWith.gender) {
-            Gender.FEMALE.code -> R.id.female_option
-            Gender.MALE.code -> R.id.male_option
-            Gender.ANY.code -> R.id.any_option
-            else -> -1
-        }
     }
+
+    fun getUserToBeMerged(): User = userToBeMerged
 }

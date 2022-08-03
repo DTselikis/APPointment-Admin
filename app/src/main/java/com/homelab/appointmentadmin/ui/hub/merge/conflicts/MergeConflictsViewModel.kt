@@ -3,10 +3,15 @@ package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.Transaction
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.*
+import com.homelab.appointmentadmin.model.network.Note
+import com.homelab.appointmentadmin.model.network.helping.Notes
 
 class MergeConflictsViewModel : ViewModel() {
     val firstname = MutableLiveData<String>()
@@ -124,18 +129,24 @@ class MergeConflictsViewModel : ViewModel() {
     }
 
     fun mergeUsers() {
-        val user = User(
-            uid = userToBeMergedWith.uid,
-            firstname.value,
-            lastname.value,
-            nickname.value,
-            phone.value,
-            email.value,
-            gender = getGender(),
-            registered = true
-        )
+        val user = getMergedUser()
 
         storeMergedUserToDB(user)
+    }
+
+    private fun storeMergedUserToDbTransaction() {
+        val db = Firebase.firestore
+
+        db.runTransaction { transaction ->
+            val notes = fetchNotes(transaction, db)
+
+            mergeUsersInfo(transaction, db)
+
+            if (notes.isNotEmpty()) mergeNotes(transaction, db, notes)
+
+            deleteUserToBeMerged(transaction, db)
+
+        }
     }
 
     private fun storeMergedUserToDB(mergedUser: User) {
@@ -157,4 +168,48 @@ class MergeConflictsViewModel : ViewModel() {
 
     private fun String?.notSameAs(str: String?): Boolean =
         str != null && !this.equals(str, true)
+
+    private fun getMergedUser(): User = User(
+        uid = userToBeMergedWith.uid,
+        firstname.value,
+        lastname.value,
+        nickname.value,
+        phone.value,
+        email.value,
+        gender = getGender(),
+        registered = true
+    )
+
+    private fun fetchNotes(transaction: Transaction, db: FirebaseFirestore): List<Note> {
+        val userToBeMergedNotesRef =
+            db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
+
+        return transaction.get(userToBeMergedNotesRef).toObject<Notes>()!!.notes!!.map { entry ->
+            entry.value
+        }
+    }
+
+    private fun mergeUsersInfo(transaction: Transaction, db: FirebaseFirestore) {
+        val userToBeMergedWithRef =
+            db.collection(USERS_COLLECTION).document(userToBeMergedWith.uid!!)
+
+        transaction.set(userToBeMergedWithRef, getMergedUser(), SetOptions.merge())
+    }
+
+    private fun mergeNotes(transaction: Transaction, db: FirebaseFirestore, notes: List<Note>) {
+        val userToBeMergedWithNotesRef =
+            db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMergedWith.uid!!)
+
+        transaction.set(userToBeMergedWithNotesRef, notes, SetOptions.merge())
+    }
+
+    private fun deleteUserToBeMerged(transaction: Transaction, db: FirebaseFirestore) {
+        val userToBeMergedWithRef =
+            db.collection(USERS_COLLECTION).document(userToBeMergedWith.uid!!)
+        val userToBeMergedNotesRef =
+            db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
+
+        transaction.delete(userToBeMergedWithRef)
+        transaction.delete(userToBeMergedNotesRef)
+    }
 }

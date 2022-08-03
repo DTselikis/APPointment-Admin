@@ -143,13 +143,13 @@ class MergeConflictsViewModel : ViewModel() {
         val db = Firebase.firestore
 
         db.runTransaction { transaction ->
-            val notes = fetchNotesWithTransaction(transaction, db)
+            val notes = fetchNotesTransaction(transaction, db)
 
             mergeUsersInfo(transaction, db)
 
             if (notes?.isNotEmpty() == true) mergeNotes(transaction, db, notes)
 
-            deleteUserToBeMergedWithTransaction(transaction, db)
+            deleteUserToBeMergedTransaction(transaction, db)
         }
             .addOnCompleteListener { task ->
                 _storeSucceeded.value = task.isSuccessful
@@ -195,7 +195,7 @@ class MergeConflictsViewModel : ViewModel() {
         registered = true
     )
 
-    private fun fetchNotesWithTransaction(
+    private fun fetchNotesTransaction(
         transaction: Transaction,
         db: FirebaseFirestore
     ): List<Note>? {
@@ -222,16 +222,16 @@ class MergeConflictsViewModel : ViewModel() {
         transaction.set(userToBeMergedWithNotesRef, notes, SetOptions.merge())
     }
 
-    private fun deleteUserToBeMergedWithTransaction(
+    private fun deleteUserToBeMergedTransaction(
         transaction: Transaction,
         db: FirebaseFirestore
     ) {
-        val userToBeMergedWithRef =
-            db.collection(USERS_COLLECTION).document(userToBeMergedWith.uid!!)
+        val userToBeMergedRef =
+            db.collection(USERS_COLLECTION).document(userToBeMerged.uid!!)
         val userToBeMergedNotesRef =
             db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
 
-        transaction.delete(userToBeMergedWithRef)
+        transaction.delete(userToBeMergedRef)
         transaction.delete(userToBeMergedNotesRef)
     }
 

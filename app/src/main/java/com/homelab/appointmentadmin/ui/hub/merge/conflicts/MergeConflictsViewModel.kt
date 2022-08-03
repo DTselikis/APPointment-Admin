@@ -10,7 +10,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.*
-import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
 
 class MergeConflictsViewModel : ViewModel() {
@@ -147,12 +146,15 @@ class MergeConflictsViewModel : ViewModel() {
 
             mergeUsersInfo(transaction, db)
 
-            if (notes?.isNotEmpty() == true) mergeNotes(transaction, db, notes)
+            notes?.let {
+                mergeNotes(transaction, db, it)
+            }
 
             deleteUserToBeMergedTransaction(transaction, db)
         }
             .addOnCompleteListener { task ->
                 _storeSucceeded.value = task.isSuccessful
+                println(task.exception)
             }
     }
 
@@ -198,14 +200,12 @@ class MergeConflictsViewModel : ViewModel() {
     private fun fetchNotesTransaction(
         transaction: Transaction,
         db: FirebaseFirestore
-    ): List<Note>? {
+    ): Notes? {
         val userToBeMergedNotesRef =
             db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
 
         return transaction.get(userToBeMergedNotesRef)
-            .toObject<Notes>()?.notes?.mapNotNull { entry ->
-                entry.value
-            }
+            .toObject<Notes>()
     }
 
     private fun mergeUsersInfo(transaction: Transaction, db: FirebaseFirestore) {
@@ -215,7 +215,7 @@ class MergeConflictsViewModel : ViewModel() {
         transaction.set(userToBeMergedWithRef, getMergedUser(), SetOptions.merge())
     }
 
-    private fun mergeNotes(transaction: Transaction, db: FirebaseFirestore, notes: List<Note>) {
+    private fun mergeNotes(transaction: Transaction, db: FirebaseFirestore, notes: Notes) {
         val userToBeMergedWithNotesRef =
             db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMergedWith.uid!!)
 
@@ -240,11 +240,11 @@ class MergeConflictsViewModel : ViewModel() {
             .get()
             .addOnSuccessListener { result ->
                 if (result.exists()) {
-                    val notes = result.toObject<Notes>()!!.notes!!.map { entry ->
-                        entry.value
-                    }
+                    val notes = result.toObject<Notes>()
 
-                    mergeNotes(notes)
+                    mergeNotes(notes!!)
+                } else {
+                    _storeSucceeded.value = true
                 }
             }
             .addOnFailureListener {
@@ -252,7 +252,7 @@ class MergeConflictsViewModel : ViewModel() {
             }
     }
 
-    private fun mergeNotes(notes: List<Note>) {
+    private fun mergeNotes(notes: Notes) {
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(userToBeMergedWith.uid!!)
             .set(notes, SetOptions.merge())
             .addOnSuccessListener {

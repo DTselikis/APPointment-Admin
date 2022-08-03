@@ -135,6 +135,7 @@ class CreateCustomerFragment : Fragment() {
             if (stored) {
                 text = getString(R.string.user_creation_success)
                 color = R.color.teal_200
+                informForNewUser()
             } else {
                 text = getString(R.string.user_creation_err)
                 color = R.color.email_red
@@ -144,7 +145,7 @@ class CreateCustomerFragment : Fragment() {
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(resources.getColor(color, requireActivity().theme))
                 .setAction("Ok") {
-                    informForNewUser()
+                    if (stored) closeFragment()
                 }
                 .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     override fun onShown(transientBottomBar: Snackbar?) {

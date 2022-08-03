@@ -35,6 +35,9 @@ class MergeConflictsViewModel : ViewModel() {
     private val _unregisteredText = MutableLiveData<String>()
     val unregisteredText: LiveData<String> = _unregisteredText
 
+    private val _storeSucceeded = MutableLiveData<Boolean>()
+    val storeSucceeded: LiveData<Boolean> = _storeSucceeded
+
     private lateinit var userToBeMerged: User
     private lateinit var userToBeMergedWith: User
 
@@ -145,8 +148,10 @@ class MergeConflictsViewModel : ViewModel() {
             if (notes?.isNotEmpty() == true) mergeNotes(transaction, db, notes)
 
             deleteUserToBeMergedWithTransaction(transaction, db)
-
         }
+            .addOnCompleteListener { task ->
+                _storeSucceeded.value = task.isSuccessful
+            }
     }
 
     // Will be synced when back online
@@ -156,6 +161,8 @@ class MergeConflictsViewModel : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     fetchNotes()
+                } else {
+                    _storeSucceeded.value = false
                 }
             }
     }
@@ -238,6 +245,9 @@ class MergeConflictsViewModel : ViewModel() {
                     mergeNotes(notes)
                 }
             }
+            .addOnFailureListener {
+                _storeSucceeded.value = false
+            }
     }
 
     private fun mergeNotes(notes: List<Note>) {
@@ -246,10 +256,16 @@ class MergeConflictsViewModel : ViewModel() {
             .addOnSuccessListener {
                 deleteUserToBeMerged()
             }
+            .addOnFailureListener {
+                _storeSucceeded.value = false
+            }
     }
 
     private fun deleteUserToBeMerged() {
         Firebase.firestore.collection(USERS_COLLECTION).document(userToBeMerged.uid!!)
             .delete()
+            .addOnCompleteListener { task ->
+                _storeSucceeded.value = task.isSuccessful
+            }
     }
 }

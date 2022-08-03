@@ -22,6 +22,7 @@ class CustomersViewModel : ViewModel() {
 
     var mergeMode = false
     private lateinit var userToBeMerged: User
+    private lateinit var userToBeMergedWith: User
 
     fun fetchUsersFromDB() {
         Firebase.firestore.collection(USERS_COLLECTION)
@@ -94,12 +95,41 @@ class CustomersViewModel : ViewModel() {
         _usersForDisplay.value = mergedList
     }
 
+    fun reflectMergeChanges(mergedUser: User) {
+        _users.remove(userToBeMerged)
+        _users.replace(userToBeMergedWith, mergedUser)
+
+        updateLists()
+    }
+
+    private fun updateLists() {
+        val (registered, unregistered) = _users.partition { it.registered }
+
+        _registeredUsers = registered
+        _unregisteredUsers = unregistered
+
+        _usersForDisplay.value = when (activeFilter) {
+            CustomerFilter.ALL -> _users
+            CustomerFilter.REGISTERED -> _registeredUsers
+            CustomerFilter.UNREGISTERED -> _unregisteredUsers
+        }
+    }
+
     fun setUserToBeMerged(user: User) {
         this.userToBeMerged = user
+    }
+
+    fun setUserToBeMergedWith(user: User) {
+        this.userToBeMergedWith = user
     }
 
     fun getUserToBeMerged(): User = userToBeMerged
 
     fun getRegisteredUsers(): List<User> = _registeredUsers
+
+    private fun MutableList<User>.replace(existingUser: User, updated: User) {
+        val index = this.indexOf(existingUser)
+        this[index] = updated
+    }
 
 }

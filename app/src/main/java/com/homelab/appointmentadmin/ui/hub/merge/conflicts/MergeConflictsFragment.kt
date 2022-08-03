@@ -17,9 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
-import com.homelab.appointmentadmin.data.ConflictChoice
-import com.homelab.appointmentadmin.data.Gender
-import com.homelab.appointmentadmin.data.GenderBtnId
+import com.homelab.appointmentadmin.data.*
 import com.homelab.appointmentadmin.databinding.FragmentMergeConflictsBinding
 
 class MergeConflictsFragment : Fragment() {
@@ -121,7 +119,7 @@ class MergeConflictsFragment : Fragment() {
         requireActivity().onBackPressed()
     }
 
-    fun closeFragment() {
+    private fun closeFragment() {
         findNavController().navigateUp()
     }
 
@@ -133,9 +131,11 @@ class MergeConflictsFragment : Fragment() {
             if (succeeded) {
                 text = getString(R.string.save_successful)
                 color = Color.parseColor(getString(R.color.teal_200))
+                setReturnValue(viewModel.getMergedUser())
             } else {
                 text = getString(R.string.save_failed)
                 color = Color.parseColor(getString(R.color.email_red))
+                setReturnValue(null)
             }
 
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)
@@ -157,6 +157,13 @@ class MergeConflictsFragment : Fragment() {
                 })
                 .show()
         }
+    }
+
+    private fun setReturnValue(mergedUser: User?) {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            MERGE_NAV_KEY,
+            mergedUser
+        )
     }
 
     private fun isOnline(): Boolean {
@@ -186,6 +193,7 @@ class MergeConflictsFragment : Fragment() {
                 setTitle(getString(R.string.unsaved_changes_warning_title))
                 setMessage(getString(R.string.unsaved_merging_warning_msg))
                 setPositiveButton(getString(R.string.dialog_yes_btn)) { _, _ ->
+                    setReturnValue(null)
                     closeFragment()
                 }
                 setNegativeButton(getString(R.string.dialog_no_btn)) { _, _ ->

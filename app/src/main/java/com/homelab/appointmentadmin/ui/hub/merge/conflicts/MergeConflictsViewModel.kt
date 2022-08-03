@@ -186,7 +186,7 @@ class MergeConflictsViewModel : ViewModel() {
     private fun String?.notSameAs(str: String?): Boolean =
         str != null && !this.equals(str, true)
 
-    private fun getMergedUser(): User = User(
+    fun getMergedUser(): User = User(
         uid = userToBeMergedWith.uid,
         firstname.value,
         lastname.value,

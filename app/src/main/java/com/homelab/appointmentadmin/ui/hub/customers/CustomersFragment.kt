@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.MERGE_NAV_KEY
 import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.data.User
@@ -25,6 +26,12 @@ class CustomersFragment : Fragment() {
     private val viewModel: CustomersViewModel by viewModels()
 
     private lateinit var userAdapter: UserAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.fetchUsersFromDB()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,9 +79,9 @@ class CustomersFragment : Fragment() {
             }
         }
 
-        viewModel.fetchUsersFromDB()
         observeForUserModifications()
         observeForNewUser()
+        observeForMergeResult()
     }
 
     fun navigate(user: User) {
@@ -102,12 +109,25 @@ class CustomersFragment : Fragment() {
         }
     }
 
+    private fun observeForMergeResult() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User?>(
+            MERGE_NAV_KEY
+        )?.observe(viewLifecycleOwner) { mergedUser ->
+            deactivateMergeMode()
+
+            mergedUser?.let {
+                viewModel.reflectMergeChanges(it)
+            }
+
+        }
+    }
+
     fun navigateToCreateNewCustomer() {
         findNavController().navigate(R.id.action_customersFragment_to_createCustomerFragment)
     }
 
     private fun navigateToMergeConflicts(user: User) {
-        deactivateMergeMode()
+        viewModel.setUserToBeMergedWith(user)
 
         val action = CustomersFragmentDirections.actionCustomersFragmentToMergeConflictsFragment(
             viewModel.getUserToBeMerged(),

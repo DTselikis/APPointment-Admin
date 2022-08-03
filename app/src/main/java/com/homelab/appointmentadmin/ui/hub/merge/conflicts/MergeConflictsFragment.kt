@@ -52,15 +52,15 @@ class MergeConflictsFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
-        binding.genderGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+        binding.mergingGenderGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
-                    GenderBtnId.FEMALE.code ->
-                        viewModel.setGender(GenderBtnId.FEMALE)
-                    GenderBtnId.MALE.code ->
-                        viewModel.setGender(GenderBtnId.MALE)
-                    GenderBtnId.ANY.code ->
-                        viewModel.setGender(GenderBtnId.ANY)
+                    R.id.merging_genre_female ->
+                        viewModel.setGender(Gender.FEMALE)
+                    R.id.merging_genre_male ->
+                        viewModel.setGender(Gender.MALE)
+                    R.id.merging_genre_any ->
+                        viewModel.setGender(Gender.ANY)
                 }
             }
         }
@@ -104,12 +104,12 @@ class MergeConflictsFragment : Fragment() {
     private fun checkGenderButton() {
         binding.apply {
             val (id, gender) = when (viewModel!!.getUserToBeMerged().gender) {
-                Gender.FEMALE.code -> Pair(R.id.female_option, GenderBtnId.FEMALE)
-                Gender.MALE.code -> Pair(R.id.male_option, GenderBtnId.MALE)
-                else -> Pair(R.id.any_option, GenderBtnId.ANY)
+                Gender.FEMALE.code -> Pair(R.id.merging_genre_female, Gender.FEMALE)
+                Gender.MALE.code -> Pair(R.id.merging_genre_male, Gender.MALE)
+                else -> Pair(R.id.merging_genre_any, Gender.ANY)
             }
 
-            genderGroup.check(id)
+            mergingGenderGroup.check(id)
             viewModel!!.setGender(gender)
         }
 

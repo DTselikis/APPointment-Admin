@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
-import com.homelab.appointmentadmin.data.GenderBtnId
+import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.databinding.FragmentCreateCustomerBinding
 
@@ -23,6 +23,12 @@ class CreateCustomerFragment : Fragment() {
     private lateinit var binding: FragmentCreateCustomerBinding
 
     private lateinit var backPressedCallback: OnBackPressedCallback
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        println("created")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,22 +59,12 @@ class CreateCustomerFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
-        binding.genderGroup.addOnButtonCheckedListener { button, checkedId, isChecked ->
-            when (checkedId) {
-                GenderBtnId.FEMALE.code -> {
-                    if (isChecked) {
-                        viewModel.setGender(GenderBtnId.FEMALE)
-                    }
-                }
-                GenderBtnId.MALE.code -> {
-                    if (isChecked) {
-                        viewModel.setGender(GenderBtnId.MALE)
-                    }
-                }
-                GenderBtnId.ANY.code -> {
-                    if (isChecked) {
-                        viewModel.setGender(GenderBtnId.ANY)
-                    }
+        binding.creationGenderGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.creation_gender_female -> viewModel.setGender(Gender.FEMALE)
+                    R.id.creation_gender_male -> viewModel.setGender(Gender.MALE)
+                    R.id.creation_gender_any -> viewModel.setGender(Gender.ANY)
                 }
             }
         }
@@ -114,8 +110,8 @@ class CreateCustomerFragment : Fragment() {
 
     private fun hasGender(): Boolean {
         binding.apply {
-            return if (genderGroup.checkedButtonId == -1) {
-                genderGroup.background =
+            return if (creationGenderGroup.checkedButtonId == -1) {
+                creationGenderGroup.background =
                     ResourcesCompat.getDrawable(
                         resources,
                         R.drawable.error_stroke,
@@ -124,7 +120,7 @@ class CreateCustomerFragment : Fragment() {
                 genderErrMsg.visibility = View.VISIBLE
                 false
             } else {
-                genderGroup.background?.alpha = 0
+                creationGenderGroup.background?.alpha = 0
                 genderErrMsg.visibility = View.GONE
                 true
             }

@@ -12,12 +12,6 @@ enum class CustomerFilter(val code: Int) {
     UNREGISTERED(2)
 }
 
-enum class GenderBtnId(val code: Int) {
-    FEMALE(1),
-    MALE(2),
-    ANY(3)
-}
-
 enum class Gender(val code: String) {
     FEMALE("F"),
     MALE("M"),

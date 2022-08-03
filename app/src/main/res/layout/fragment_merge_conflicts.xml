@@ -289,7 +289,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/gender_group"
+                    android:id="@+id/merging_gender_group"
                     android:layout_width="@dimen/profile_edit_edit_text_width"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/merge_results_margin_top"
@@ -301,21 +301,21 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/female_option"
+                        android:id="@+id/merging_genre_female"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/female_gender_btn" />
 
                     <Button
-                        android:id="@+id/male_option"
+                        android:id="@+id/merging_genre_male"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/male_gender_btn" />
 
                     <Button
-                        android:id="@+id/any_option"
+                        android:id="@+id/merging_genre_any"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -332,7 +332,7 @@
                     android:text="@string/save_edits_btn_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/gender_group" />
+                    app:layout_constraintTop_toBottomOf="@id/merging_gender_group" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

@@ -20,7 +20,7 @@ class MergeConflictsViewModel : ViewModel() {
     val email = MutableLiveData<String>()
     val fbName = MutableLiveData<String>()
     val profilePic = MutableLiveData<User>()
-    private lateinit var gender: GenderBtnId
+    private lateinit var gender: Gender
 
     private val _numOfConflicts = MutableLiveData<Int>()
     val numOfConflicts: LiveData<Int> = _numOfConflicts
@@ -173,14 +173,8 @@ class MergeConflictsViewModel : ViewModel() {
 
     fun getUserToBeMerged(): User = userToBeMerged
 
-    fun setGender(gender: GenderBtnId) {
+    fun setGender(gender: Gender) {
         this.gender = gender
-    }
-
-    private fun getGender(): String = when (gender) {
-        GenderBtnId.FEMALE -> Gender.FEMALE.code
-        GenderBtnId.MALE -> Gender.MALE.code
-        else -> Gender.ANY.code
     }
 
     private fun String?.notSameAs(str: String?): Boolean =
@@ -193,7 +187,7 @@ class MergeConflictsViewModel : ViewModel() {
         nickname.value,
         phone.value,
         email.value,
-        gender = getGender(),
+        gender = gender.code,
         registered = true
     )
 

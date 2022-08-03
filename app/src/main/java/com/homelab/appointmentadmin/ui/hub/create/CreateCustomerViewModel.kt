@@ -7,7 +7,6 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.Gender
-import com.homelab.appointmentadmin.data.GenderBtnId
 import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 
@@ -22,7 +21,7 @@ class CreateCustomerViewModel : ViewModel() {
     val userStored: LiveData<Boolean> = _userStored
 
     private lateinit var user: User
-    private lateinit var gender: GenderBtnId
+    private lateinit var gender: Gender
 
     fun createUser() {
         val user = createUserObject()
@@ -49,7 +48,7 @@ class CreateCustomerViewModel : ViewModel() {
             else nickname.value,
             phone.value,
             email.value,
-            gender = getGender(),
+            gender = gender.code,
             registered = false
         ).also {
             it.uid = "${it.hashCode()}_${Timestamp.now().seconds}"
@@ -68,15 +67,7 @@ class CreateCustomerViewModel : ViewModel() {
         return changes.contains(false)
     }
 
-    fun setGender(gender: GenderBtnId) {
+    fun setGender(gender: Gender) {
         this.gender = gender
     }
-
-    private fun getGender(): String = when (gender) {
-        GenderBtnId.FEMALE -> Gender.FEMALE.code
-        GenderBtnId.MALE -> Gender.MALE.code
-        else -> Gender.ANY.code
-    }
-
-
 }

@@ -134,7 +134,7 @@ class MergeConflictsViewModel : ViewModel() {
         storeMergedUserToDB(user)
     }
 
-    private fun storeMergedUserToDbTransaction() {
+    fun storeMergedUserToDbTransaction() {
         val db = Firebase.firestore
 
         db.runTransaction { transaction ->
@@ -142,7 +142,7 @@ class MergeConflictsViewModel : ViewModel() {
 
             mergeUsersInfo(transaction, db)
 
-            if (notes.isNotEmpty()) mergeNotes(transaction, db, notes)
+            if (notes?.isNotEmpty() == true) mergeNotes(transaction, db, notes)
 
             deleteUserToBeMerged(transaction, db)
 

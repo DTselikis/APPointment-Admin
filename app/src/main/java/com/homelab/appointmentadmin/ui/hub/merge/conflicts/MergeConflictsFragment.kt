@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,6 +46,13 @@ class MergeConflictsFragment : Fragment() {
             viewModel = this@MergeConflictsFragment.viewModel
             mergeConflictsFragment = this@MergeConflictsFragment
         }
+
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showWarningMessage()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
         binding.genderGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
@@ -109,6 +117,14 @@ class MergeConflictsFragment : Fragment() {
 
     }
 
+    fun backPress() {
+        requireActivity().onBackPressed()
+    }
+
+    fun closeFragment() {
+        findNavController().navigateUp()
+    }
+
     private fun observeStoreStatus() {
         viewModel.storeSucceeded.observe(viewLifecycleOwner) { succeeded ->
             val text: String
@@ -126,7 +142,7 @@ class MergeConflictsFragment : Fragment() {
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(color)
                 .setAction("Ok") {
-                    findNavController().navigateUp()
+                    closeFragment()
                 }
                 .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     override fun onShown(transientBottomBar: Snackbar?) {
@@ -161,5 +177,22 @@ class MergeConflictsFragment : Fragment() {
         }
 
         return false
+    }
+
+    private fun showWarningMessage() {
+        activity?.let {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(it)
+            builder.apply {
+                setTitle(getString(R.string.unsaved_changes_warning_title))
+                setMessage(getString(R.string.unsaved_merging_warning_msg))
+                setPositiveButton(getString(R.string.dialog_yes_btn)) { _, _ ->
+                    closeFragment()
+                }
+                setNegativeButton(getString(R.string.dialog_no_btn)) { _, _ ->
+
+                }
+            }
+                .create()
+        }?.show()
     }
 }

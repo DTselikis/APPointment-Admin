@@ -27,6 +27,17 @@
             conflicts_radio_group, save_choice_btn, unregistered, registered"
             tools:visibility="visible" />
 
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:onClick="@{() -> mergeConflictsFragment.backPress()}"
+            android:src="@drawable/ic_arrow_back_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/conflicts_progress"
             android:layout_width="wrap_content"

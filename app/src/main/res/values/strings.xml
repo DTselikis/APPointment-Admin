@@ -23,6 +23,7 @@
     <string name="no_edits_made">No changes were made</string>
     <string name="unsaved_changes_warning_title">Unsaved changes</string>
     <string name="unsaved_changes_warning_msg">Proceed without saving?</string>
+    <string name="unsaved_merging_warning_msg">Proceed without merging?</string>
     <string name="dialog_yes_btn">Yes</string>
     <string name="dialog_no_btn">No</string>
     <string name="note_saved">Saved</string>

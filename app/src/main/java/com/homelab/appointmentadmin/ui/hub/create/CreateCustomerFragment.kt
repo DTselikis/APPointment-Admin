@@ -1,24 +1,20 @@
 package com.homelab.appointmentadmin.ui.hub.create
 
-import android.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
-import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.data.GenderBtnId
 import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
-import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.databinding.FragmentCreateCustomerBinding
 
 class CreateCustomerFragment : Fragment() {
@@ -142,15 +138,15 @@ class CreateCustomerFragment : Fragment() {
 
             if (stored) {
                 text = getString(R.string.user_creation_success)
-                color = Color.parseColor(getString(R.color.teal_200))
+                color = R.color.teal_200
             } else {
                 text = getString(R.string.user_creation_err)
-                color = Color.parseColor(getString(R.color.email_red))
+                color = R.color.email_red
             }
 
             Snackbar.make(binding.saveInfoBtn, text, Snackbar.LENGTH_LONG)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
-                .setBackgroundTint(color)
+                .setBackgroundTint(resources.getColor(color, requireActivity().theme))
                 .setAction("Ok") {
                     informForNewUser()
                 }

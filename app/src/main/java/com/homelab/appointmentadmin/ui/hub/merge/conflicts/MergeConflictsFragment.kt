@@ -1,5 +1,8 @@
 package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -70,7 +73,9 @@ class MergeConflictsFragment : Fragment() {
     }
 
     fun mergeUsers() {
-        viewModel.mergeUsers()
+        if (isOnline()) {
+            viewModel.storeMergedUserToDbTransaction()
+        }
     }
 
     private fun showMergeResult() {
@@ -95,5 +100,25 @@ class MergeConflictsFragment : Fragment() {
             viewModel!!.setGender(gender)
         }
 
+    }
+
+    private fun isOnline(): Boolean {
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+        capabilities?.let {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                return true
+            }
+        }
+
+        return false
     }
 }

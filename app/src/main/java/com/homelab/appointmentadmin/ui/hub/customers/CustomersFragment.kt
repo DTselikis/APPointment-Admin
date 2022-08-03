@@ -116,7 +116,10 @@ class CustomersFragment : Fragment() {
             deactivateMergeMode()
 
             mergedUser?.let {
-                viewModel.reflectMergeChanges(it)
+                val (deletedUserIndex, updatedUserIndex) = viewModel.reflectMergeChanges(it)
+
+                userAdapter.notifyItemRemoved(deletedUserIndex)
+                userAdapter.notifyItemChanged(updatedUserIndex)
             }
 
         }

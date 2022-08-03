@@ -95,11 +95,16 @@ class CustomersViewModel : ViewModel() {
         _usersForDisplay.value = mergedList
     }
 
-    fun reflectMergeChanges(mergedUser: User) {
+    fun reflectMergeChanges(mergedUser: User): Pair<Int, Int> {
+        val userToBeMergedIndex = _users.indexOf(userToBeMerged)
+        val userToBeMergedWithIndex = _users.indexOf(userToBeMergedWith)
+
         _users.remove(userToBeMerged)
         _users.replace(userToBeMergedWith, mergedUser)
 
         updateLists()
+
+        return Pair(userToBeMergedIndex, userToBeMergedWithIndex)
     }
 
     private fun updateLists() {
@@ -107,12 +112,6 @@ class CustomersViewModel : ViewModel() {
 
         _registeredUsers = registered
         _unregisteredUsers = unregistered
-
-        _usersForDisplay.value = when (activeFilter) {
-            CustomerFilter.ALL -> _users
-            CustomerFilter.REGISTERED -> _registeredUsers
-            CustomerFilter.UNREGISTERED -> _unregisteredUsers
-        }
     }
 
     fun setUserToBeMerged(user: User) {

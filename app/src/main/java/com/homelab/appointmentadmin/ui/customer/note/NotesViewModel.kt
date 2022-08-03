@@ -13,7 +13,7 @@ import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
 
 class NotesViewModel(private val user: User) : ViewModel() {
-    private val _notes = MutableLiveData<MutableList<Note>>()
+    private val _notes = MutableLiveData<MutableList<Note>>(mutableListOf())
     val notes: LiveData<MutableList<Note>> = _notes
 
     val title = MutableLiveData<String>()
@@ -31,9 +31,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!).get()
             .addOnSuccessListener { result ->
                 if (result.exists()) {
-                    _notes.value = result.toObject<Notes>()!!.notes!!.map { entry ->
+                    _notes.value!!.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
                         entry.value
-                    }.sortedByDescending { it.timestamp }.toMutableList()
+                    }.sortedByDescending { it.timestamp })
                 }
             }
     }

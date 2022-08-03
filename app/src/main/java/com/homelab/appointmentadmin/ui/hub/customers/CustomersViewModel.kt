@@ -48,8 +48,18 @@ class CustomersViewModel : ViewModel() {
         return index
     }
 
-    fun insertUser(newUser: User) {
+    fun insertUser(newUser: User): Int {
         _users.add(newUser)
+
+        updateLists()
+
+        _usersForDisplay.value = when (activeFilter) {
+            CustomerFilter.ALL -> _users
+            CustomerFilter.REGISTERED -> _registeredUsers
+            CustomerFilter.UNREGISTERED -> _unregisteredUsers
+        }
+
+        return 0
     }
 
     fun filterUsers(registered: Boolean) {

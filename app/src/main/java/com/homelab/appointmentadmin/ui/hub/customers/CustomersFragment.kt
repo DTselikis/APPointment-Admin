@@ -105,7 +105,8 @@ class CustomersFragment : Fragment() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(
             NEW_USER_NAV_KEY
         )?.observe(viewLifecycleOwner) { newUser ->
-            viewModel.insertUser(newUser)
+            val insertedIndex = viewModel.insertUser(newUser)
+            userAdapter.notifyItemInserted(insertedIndex)
         }
     }
 

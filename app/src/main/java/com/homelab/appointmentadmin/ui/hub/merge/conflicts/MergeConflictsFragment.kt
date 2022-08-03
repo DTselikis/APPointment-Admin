@@ -1,7 +1,6 @@
 package com.homelab.appointmentadmin.ui.hub.merge.conflicts
 
 import android.content.Context
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -17,7 +16,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointmentadmin.R
-import com.homelab.appointmentadmin.data.*
+import com.homelab.appointmentadmin.data.ConflictChoice
+import com.homelab.appointmentadmin.data.Gender
+import com.homelab.appointmentadmin.data.MERGE_NAV_KEY
+import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.FragmentMergeConflictsBinding
 
 class MergeConflictsFragment : Fragment() {
@@ -130,17 +132,17 @@ class MergeConflictsFragment : Fragment() {
 
             if (succeeded) {
                 text = getString(R.string.save_successful)
-                color = Color.parseColor(getString(R.color.teal_200))
+                color = R.color.teal_200
                 setReturnValue(viewModel.getMergedUser())
             } else {
                 text = getString(R.string.save_failed)
-                color = Color.parseColor(getString(R.color.email_red))
+                color = R.color.email_red
                 setReturnValue(null)
             }
 
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
-                .setBackgroundTint(color)
+                .setBackgroundTint(resources.getColor(color, requireActivity().theme))
                 .setAction("Ok") {
                     closeFragment()
                 }

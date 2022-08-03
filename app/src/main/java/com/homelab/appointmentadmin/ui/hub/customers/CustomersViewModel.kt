@@ -30,7 +30,7 @@ class CustomersViewModel : ViewModel() {
             .addOnSuccessListener { result ->
                 _users = result.map { document ->
                     document.toObject<User>()
-                }.toMutableList()
+                }.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! }).toMutableList()
 
                 val (registered, unregistered) = _users.partition { it.registered }
                 _registeredUsers = registered
@@ -108,6 +108,7 @@ class CustomersViewModel : ViewModel() {
     }
 
     private fun updateLists() {
+        _users.sortWith((compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! }))
         val (registered, unregistered) = _users.partition { it.registered }
 
         _registeredUsers = registered

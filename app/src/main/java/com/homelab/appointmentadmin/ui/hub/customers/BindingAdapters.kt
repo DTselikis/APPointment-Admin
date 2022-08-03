@@ -14,9 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 fun bindUsersList(recyclerView: RecyclerView, users: List<User>?) {
     val adapter = recyclerView.adapter as UserAdapter
 
-    val sortedList = users?.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! })
-
-    adapter.submitList(sortedList)
+    adapter.submitList(users)
 }
 
 @BindingAdapter("stroke")

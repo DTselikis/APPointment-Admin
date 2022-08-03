@@ -42,7 +42,7 @@ class MergeConflictsViewModel : ViewModel() {
     private lateinit var userToBeMergedWith: User
 
     private lateinit var conflicts: List<Conflict>
-    private val conflictChoices = mapOf<Conflict, String>()
+    private val conflictChoices = mutableMapOf<Conflict, String>()
 
     fun setMergingUsers(userToBeMerged: User, userToBeMergedWith: User) {
         this.userToBeMerged = userToBeMerged
@@ -109,7 +109,7 @@ class MergeConflictsViewModel : ViewModel() {
             Conflict.PHONE -> Pair(Conflict.PHONE, user.phone)
         }
 
-        conflictChoices[key] to value
+        conflictChoices[key] = value!!
     }
 
     fun populateFields() {

@@ -180,11 +180,11 @@ class MergeConflictsViewModel : ViewModel() {
         registered = true
     )
 
-    private fun fetchNotes(transaction: Transaction, db: FirebaseFirestore): List<Note> {
+    private fun fetchNotes(transaction: Transaction, db: FirebaseFirestore): List<Note>? {
         val userToBeMergedNotesRef =
             db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
 
-        return transaction.get(userToBeMergedNotesRef).toObject<Notes>()!!.notes!!.map { entry ->
+        return transaction.get(userToBeMergedNotesRef).toObject<Notes>()?.notes?.mapNotNull { entry ->
             entry.value
         }
     }

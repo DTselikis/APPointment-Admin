@@ -119,6 +119,9 @@ class MergeConflictsViewModel : ViewModel() {
         lastname.value = conflictChoices.getOrElse(Conflict.LASTNAME) {
             userToBeMergedWith.lastname ?: userToBeMerged.lastname
         }
+        nickname.value = conflictChoices.getOrElse(Conflict.NICKNAME) {
+            userToBeMergedWith.nickname ?: userToBeMerged.nickname
+        }
         phone.value = conflictChoices.getOrElse(Conflict.PHONE) {
             userToBeMergedWith.phone ?: userToBeMerged.phone
         }
@@ -126,7 +129,6 @@ class MergeConflictsViewModel : ViewModel() {
             userToBeMergedWith.email ?: userToBeMerged.email
         }
 
-        nickname.value = userToBeMerged.nickname ?: ""
         fbName.value = userToBeMergedWith.fbName ?: ""
         profilePic.value = userToBeMergedWith
     }

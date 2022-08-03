@@ -46,25 +46,15 @@ class MergeConflictsViewModel : ViewModel() {
     private fun findConflicts() {
         val conflicts = mutableListOf<Conflict>()
 
-        if (userToBeMerged.firstname != null && userToBeMergedWith.firstname != null &&
-            userToBeMerged.firstname != userToBeMergedWith.firstname
-        )
+        if (userToBeMerged.firstname?.notSameAs(userToBeMergedWith.firstname) == true)
             conflicts.add(Conflict.FIRSTNAME)
-        if (userToBeMerged.lastname != null && userToBeMergedWith.lastname != null &&
-            userToBeMerged.lastname != userToBeMergedWith.lastname
-        )
+        if (userToBeMerged.lastname?.notSameAs(userToBeMergedWith.lastname) == true)
             conflicts.add(Conflict.LASTNAME)
-        if (userToBeMerged.email != null && userToBeMergedWith.email != null &&
-            userToBeMerged.email != userToBeMergedWith.email
-        )
+        if (userToBeMerged.email?.notSameAs(userToBeMergedWith.email) == true)
             conflicts.add(Conflict.EMAIL)
-        if (userToBeMerged.nickname != null && userToBeMergedWith.nickname != null &&
-            userToBeMerged.nickname != userToBeMergedWith.nickname
-        )
+        if (userToBeMerged.nickname?.notSameAs(userToBeMergedWith.nickname) == true)
             conflicts.add(Conflict.NICKNAME)
-        if (userToBeMerged.phone != null && userToBeMergedWith.phone != null &&
-            userToBeMerged.phone != userToBeMergedWith.phone
-        )
+        if (userToBeMerged.phone?.notSameAs(userToBeMergedWith.phone) == true)
             conflicts.add(Conflict.PHONE)
 
         this.conflicts = conflicts
@@ -164,4 +154,7 @@ class MergeConflictsViewModel : ViewModel() {
         GenderBtnId.MALE -> Gender.MALE.code
         else -> Gender.ANY.code
     }
+
+    private fun String?.notSameAs(str: String?): Boolean =
+        str != null && !this.equals(str, true)
 }

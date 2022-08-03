@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -119,11 +120,15 @@ class CreateCustomerFragment : Fragment() {
         binding.apply {
             return if (genderGroup.checkedButtonId == -1) {
                 genderGroup.background =
-                    resources.getDrawable(R.drawable.error_stroke, requireActivity().theme)
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.error_stroke,
+                        requireActivity().theme
+                    )
                 genderErrMsg.visibility = View.VISIBLE
                 false
             } else {
-                genderGroup.background.setVisible(false, false)
+                genderGroup.background?.alpha = 0
                 genderErrMsg.visibility = View.GONE
                 true
             }

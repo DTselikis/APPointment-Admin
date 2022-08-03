@@ -92,7 +92,7 @@ class MergeConflictsFragment : Fragment() {
             }
 
             genderGroup.check(id)
-            viewModel.setGender(gender)
+            viewModel!!.setGender(gender)
         }
 
     }

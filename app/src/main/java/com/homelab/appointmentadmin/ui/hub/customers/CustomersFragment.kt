@@ -107,6 +107,8 @@ class CustomersFragment : Fragment() {
     }
 
     private fun navigateToMergeConflicts(user: User) {
+        deactivateMergeMode()
+
         val action = CustomersFragmentDirections.actionCustomersFragmentToMergeConflictsFragment(
             viewModel.getUserToBeMerged(),
             user

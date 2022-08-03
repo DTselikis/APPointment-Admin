@@ -75,6 +75,8 @@ class MergeConflictsFragment : Fragment() {
     fun mergeUsers() {
         if (isOnline()) {
             viewModel.storeMergedUserToDbTransaction()
+        } else {
+            viewModel.mergeUsers()
         }
     }
 

@@ -96,8 +96,7 @@ class CustomersFragment : Fragment() {
     private fun observeForUserModifications() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(USER_NAV_KEY)
             ?.observe(viewLifecycleOwner) { updatedUser ->
-                val position = viewModel.updateUser(updatedUser)
-                userAdapter.notifyItemChanged(position)
+                viewModel.updateUser(updatedUser)
             }
     }
 
@@ -105,8 +104,7 @@ class CustomersFragment : Fragment() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(
             NEW_USER_NAV_KEY
         )?.observe(viewLifecycleOwner) { newUser ->
-            val insertedIndex = viewModel.insertUser(newUser)
-            userAdapter.notifyItemInserted(insertedIndex)
+            viewModel.insertUser(newUser)
         }
     }
 
@@ -117,10 +115,8 @@ class CustomersFragment : Fragment() {
             deactivateMergeMode()
 
             mergedUser?.let {
-                val (deletedUserIndex, updatedUserIndex) = viewModel.reflectMergeChanges(it)
-
-                userAdapter.notifyItemRemoved(deletedUserIndex)
-                userAdapter.notifyItemChanged(updatedUserIndex)
+                viewModel.updateUser(mergedUser)
+                viewModel.deleteUser(viewModel.getUserToBeMerged())
             }
 
         }

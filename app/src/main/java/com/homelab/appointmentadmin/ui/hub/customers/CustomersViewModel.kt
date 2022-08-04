@@ -11,7 +11,7 @@ import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 
 class CustomersViewModel : ViewModel() {
-    private lateinit var _users: MutableList<User>
+    lateinit var _users: MutableList<User>
     private lateinit var _registeredUsers: List<User>
     private lateinit var _unregisteredUsers: List<User>
 
@@ -30,7 +30,8 @@ class CustomersViewModel : ViewModel() {
             .addOnSuccessListener { result ->
                 _users = result.map { document ->
                     document.toObject<User>()
-                }.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! }).toMutableList()
+                }.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! })
+                    .toMutableList()
 
                 val (registered, unregistered) = _users.partition { it.registered }
                 _registeredUsers = registered
@@ -41,46 +42,24 @@ class CustomersViewModel : ViewModel() {
     }
 
     fun updateUser(updatedUser: User): Int {
-        val existingUser = _users.find { it.uid == updatedUser.uid }
-        val index = _users.indexOf(existingUser)
-        _users[index] = updatedUser
+        val updatedIndex = _users.update(updatedUser)
+        updateLists()
 
-        return index
+        return updatedIndex
     }
 
     fun insertUser(newUser: User): Int {
-        _users.add(newUser)
-
+        val insertedIndex = _users.addSorted(newUser)
         updateLists()
 
-        _usersForDisplay.value = when (activeFilter) {
-            CustomerFilter.ALL -> _users
-            CustomerFilter.REGISTERED -> _registeredUsers
-            CustomerFilter.UNREGISTERED -> _unregisteredUsers
-        }
-
-        return 0
+        return insertedIndex
     }
 
     fun deleteUser(userToBeDeleted: User): Int {
-        val activeList = when (activeFilter) {
-            CustomerFilter.ALL -> _users
-            CustomerFilter.REGISTERED -> _registeredUsers
-            CustomerFilter.UNREGISTERED -> _unregisteredUsers
-        }
-
-        val index = activeList.indexOf(userToBeDeleted)
         _users.remove(userToBeDeleted)
-
         updateLists()
 
-        _usersForDisplay.value = when (activeFilter) {
-            CustomerFilter.ALL -> _users
-            CustomerFilter.REGISTERED -> _registeredUsers
-            CustomerFilter.UNREGISTERED -> _unregisteredUsers
-        }
-
-        return index
+        return 0
     }
 
     fun filterUsers(registered: Boolean) {
@@ -126,24 +105,17 @@ class CustomersViewModel : ViewModel() {
         _usersForDisplay.value = mergedList
     }
 
-    fun reflectMergeChanges(mergedUser: User): Pair<Int, Int> {
-        val userToBeMergedIndex = _users.indexOf(userToBeMerged)
-        val userToBeMergedWithIndex = _users.indexOf(userToBeMergedWith)
-
-        _users.remove(userToBeMerged)
-        _users.replace(userToBeMergedWith, mergedUser)
-
-        updateLists()
-
-        return Pair(userToBeMergedIndex, userToBeMergedWithIndex)
-    }
-
     private fun updateLists() {
-        _users.sortWith((compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! }))
         val (registered, unregistered) = _users.partition { it.registered }
 
         _registeredUsers = registered
         _unregisteredUsers = unregistered
+
+        _usersForDisplay.value = when (activeFilter) {
+            CustomerFilter.ALL -> _users
+            CustomerFilter.UNREGISTERED -> _unregisteredUsers
+            CustomerFilter.REGISTERED -> _registeredUsers
+        }
     }
 
     fun setUserToBeMerged(user: User) {
@@ -158,9 +130,19 @@ class CustomersViewModel : ViewModel() {
 
     fun getRegisteredUsers(): List<User> = _registeredUsers
 
-    private fun MutableList<User>.replace(existingUser: User, updated: User) {
+    private fun MutableList<User>.update(updatedUser: User): Int {
+        val existingUser = this.find { it.uid == updatedUser.uid }
         val index = this.indexOf(existingUser)
-        this[index] = updated
+        this[index] = updatedUser
+
+        return index
+    }
+
+    private fun MutableList<User>.addSorted(newUser: User): Int {
+        this.add(newUser)
+        this.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.nickname!! })
+
+        return this.indexOf(newUser)
     }
 
 }

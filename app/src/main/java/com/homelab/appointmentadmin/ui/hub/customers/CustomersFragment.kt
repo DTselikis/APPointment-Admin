@@ -150,8 +150,7 @@ class CustomersFragment : Fragment() {
     }
 
     fun deleteUser(user: User) {
-        val index = viewModel.deleteUser(user)
-        userAdapter.notifyItemRemoved(index)
+        viewModel.deleteUser(user)
     }
 
     fun deactivateMergeMode() {

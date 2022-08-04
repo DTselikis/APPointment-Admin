@@ -27,12 +27,6 @@ class CustomersFragment : Fragment() {
 
     private lateinit var userAdapter: UserAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.fetchUsersFromDB()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,9 +73,10 @@ class CustomersFragment : Fragment() {
             }
         }
 
-        observeForUserModifications()
-        observeForNewUser()
-        observeForMergeResult()
+        viewModel.fetchUsersFromDB()
+//        observeForUserModifications()
+//        observeForNewUser()
+//        observeForMergeResult()
     }
 
     fun navigate(user: User) {

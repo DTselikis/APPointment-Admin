@@ -158,6 +158,11 @@ class CustomersFragment : Fragment() {
         showRegisteredCustomers()
     }
 
+    fun deleteUser(user: User) {
+        val index = viewModel.deleteUser(user)
+        userAdapter.notifyItemRemoved(index)
+    }
+
     fun deactivateMergeMode() {
         binding.apply {
             filterBtn.visibility = View.VISIBLE

@@ -57,6 +57,11 @@ class UserAdapter(
                         true
                     }
             }
+            contextMenu.add(view.context.getString(R.string.delete_user_context_menu_item))
+                .setOnMenuItemClickListener {
+                    customersFragment.deleteUser(user)
+                    true
+                }
         }
     }
 }

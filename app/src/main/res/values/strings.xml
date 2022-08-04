@@ -48,4 +48,5 @@
 
     <string name="number_of_conflicts">%d/%d</string>
     <string name="choice_conflict">Choose one of the two</string>
+    <string name="delete_user_context_menu_item">Delete</string>
 </resources>

@@ -62,6 +62,27 @@ class CustomersViewModel : ViewModel() {
         return 0
     }
 
+    fun deleteUser(userToBeDeleted: User): Int {
+        val activeList = when (activeFilter) {
+            CustomerFilter.ALL -> _users
+            CustomerFilter.REGISTERED -> _registeredUsers
+            CustomerFilter.UNREGISTERED -> _unregisteredUsers
+        }
+
+        val index = activeList.indexOf(userToBeDeleted)
+        _users.remove(userToBeDeleted)
+
+        updateLists()
+
+        _usersForDisplay.value = when (activeFilter) {
+            CustomerFilter.ALL -> _users
+            CustomerFilter.REGISTERED -> _registeredUsers
+            CustomerFilter.UNREGISTERED -> _unregisteredUsers
+        }
+
+        return index
+    }
+
     fun filterUsers(registered: Boolean) {
         when (registered) {
             true -> {

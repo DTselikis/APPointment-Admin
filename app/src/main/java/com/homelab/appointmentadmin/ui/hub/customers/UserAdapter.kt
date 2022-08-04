@@ -29,7 +29,10 @@ class UserAdapter(
         }
 
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.lastname == newItem.lastname
+            return  oldItem.firstname == newItem.firstname && oldItem.lastname == newItem.lastname
+                    &&  oldItem.nickname == newItem.nickname &&  oldItem.phone == newItem.phone
+                    &&  oldItem.email == newItem.email &&  oldItem.gender == newItem.gender
+                    && oldItem.fbName == newItem.fbName && oldItem.registered == newItem.registered
         }
 
     }

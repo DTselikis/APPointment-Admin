@@ -18,6 +18,9 @@ class CustomersViewModel : ViewModel() {
     private val _usersForDisplay = MutableLiveData<List<User>>()
     val usersForDisplay: LiveData<List<User>> = _usersForDisplay
 
+    private val _userDeleted = MutableLiveData<Boolean>()
+    val userDeleted: LiveData<Boolean> = _userDeleted
+
     private var activeFilter = CustomerFilter.ALL
 
     var mergeMode = false
@@ -55,11 +58,20 @@ class CustomersViewModel : ViewModel() {
         return insertedIndex
     }
 
-    fun deleteUser(userToBeDeleted: User): Int {
-        _users.remove(userToBeDeleted)
-        updateLists()
+    fun deleteUser(user: User) {
+        Firebase.firestore.runTransaction { transaction ->
+            val userRef = Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            val userNotesRef = Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
 
-        return 0
+            transaction.delete(userRef)
+            transaction.delete(userNotesRef)
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                _users.remove(user)
+                updateLists()
+            }
+            _userDeleted.value = task.isSuccessful
+        }
     }
 
     fun filterUsers(registered: Boolean) {

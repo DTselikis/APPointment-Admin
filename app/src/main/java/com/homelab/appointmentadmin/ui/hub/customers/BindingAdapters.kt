@@ -15,6 +15,7 @@ fun bindUsersList(recyclerView: RecyclerView, users: List<User>?) {
     val adapter = recyclerView.adapter as UserAdapter
 
     adapter.submitList(users)
+    adapter.notifyDataSetChanged()
 }
 
 @BindingAdapter("stroke")

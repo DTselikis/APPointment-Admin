@@ -27,6 +27,12 @@ class CustomersFragment : Fragment() {
 
     private lateinit var userAdapter: UserAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.fetchUsersFromDB()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -89,31 +95,49 @@ class CustomersFragment : Fragment() {
     }
 
     private fun observeForUserModifications() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(USER_NAV_KEY)
-            ?.observe(viewLifecycleOwner) { updatedUser ->
-                viewModel.updateUser(updatedUser)
-            }
+        findNavController().currentBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
+            savedStateHandle.getLiveData<User>(USER_NAV_KEY)
+                .observe(viewLifecycleOwner) { updatedUser ->
+                    viewModel.updateUser(updatedUser)
+                    savedStateHandle.remove<User>(USER_NAV_KEY)
+                }
+        }
     }
 
     private fun observeForNewUser() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User>(
-            NEW_USER_NAV_KEY
-        )?.observe(viewLifecycleOwner) { newUser ->
-            viewModel.insertUser(newUser)
+        findNavController().currentBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
+            savedStateHandle.getLiveData<User>(
+                NEW_USER_NAV_KEY
+            ).observe(viewLifecycleOwner) { newUser ->
+                viewModel.insertUser(newUser)
+                savedStateHandle.remove<User>(NEW_USER_NAV_KEY)
+            }
         }
     }
 
     private fun observeForMergeResult() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<User?>(
-            MERGE_NAV_KEY
-        )?.observe(viewLifecycleOwner) { mergedUser ->
-            deactivateMergeMode()
+        findNavController().currentBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
+            savedStateHandle.getLiveData<User?>(
+                MERGE_NAV_KEY
+            ).observe(viewLifecycleOwner) { mergedUser ->
+                deactivateMergeMode()
 
-            mergedUser?.let {
-                viewModel.updateUser(mergedUser)
-                viewModel.deleteUser(viewModel.getUserToBeMerged())
+                mergedUser?.let {
+                    viewModel.updateUser(mergedUser)
+                    viewModel.deleteUser(viewModel.getUserToBeMerged())
+                }
+
+                savedStateHandle.remove<User?>(MERGE_NAV_KEY)
             }
+        }
+    }
 
+    private fun observeForUserDeletion() {
+        viewModel.userDeleted.observe(viewLifecycleOwner) { deleted ->
+            val text =
+                if (deleted) getString(R.string.delete_success) else getString(R.string.delete_fail)
+
+            Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
         }
     }
 

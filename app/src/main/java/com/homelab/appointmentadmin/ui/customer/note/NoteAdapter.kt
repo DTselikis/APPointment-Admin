@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.NoteItemBinding
 import com.homelab.appointmentadmin.model.network.Note
 
@@ -43,6 +44,20 @@ class NoteAdapter(
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val note = getItem(position)
+
+        addContextMenu(holder.itemView, note)
+
+        holder.bind(note)
+    }
+
+    private fun addContextMenu(itemView: View, note: Note) {
+        itemView.setOnCreateContextMenuListener { contextMenu, view, _ ->
+            contextMenu.add(view.context.getString(R.string.delete_user_context_menu_item))
+                .setOnMenuItemClickListener {
+                    notesFragment.deleteNote(note)
+                    true
+                }
+        }
     }
 }

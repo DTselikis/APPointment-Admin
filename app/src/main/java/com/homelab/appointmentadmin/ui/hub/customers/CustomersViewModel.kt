@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class CustomersViewModel : ViewModel() {
-    lateinit var _users: MutableList<User>
+    private lateinit var _users: MutableList<User>
     private lateinit var _registeredUsers: List<User>
     private lateinit var _unregisteredUsers: List<User>
 
@@ -71,7 +71,7 @@ class CustomersViewModel : ViewModel() {
             transaction.delete(userRef)
             transaction.delete(userNotesRef)
         }.addOnCompleteListener { task ->
-            val deleted: Boolean =
+            val deleted =
                 if (task.isSuccessful) {
                     _users.remove(user)
                     updateLists()
@@ -150,8 +150,6 @@ class CustomersViewModel : ViewModel() {
     }
 
     fun getUserToBeMerged(): User = userToBeMerged
-
-    fun getRegisteredUsers(): List<User> = _registeredUsers
 
     private fun MutableList<User>.update(updatedUser: User): Int {
         val existingUser = this.find { it.uid == updatedUser.uid }

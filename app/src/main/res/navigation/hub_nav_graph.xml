@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.homelab.appointmentadmin.ui.auth.login.LoginFragment"
+        android:name="com.homelab.appointmentadmin.ui.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action

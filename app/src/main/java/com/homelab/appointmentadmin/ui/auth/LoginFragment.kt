@@ -1,4 +1,4 @@
-package com.homelab.appointmentadmin.ui.auth.login
+package com.homelab.appointmentadmin.ui.auth
 
 import android.app.Activity
 import android.os.Bundle

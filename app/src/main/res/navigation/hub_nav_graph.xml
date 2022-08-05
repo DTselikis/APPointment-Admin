@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hub_nav_graph"
-    app:startDestination="@id/customersFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/customersFragment"
@@ -45,5 +45,16 @@
         <argument
             android:name="usetToBeMergedWith"
             app:argType="com.homelab.appointmentadmin.data.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.homelab.appointmentadmin.ui.auth.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_customersFragment"
+            app:destination="@id/customersFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.data.MERGE_NAV_KEY
@@ -19,6 +21,7 @@ import com.homelab.appointmentadmin.data.NEW_USER_NAV_KEY
 import com.homelab.appointmentadmin.data.USER_NAV_KEY
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.databinding.FragmentCustomersBinding
+import kotlinx.coroutines.flow.collectLatest
 
 class CustomersFragment : Fragment() {
 
@@ -79,10 +82,10 @@ class CustomersFragment : Fragment() {
             }
         }
 
-        viewModel.fetchUsersFromDB()
-//        observeForUserModifications()
-//        observeForNewUser()
-//        observeForMergeResult()
+        observeForUserDeletion()
+        observeForUserModifications()
+        observeForNewUser()
+        observeForMergeResult()
     }
 
     fun navigate(user: User) {
@@ -133,11 +136,13 @@ class CustomersFragment : Fragment() {
     }
 
     private fun observeForUserDeletion() {
-        viewModel.userDeleted.observe(viewLifecycleOwner) { deleted ->
-            val text =
-                if (deleted) getString(R.string.delete_success) else getString(R.string.delete_fail)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.userDeleted.collectLatest { deleted ->
+                val text =
+                    if (deleted) getString(R.string.delete_success) else getString(R.string.delete_fail)
 
-            Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

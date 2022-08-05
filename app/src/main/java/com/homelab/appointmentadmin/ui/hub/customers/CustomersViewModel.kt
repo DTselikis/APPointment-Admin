@@ -3,12 +3,17 @@ package com.homelab.appointmentadmin.ui.hub.customers
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.CustomerFilter
 import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class CustomersViewModel : ViewModel() {
     lateinit var _users: MutableList<User>
@@ -18,8 +23,8 @@ class CustomersViewModel : ViewModel() {
     private val _usersForDisplay = MutableLiveData<List<User>>()
     val usersForDisplay: LiveData<List<User>> = _usersForDisplay
 
-    private val _userDeleted = MutableLiveData<Boolean>()
-    val userDeleted: LiveData<Boolean> = _userDeleted
+    private val _userDeleted = MutableSharedFlow<Boolean>()
+    val userDeleted: SharedFlow<Boolean> = _userDeleted.asSharedFlow()
 
     private var activeFilter = CustomerFilter.ALL
 
@@ -66,11 +71,17 @@ class CustomersViewModel : ViewModel() {
             transaction.delete(userRef)
             transaction.delete(userNotesRef)
         }.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                _users.remove(user)
-                updateLists()
+            val deleted: Boolean =
+                if (task.isSuccessful) {
+                    _users.remove(user)
+                    updateLists()
+                    true
+                } else {
+                    false
+                }
+            viewModelScope.launch {
+                _userDeleted.emit(deleted)
             }
-            _userDeleted.value = task.isSuccessful
         }
     }
 

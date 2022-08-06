@@ -28,11 +28,12 @@ class NoteAdapter(
 
     companion object Diffcallback : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.timestamp == newItem.timestamp
+            return oldItem.hash == newItem.hash
         }
 
         override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.title == newItem.title || oldItem.description == newItem.description
+            return oldItem.title == newItem.title && oldItem.description == newItem.description
+                    && oldItem.timestamp == newItem.timestamp && oldItem.photos == newItem.photos
         }
 
     }

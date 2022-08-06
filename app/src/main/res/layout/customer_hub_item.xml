@@ -44,11 +44,11 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text='@{user.firstname + " " + user.lastname}'
+                android:text='@{user.nickname}'
                 app:layout_constraintBottom_toBottomOf="@id/customer_hub_pic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.3"
-                app:layout_constraintStart_toStartOf="@id/customer_hub_pic"
+                app:layout_constraintHorizontal_bias="0.07"
+                app:layout_constraintStart_toEndOf="@id/customer_hub_pic"
                 app:layout_constraintTop_toTopOf="@id/customer_hub_pic"
                 tools:text="Customer Customer" />
 

@@ -10,7 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.NOTES_FIELD_VALUE
-import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTI0N
+import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTION
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
@@ -37,7 +37,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private var isNoteVisible = false
 
     fun fetchNotes() {
-        Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!).get()
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
             .addOnSuccessListener { result ->
                 if (result.exists()) {
                     _notes.value!!.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
@@ -87,7 +87,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
             )
         )
 
-        Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!)
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!)
             .set(data, SetOptions.merge())
             .addOnCompleteListener { task ->
                 _updatesStored.value = task.isSuccessful
@@ -96,7 +96,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun deleteNote(note: Note) {
         val index = _notes.value!!.indexOf(note)
-        Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!)
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!)
             .update(mapOf("$NOTES_FIELD_VALUE.${note.hash}" to FieldValue.delete()))
             .addOnCompleteListener { task ->
                 if (task.isSuccessful)

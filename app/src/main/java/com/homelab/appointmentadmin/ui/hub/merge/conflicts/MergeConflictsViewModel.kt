@@ -196,7 +196,7 @@ class MergeConflictsViewModel : ViewModel() {
         db: FirebaseFirestore
     ): Notes? {
         val userToBeMergedNotesRef =
-            db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
+            db.collection(USERS_NOTES_COLLECTION).document(userToBeMerged.uid!!)
 
         return transaction.get(userToBeMergedNotesRef)
             .toObject<Notes>()
@@ -211,7 +211,7 @@ class MergeConflictsViewModel : ViewModel() {
 
     private fun mergeNotes(transaction: Transaction, db: FirebaseFirestore, notes: Notes) {
         val userToBeMergedWithNotesRef =
-            db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMergedWith.uid!!)
+            db.collection(USERS_NOTES_COLLECTION).document(userToBeMergedWith.uid!!)
 
         transaction.set(userToBeMergedWithNotesRef, notes, SetOptions.merge())
     }
@@ -223,14 +223,14 @@ class MergeConflictsViewModel : ViewModel() {
         val userToBeMergedRef =
             db.collection(USERS_COLLECTION).document(userToBeMerged.uid!!)
         val userToBeMergedNotesRef =
-            db.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
+            db.collection(USERS_NOTES_COLLECTION).document(userToBeMerged.uid!!)
 
         transaction.delete(userToBeMergedRef)
         transaction.delete(userToBeMergedNotesRef)
     }
 
     private fun fetchNotes() {
-        Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(userToBeMerged.uid!!)
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(userToBeMerged.uid!!)
             .get()
             .addOnSuccessListener { result ->
                 if (result.exists()) {
@@ -247,7 +247,7 @@ class MergeConflictsViewModel : ViewModel() {
     }
 
     private fun mergeNotes(notes: Notes) {
-        Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(userToBeMergedWith.uid!!)
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(userToBeMergedWith.uid!!)
             .set(notes, SetOptions.merge())
             .addOnSuccessListener {
                 deleteUserToBeMerged()

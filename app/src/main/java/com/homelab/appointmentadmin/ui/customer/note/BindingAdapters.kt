@@ -6,6 +6,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.homelab.appointmentadmin.model.network.Note
 import java.text.SimpleDateFormat
+import java.util.*
 
 @BindingAdapter("notes")
 fun bindNotes(recyclerView: RecyclerView, notes: List<Note>?) {
@@ -17,6 +18,7 @@ fun bindNotes(recyclerView: RecyclerView, notes: List<Note>?) {
 @BindingAdapter("date")
 fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
     timestamp?.let {
-        materialTextView.text = SimpleDateFormat("E dd/MM/yy").format(timestamp.toDate())
+        materialTextView.text =
+            SimpleDateFormat("E dd/MM/yy", Locale.getDefault()).format(timestamp.toDate())
     }
 }

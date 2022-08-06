@@ -112,11 +112,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
             }
     }
 
-    private fun insertNoteToList(note: Note): Int {
+    private fun insertNoteToList(note: Note) {
         _notes.add(0, note)
         _notesForDisplay.value = _notes.map { it }
-
-        return 0
     }
 
     private fun updateExistingNote(note: Note) {

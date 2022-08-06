@@ -19,8 +19,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class NotesViewModel(private val user: User) : ViewModel() {
-    private val _notes = MutableLiveData<MutableList<Note>>(mutableListOf())
-    val notes: LiveData<MutableList<Note>> = _notes
+    private val _notesForDisplay = MutableLiveData<List<Note>>()
+    val notesForDisplay: LiveData<List<Note>> = _notesForDisplay
+
+    private val _notes = mutableListOf<Note>()
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
@@ -28,8 +30,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _updatesStored = MutableLiveData<Boolean>()
     val updatesStored: LiveData<Boolean> = _updatesStored
 
-    private val _noteDeleted = MutableSharedFlow<Pair<Int, Boolean>>()
-    val noteDeleted: SharedFlow<Pair<Int, Boolean>> = _noteDeleted
+    private val _noteDeleted = MutableSharedFlow<Boolean>()
+    val noteDeleted: SharedFlow<Boolean> = _noteDeleted
 
     private lateinit var selectedNote: Note
     private var isNew = false
@@ -40,9 +42,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
             .addOnSuccessListener { result ->
                 if (result.exists()) {
-                    _notes.value!!.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
+                    _notes.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
                         entry.value
                     }.sortedByDescending { it.timestamp })
+                    _notesForDisplay.value = _notes.map { it }
                 }
             }
     }
@@ -57,7 +60,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun isModified(): Boolean =
         title.value != selectedNote.title || description.value != selectedNote.description
 
-    fun storeChangesToDB(): Int {
+    fun storeChangesToDB() {
         val note =
             Note(
                 title = title.value,
@@ -67,17 +70,17 @@ class NotesViewModel(private val user: User) : ViewModel() {
             )
         storeToDB(note, selectedNote.hash!!)
 
-        return updateExistingNote(note)
+        updateExistingNote(note)
     }
 
-    fun storeNewNoteToDB(): Int {
+    fun storeNewNoteToDB() {
         val newNote =
             Note(description = description.value, photos = null, title = title.value).also {
                 it.hash = it.hashCode().toString()
             }
         storeToDB(newNote, newNote.hash!!)
 
-        return insertNoteToList(newNote)
+        insertNoteToList(newNote)
     }
 
     private fun storeToDB(note: Note, hash: String) {
@@ -95,33 +98,31 @@ class NotesViewModel(private val user: User) : ViewModel() {
     }
 
     fun deleteNote(note: Note) {
-        val index = _notes.value!!.indexOf(note)
         Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!)
             .update(mapOf("$NOTES_FIELD_VALUE.${note.hash}" to FieldValue.delete()))
             .addOnCompleteListener { task ->
-                if (task.isSuccessful)
-                    _notes.value!!.remove(note)
+                if (task.isSuccessful) {
+                    _notes.remove(note)
+                    _notesForDisplay.value = _notes.map { it }
+                }
 
                 viewModelScope.launch {
-                    _noteDeleted.emit(Pair(index, task.isSuccessful))
+                    _noteDeleted.emit(task.isSuccessful)
                 }
             }
     }
 
     private fun insertNoteToList(note: Note): Int {
-        _notes.value!!.add(0, note)
+        _notes.add(0, note)
+        _notesForDisplay.value = _notes.map { it }
 
         return 0
     }
 
-    private fun updateExistingNote(note: Note): Int {
-        val existingNote = _notes.value!!.find { it.hash == note.hash }
-        val index = _notes.value!!.indexOf(existingNote)
-        _notes.value!!.remove(existingNote)
+    private fun updateExistingNote(note: Note) {
+        _notes.remove(selectedNote)
 
         insertNoteToList(note)
-
-        return index
     }
 
     fun setNewNoteState() {

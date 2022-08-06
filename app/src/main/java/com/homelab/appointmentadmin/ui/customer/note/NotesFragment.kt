@@ -139,15 +139,11 @@ class NotesFragment : Fragment() {
     }
 
     private fun updateAdapter() {
-        val index: Int
         viewModel.apply {
             if (isNewNote()) {
-                index = storeNewNoteToDB()
-                adapter.notifyItemInserted(index)
+                storeNewNoteToDB()
             } else if (isModified()) {
-                index = storeChangesToDB()
-                adapter.notifyItemChanged(index)
-                adapter.notifyItemMoved(index, 0)
+                storeChangesToDB()
             }
         }
     }
@@ -163,9 +159,8 @@ class NotesFragment : Fragment() {
 
     private fun observeForNoteDeletion() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.noteDeleted.collectLatest { result ->
-                val text = if (result.second) {
-                    adapter.notifyItemRemoved(result.first)
+            viewModel.noteDeleted.collectLatest { deleted ->
+                val text = if (deleted) {
                     getString(R.string.delete_success)
                 } else getString(R.string.delete_fail)
 

@@ -8,7 +8,7 @@ import com.homelab.appointmentadmin.model.network.Note
 import java.text.SimpleDateFormat
 
 @BindingAdapter("notes")
-fun bindNotes(recyclerView: RecyclerView, notes: MutableList<Note>?) {
+fun bindNotes(recyclerView: RecyclerView, notes: List<Note>?) {
     val adapter = recyclerView.adapter as NoteAdapter
 
     adapter.submitList(notes)

@@ -42,10 +42,7 @@ class CreateCustomerViewModel : ViewModel() {
             uid = null,
             firstname.value,
             lastname.value,
-            if (nickname.value.isNullOrBlank())
-                "${if (!firstname.value.isNullOrBlank()) firstname.value else ""}" +
-                        "${if (!lastname.value.isNullOrBlank()) lastname.value else ""}"
-            else nickname.value,
+            if (!nickname.value.isNullOrBlank()) nickname.value!! else defaultNickname(),
             phone.value,
             email.value,
             gender = gender.code,
@@ -69,5 +66,19 @@ class CreateCustomerViewModel : ViewModel() {
 
     fun setGender(gender: Gender) {
         this.gender = gender
+    }
+
+    private fun defaultNickname(): String {
+        var nickname: String
+        if (!firstname.value.isNullOrBlank()) {
+            nickname = firstname.value!!
+            if (!lastname.value.isNullOrBlank()) {
+                nickname += " ${lastname.value}"
+            }
+        } else {
+            nickname = lastname.value!!
+        }
+
+        return nickname
     }
 }

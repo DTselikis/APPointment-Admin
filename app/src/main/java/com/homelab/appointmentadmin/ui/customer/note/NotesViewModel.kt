@@ -24,8 +24,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private val _notes = mutableListOf<Note>()
 
-    val title = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
+    val title = MutableLiveData<String?>()
+    val description = MutableLiveData<String?>()
 
     private val _updatesStored = MutableLiveData<Boolean>()
     val updatesStored: LiveData<Boolean> = _updatesStored

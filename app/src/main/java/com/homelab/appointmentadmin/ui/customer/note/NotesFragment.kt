@@ -4,19 +4,21 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class NotesFragment : Fragment() {
 
@@ -63,6 +65,7 @@ class NotesFragment : Fragment() {
         viewModel.fetchNotes()
 
         observeChangedStoredtoDB()
+        observeForNoteDeletion()
     }
 
     override fun onResume() {
@@ -116,6 +119,10 @@ class NotesFragment : Fragment() {
         })
     }
 
+    fun deleteNote(note: Note) {
+        viewModel.deleteNote(note)
+    }
+
     fun back() {
         hideNote()
         viewModel.setNoteVisible(false)
@@ -151,6 +158,19 @@ class NotesFragment : Fragment() {
                 if (stored) getString(R.string.note_saved) else getString(R.string.note_not_saved)
 
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun observeForNoteDeletion() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.noteDeleted.collectLatest { result ->
+                val text = if (result.second) {
+                    adapter.notifyItemRemoved(result.first)
+                    getString(R.string.delete_success)
+                } else getString(R.string.delete_fail)
+
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

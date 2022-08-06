@@ -3,14 +3,20 @@ package com.homelab.appointmentadmin.ui.customer.note
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.homelab.appointmentadmin.data.NOTES_FIELD_VALUE
 import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTI0N
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 
 class NotesViewModel(private val user: User) : ViewModel() {
     private val _notes = MutableLiveData<MutableList<Note>>(mutableListOf())
@@ -21,6 +27,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private val _updatesStored = MutableLiveData<Boolean>()
     val updatesStored: LiveData<Boolean> = _updatesStored
+
+    private val _noteDeleted = MutableSharedFlow<Pair<Int, Boolean>>()
+    val noteDeleted: SharedFlow<Pair<Int, Boolean>> = _noteDeleted
 
     private lateinit var selectedNote: Note
     private var isNew = false
@@ -82,6 +91,20 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .set(data, SetOptions.merge())
             .addOnCompleteListener { task ->
                 _updatesStored.value = task.isSuccessful
+            }
+    }
+
+    fun deleteNote(note: Note) {
+        val index = _notes.value!!.indexOf(note)
+        Firebase.firestore.collection(USERS_NOTES_COLLECTI0N).document(user.uid!!)
+            .update(mapOf("$NOTES_FIELD_VALUE.${note.hash}" to FieldValue.delete()))
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                    _notes.value!!.remove(note)
+
+                viewModelScope.launch {
+                    _noteDeleted.emit(Pair(index, task.isSuccessful))
+                }
             }
     }
 

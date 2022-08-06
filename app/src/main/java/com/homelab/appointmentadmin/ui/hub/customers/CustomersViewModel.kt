@@ -45,22 +45,18 @@ class CustomersViewModel : ViewModel() {
                 _registeredUsers = registered
                 _unregisteredUsers = unregistered
 
-                _usersForDisplay.value = _users
+                _usersForDisplay.value = _users.map { it }
             }
     }
 
-    fun updateUser(updatedUser: User): Int {
-        val updatedIndex = _users.update(updatedUser)
+    fun updateUser(updatedUser: User) {
+        _users.update(updatedUser)
         updateLists()
-
-        return updatedIndex
     }
 
-    fun insertUser(newUser: User): Int {
-        val insertedIndex = _users.addSorted(newUser)
+    fun insertUser(newUser: User) {
+        _users.addSorted(newUser)
         updateLists()
-
-        return insertedIndex
     }
 
     fun deleteUser(user: User) {
@@ -89,17 +85,17 @@ class CustomersViewModel : ViewModel() {
         when (registered) {
             true -> {
                 activeFilter = CustomerFilter.REGISTERED
-                _usersForDisplay.value = _registeredUsers
+                _usersForDisplay.value = _registeredUsers.map { it }
             }
             false -> {
                 activeFilter = CustomerFilter.UNREGISTERED
-                _usersForDisplay.value = _unregisteredUsers
+                _usersForDisplay.value = _unregisteredUsers.map { it }
             }
         }
     }
 
     fun resetFilter() {
-        _usersForDisplay.value = _users
+        _usersForDisplay.value = _users.map { it }
 
         activeFilter = CustomerFilter.ALL
     }
@@ -125,7 +121,7 @@ class CustomersViewModel : ViewModel() {
             }
         }
 
-        _usersForDisplay.value = mergedList
+        _usersForDisplay.value = mergedList.map { it }
     }
 
     private fun updateLists() {
@@ -135,9 +131,9 @@ class CustomersViewModel : ViewModel() {
         _unregisteredUsers = unregistered
 
         _usersForDisplay.value = when (activeFilter) {
-            CustomerFilter.ALL -> _users
-            CustomerFilter.UNREGISTERED -> _unregisteredUsers
-            CustomerFilter.REGISTERED -> _registeredUsers
+            CustomerFilter.ALL -> _users.map { it }
+            CustomerFilter.UNREGISTERED -> _unregisteredUsers.map { it }
+            CustomerFilter.REGISTERED -> _registeredUsers.map { it }
         }
     }
 

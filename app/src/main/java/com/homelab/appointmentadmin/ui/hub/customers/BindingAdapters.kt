@@ -7,6 +7,7 @@ import coil.load
 import coil.request.CachePolicy
 import com.google.android.material.card.MaterialCardView
 import com.homelab.appointmentadmin.R
+import com.homelab.appointmentadmin.data.Gender
 import com.homelab.appointmentadmin.data.User
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -34,8 +35,8 @@ fun bindStroke(materialCardView: MaterialCardView, registered: Boolean?) {
 fun bindProfilePic(circleImageView: CircleImageView, user: User?) {
     user?.let {
         val placeholder = when (it.gender) {
-            "F" -> R.drawable.female_placeholder_wo_bg
-            "M" -> R.drawable.male_placeholder_wo_bg
+            Gender.FEMALE.code -> R.drawable.female_placeholder_wo_bg
+            Gender.MALE.code -> R.drawable.male_placeholder_wo_bg
             else -> R.drawable.any_placeholder_wo_bg
         }
 

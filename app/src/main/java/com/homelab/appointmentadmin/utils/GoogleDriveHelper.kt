@@ -54,7 +54,7 @@ object GoogleDriveHelper {
         return listOf(userFolder, userNotesFolder)
     }
 
-    private fun createFolderInNotExist(name: String, parents: List<String>? = null): String =
+    fun createFolderInNotExist(name: String, parents: List<String>? = null): String =
         gDrive.folder(name)?.id ?: createFolder(name, parents)
 
 

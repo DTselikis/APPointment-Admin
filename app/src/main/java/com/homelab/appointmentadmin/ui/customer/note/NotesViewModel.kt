@@ -50,6 +50,14 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private lateinit var file: File
     private lateinit var mime: String
     private lateinit var parents: List<String>
+    private var noteFolderId: String? = null
+    get() {
+        if (field == null) {
+            field = GoogleDriveHelper.createFolderInNotExist(timestamp!!, parents)
+        }
+
+        return field
+    }
 
     private var timestamp: String? = null
 

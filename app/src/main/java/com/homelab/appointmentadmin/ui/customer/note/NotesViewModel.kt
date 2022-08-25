@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -88,7 +89,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun storeNewNoteToDB() {
         val newNote =
             Note(description = description.value, photos = null, title = title.value).also {
-                it.hash = it.hashCode().toString()
+                it.hash = "${it.hashCode()}_${Timestamp.now().seconds}"
             }
         storeToDB(newNote, newNote.hash!!)
 

@@ -36,8 +36,11 @@ object GoogleDriveHelper {
         }
     }
 
-    fun uploadImage(image: java.io.File, mime: String?) {
-        val gFile = File().apply { name = image.name }
+    fun uploadImage(image: java.io.File, mime: String?, folderId: String) {
+        val gFile = File().apply {
+            name = image.name
+            parents = listOf(folderId)
+        }
         val fileContent = FileContent(mime ?: "image/*", image)
 
         gDrive.Files().create(gFile, fileContent).execute()

@@ -78,6 +78,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         isNew = false
         title.value = note.title
         description.value = note.description
+        timestamp = note.hash
     }
 
     fun isModified(): Boolean =

@@ -1,7 +1,10 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.request.CachePolicy
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.homelab.appointmentadmin.model.network.Note
@@ -22,3 +25,11 @@ fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
             SimpleDateFormat("E dd/MM/yy", Locale.getDefault()).format(timestamp.toDate())
     }
 }
+
+@BindingAdapter("imgUrl")
+fun bindProfilePic(imageView: ImageView, url: String) {
+    imageView.load(url) {
+            memoryCachePolicy(CachePolicy.ENABLED)
+            diskCachePolicy(CachePolicy.ENABLED)
+        }
+    }

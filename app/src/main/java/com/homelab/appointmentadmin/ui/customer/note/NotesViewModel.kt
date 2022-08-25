@@ -73,14 +73,6 @@ class NotesViewModel(private val user: User) : ViewModel() {
             }
     }
 
-    fun setSelectedNote(note: Note) {
-        selectedNote = note
-        isNew = false
-        title.value = note.title
-        description.value = note.description
-        timestamp = note.hash
-    }
-
     fun isModified(): Boolean =
         title.value != selectedNote.title || description.value != selectedNote.description
 
@@ -168,6 +160,14 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 _needsAuthorization.emit(e.intent)
             }
         }
+    }
+
+    fun setSelectedNote(note: Note) {
+        selectedNote = note
+        isNew = false
+        title.value = note.title
+        description.value = note.description
+        timestamp = note.hash
     }
 
     fun setNewNoteState() {

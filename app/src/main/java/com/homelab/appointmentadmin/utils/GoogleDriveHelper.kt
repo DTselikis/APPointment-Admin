@@ -8,6 +8,7 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
+import com.google.api.services.drive.model.File
 import com.homelab.appointmentadmin.R
 
 object GoogleDriveHelper {
@@ -31,9 +32,16 @@ object GoogleDriveHelper {
     }
 
     fun uploadImage(image: java.io.File, mime: String?) {
-        val gFile = com.google.api.services.drive.model.File().apply { name = image.name }
+        val gFile = File().apply { name = image.name }
         val fileContent = FileContent(mime ?: "image/*", image)
 
         gDrive.Files().create(gFile, fileContent).execute()
     }
+
+    private fun Drive.folderExists(name: String): File =
+        files().list().apply {
+            q = "name=$name"
+            spaces = "drive"
+            fields = "name"
+        }.execute().files[0]
 }

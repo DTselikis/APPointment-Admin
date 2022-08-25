@@ -38,7 +38,7 @@ object GoogleDriveHelper {
         gDrive.Files().create(gFile, fileContent).execute()
     }
 
-    private fun Drive.folderExists(name: String): File =
+    private fun Drive.folder(name: String): File =
         files().list().apply {
             q = "name=$name"
             spaces = "drive"

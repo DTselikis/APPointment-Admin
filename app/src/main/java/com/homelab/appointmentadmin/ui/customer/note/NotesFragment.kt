@@ -41,6 +41,7 @@ class NotesFragment : Fragment() {
             uri?.let {
                 val file = it.toFile()
                 val mimeType = requireContext().contentResolver.getType(it)
+                viewModel.uploadFile(file!!, mimeType)
             }
         }
 

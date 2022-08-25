@@ -14,6 +14,7 @@ import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTION
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
+import com.homelab.appointmentadmin.utils.GoogleDriveHelper
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -121,6 +122,12 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _notes.remove(selectedNote)
 
         insertNoteToList(note)
+    }
+
+    fun uploadFile(image: java.io.File, mime: String?) {
+        viewModelScope.launch {
+            GoogleDriveHelper.uploadImage(image, mime)
+        }
     }
 
     fun setNewNoteState() {

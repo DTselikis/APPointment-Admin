@@ -45,6 +45,11 @@ class NotesFragment : Fragment() {
             }
         }
 
+    private val requestAuthorization =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            viewModel.uploadFile()
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,6 +85,7 @@ class NotesFragment : Fragment() {
 
         observeChangedStoredtoDB()
         observeForNoteDeletion()
+        observeNeedsAuthorization()
 
         GoogleDriveHelper.initialize(requireContext())
     }
@@ -185,6 +191,14 @@ class NotesFragment : Fragment() {
                 } else getString(R.string.delete_fail)
 
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observeNeedsAuthorization() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.needsAuthorization.collectLatest { requestAuthIntent ->
+                requestAuthorization.launch(requestAuthIntent)
             }
         }
     }

@@ -1,9 +1,11 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -18,6 +20,7 @@ import com.homelab.appointmentadmin.utils.GoogleDriveHelper
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 class NotesViewModel(private val user: User) : ViewModel() {
     private val _notesForDisplay = MutableLiveData<List<Note>>()
@@ -34,10 +37,16 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _noteDeleted = MutableSharedFlow<Boolean>()
     val noteDeleted: SharedFlow<Boolean> = _noteDeleted
 
+    private val _needsAuthorization = MutableSharedFlow<Intent>()
+    val needsAuthorization: SharedFlow<Intent> = _needsAuthorization
+
     private lateinit var selectedNote: Note
     private var isNew = false
 
     private var isNoteVisible = false
+
+    private lateinit var file: File
+    private lateinit var mime: String
 
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
@@ -124,9 +133,13 @@ class NotesViewModel(private val user: User) : ViewModel() {
         insertNoteToList(note)
     }
 
-    fun uploadFile(image: java.io.File, mime: String?) {
+    fun uploadFile(image: File = file, mime: String? = this.mime) {
         viewModelScope.launch {
-            GoogleDriveHelper.uploadImage(image, mime)
+            try {
+                GoogleDriveHelper.uploadImage(image, mime)
+            } catch (e: UserRecoverableAuthIOException) {
+                _needsAuthorization.emit(e.intent)
+            }
         }
     }
 

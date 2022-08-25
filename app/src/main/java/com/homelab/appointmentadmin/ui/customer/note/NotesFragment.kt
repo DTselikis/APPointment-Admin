@@ -111,6 +111,7 @@ class NotesFragment : Fragment() {
             visibility = View.VISIBLE
         }
         binding.newNoteBtn.visibility = View.GONE
+        binding.photosBottomSheet.visibility = View.VISIBLE
 
         val scaleX = PropertyValuesHolder.ofFloat("scaleX", 1f)
         val scaleY = PropertyValuesHolder.ofFloat("scaleY", 1f)
@@ -132,6 +133,7 @@ class NotesFragment : Fragment() {
 
             override fun onAnimationEnd(p0: Animator?) {
                 binding.cardFrame.visibility = View.GONE
+                binding.photosBottomSheet.visibility = View.GONE
                 binding.newNoteBtn.visibility = View.VISIBLE
                 updateAdapter()
             }

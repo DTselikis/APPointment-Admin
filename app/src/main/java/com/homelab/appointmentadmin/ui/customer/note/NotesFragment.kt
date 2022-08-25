@@ -3,6 +3,7 @@ package com.homelab.appointmentadmin.ui.customer.note
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,8 @@ import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 import kotlinx.coroutines.flow.collectLatest
+import java.io.File
+import java.io.FileOutputStream
 
 class NotesFragment : Fragment() {
 
@@ -34,7 +37,9 @@ class NotesFragment : Fragment() {
 
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-
+            uri?.let {
+                val file = it.toFile()
+            }
         }
 
     override fun onCreateView(
@@ -177,5 +182,20 @@ class NotesFragment : Fragment() {
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun Uri.toFile(): File? {
+        requireActivity().contentResolver.openInputStream(this)?.let { inputSteam ->
+            val tmpFile = File.createTempFile("note", "pic")
+            val fileOutputStream = FileOutputStream(tmpFile)
+
+            inputSteam.copyTo(fileOutputStream)
+            inputSteam.close()
+            fileOutputStream.close()
+
+            return tmpFile
+        }
+
+        return null
     }
 }

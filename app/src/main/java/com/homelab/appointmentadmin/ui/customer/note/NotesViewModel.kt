@@ -48,6 +48,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private lateinit var file: File
     private lateinit var mime: String
+    private lateinit var folderId: String
 
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
@@ -132,6 +133,16 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _notes.remove(selectedNote)
 
         insertNoteToList(note)
+    }
+
+    fun initializeFolderId() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                folderId = GoogleDriveHelper.createFolderInNotExist(user.uid!!)
+            } catch (e: UserRecoverableAuthIOException) {
+                _needsAuthorization.emit(e.intent)
+            }
+        }
     }
 
     fun uploadFile(image: File = file, mime: String? = this.mime) {

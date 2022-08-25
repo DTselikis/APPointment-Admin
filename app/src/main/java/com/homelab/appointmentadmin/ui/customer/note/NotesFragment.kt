@@ -88,6 +88,7 @@ class NotesFragment : Fragment() {
         observeNeedsAuthorization()
 
         GoogleDriveHelper.initialize(requireContext())
+        viewModel.initializeFolderId()
     }
 
     override fun onResume() {

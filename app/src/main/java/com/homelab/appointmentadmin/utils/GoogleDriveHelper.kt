@@ -43,9 +43,9 @@ object GoogleDriveHelper {
         gDrive.Files().create(gFile, fileContent).execute()
     }
 
-    fun createFolderInNotExist(uid: String) {
-        val folder = gDrive.folder(uid)?.id ?: createFolder(uid)
-    }
+    fun createFolderInNotExist(uid: String): String =
+        gDrive.folder(uid)?.id ?: createFolder(uid)
+
 
     private fun createFolder(name: String): String =
         gDrive.files().create(

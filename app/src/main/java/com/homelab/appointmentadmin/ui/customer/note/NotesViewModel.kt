@@ -17,6 +17,7 @@ import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
 import com.homelab.appointmentadmin.utils.GoogleDriveHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -134,7 +135,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     }
 
     fun uploadFile(image: File = file, mime: String? = this.mime) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 GoogleDriveHelper.uploadImage(image, mime)
             } catch (e: UserRecoverableAuthIOException) {

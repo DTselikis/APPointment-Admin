@@ -9,9 +9,6 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import com.homelab.appointmentadmin.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 object GoogleDriveHelper {
     lateinit var gDrive: Drive
@@ -33,14 +30,10 @@ object GoogleDriveHelper {
         }
     }
 
-    suspend fun uploadImage(image: java.io.File, mime: String?) {
+    fun uploadImage(image: java.io.File, mime: String?) {
         val gFile = com.google.api.services.drive.model.File().apply { name = image.name }
         val fileContent = FileContent(mime ?: "image/*", image)
 
-        coroutineScope {
-            launch(Dispatchers.IO) {
-                gDrive.Files().create(gFile, fileContent).execute()
-            }
-        }
+        gDrive.Files().create(gFile, fileContent).execute()
     }
 }

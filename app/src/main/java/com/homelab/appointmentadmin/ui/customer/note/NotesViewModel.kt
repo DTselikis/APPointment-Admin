@@ -88,9 +88,12 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun storeNewNoteToDB() {
         val newNote =
-            Note(description = description.value, photos = null, title = title.value).also {
-                it.hash = "${it.hashCode()}_${Timestamp.now().seconds}"
-            }
+            Note(
+                description = description.value,
+                photos = null,
+                title = title.value,
+                hash = Timestamp.now().seconds.toString()
+            )
         storeToDB(newNote, newNote.hash!!)
 
         insertNoteToList(newNote)

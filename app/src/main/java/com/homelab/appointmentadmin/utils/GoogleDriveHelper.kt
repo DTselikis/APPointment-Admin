@@ -18,7 +18,10 @@ object GoogleDriveHelper {
     fun initialize(context: Context) {
         GoogleSignIn.getLastSignedInAccount(context)?.let { googleAccount ->
             val credential =
-                GoogleAccountCredential.usingOAuth2(context, listOf(DriveScopes.DRIVE_FILE))
+                GoogleAccountCredential.usingOAuth2(
+                    context,
+                    listOf(DriveScopes.DRIVE_FILE, DriveScopes.DRIVE)
+                )
             credential.selectedAccount = googleAccount.account
 
             gDrive = Drive.Builder(
@@ -38,10 +41,13 @@ object GoogleDriveHelper {
         gDrive.Files().create(gFile, fileContent).execute()
     }
 
-    private fun Drive.folder(name: String): File =
+    fun createFolderInNotExist(uid: String) {
+        val folder = gDrive.folder(uid)?.id
+    }
+
+    private fun Drive.folder(name: String): File? =
         files().list().apply {
-            q = "name=$name"
+            q = "mimeType='application/vnd.google-apps.folder' and name='$name'"
             spaces = "drive"
-            fields = "name"
-        }.execute().files[0]
+        }.execute().files.getOrNull(0)
 }

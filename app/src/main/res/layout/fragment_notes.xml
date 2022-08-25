@@ -111,7 +111,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:text="@={viewModel.description}"
-                    app:layout_constraintBottom_toTopOf="@id/note_photos_rv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/frame_title_divider" />
@@ -130,10 +129,25 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.97" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/photos_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <FrameLayout
+                style="?attr/bottomSheetStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/note_photos_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -141,9 +155,8 @@
                     app:layout_constraintTop_toBottomOf="@id/frame_note_text"
                     app:spanCount="2"
                     tools:listitem="@layout/note_photo_item" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+            </FrameLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

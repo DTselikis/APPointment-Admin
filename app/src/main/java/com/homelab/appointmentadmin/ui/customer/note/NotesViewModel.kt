@@ -49,7 +49,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private lateinit var file: File
     private lateinit var mime: String
-    private lateinit var folderId: String
+    private lateinit var parents: List<String>
 
     private var timestamp: String? = null
 
@@ -141,10 +141,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
         insertNoteToList(note)
     }
 
-    fun initializeFolderId() {
+    fun initializeFolderStructure() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                folderId = GoogleDriveHelper.createFolderInNotExist(user.uid!!)
+                parents = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
             } catch (e: UserRecoverableAuthIOException) {
                 _needsAuthorization.emit(e.intent)
             }

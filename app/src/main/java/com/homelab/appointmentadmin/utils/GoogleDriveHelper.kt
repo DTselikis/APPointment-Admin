@@ -12,6 +12,7 @@ import com.google.api.services.drive.model.File
 import com.homelab.appointmentadmin.R
 
 private const val MIME_TYPE_GDRIVE_FOLDER = "application/vnd.google-apps.folder"
+private const val NOTES_SUBFOLDER = "Notes"
 
 object GoogleDriveHelper {
     lateinit var gDrive: Drive
@@ -46,15 +47,25 @@ object GoogleDriveHelper {
         gDrive.Files().create(gFile, fileContent).execute()
     }
 
-    fun createFolderInNotExist(uid: String): String =
-        gDrive.folder(uid)?.id ?: createFolder(uid)
+    fun createFolderStructureIfNotExists(uid: String): List<String> {
+        val userFolder = createFolderInNotExist(uid)
+        val userNotesFolder = createFolderInNotExist(NOTES_SUBFOLDER, listOf(userFolder))
+
+        return listOf(userFolder, userNotesFolder)
+    }
+
+    private fun createFolderInNotExist(name: String, parents: List<String>? = null): String =
+        gDrive.folder(name)?.id ?: createFolder(name, parents)
 
 
-    private fun createFolder(name: String): String =
+    private fun createFolder(name: String, parents: List<String>? = null): String =
         gDrive.files().create(
             File().apply {
                 this.name = name
                 mimeType = MIME_TYPE_GDRIVE_FOLDER
+                parents?.let {
+                    this.parents = it
+                }
             }
         )
             .setFields("id")

@@ -20,6 +20,7 @@ import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
+import com.homelab.appointmentadmin.utils.GoogleDriveHelper
 import kotlinx.coroutines.flow.collectLatest
 import java.io.File
 import java.io.FileOutputStream
@@ -78,6 +79,8 @@ class NotesFragment : Fragment() {
 
         observeChangedStoredtoDB()
         observeForNoteDeletion()
+
+        GoogleDriveHelper.initialize(requireContext())
     }
 
     override fun onResume() {

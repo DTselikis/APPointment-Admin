@@ -37,10 +37,10 @@ object GoogleDriveHelper {
         }
     }
 
-    fun uploadImage(image: java.io.File, mime: String?, folderId: String) {
+    fun uploadImage(image: java.io.File, mime: String?, parents: List<String>) {
         val gFile = File().apply {
             name = image.name
-            parents = listOf(folderId)
+            this.parents = parents
         }
         val fileContent = FileContent(mime ?: "image/*", image)
 

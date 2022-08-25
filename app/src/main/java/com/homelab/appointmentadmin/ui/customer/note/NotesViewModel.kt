@@ -162,7 +162,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun uploadFile(image: File = file, mime: String? = this.mime) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                GoogleDriveHelper.uploadImage(image, mime, folderId)
+                GoogleDriveHelper.uploadImage(image, mime, parents.plus(noteFolderId!!))
             } catch (e: UserRecoverableAuthIOException) {
                 _needsAuthorization.emit(e.intent)
             }

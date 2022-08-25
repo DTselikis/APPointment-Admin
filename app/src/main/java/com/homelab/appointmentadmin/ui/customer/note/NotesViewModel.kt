@@ -51,6 +51,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private lateinit var mime: String
     private lateinit var folderId: String
 
+    private var timestamp: String? = null
+
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
             .addOnSuccessListener { result ->
@@ -92,7 +94,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 description = description.value,
                 photos = null,
                 title = title.value,
-                hash = Timestamp.now().seconds.toString()
+                hash = timestamp
             )
         storeToDB(newNote, newNote.hash!!)
 
@@ -163,6 +165,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         title.value = null
         description.value = null
         isNew = true
+        timestamp = Timestamp.now().seconds.toString()
     }
 
     fun isNewNote(): Boolean = isNew

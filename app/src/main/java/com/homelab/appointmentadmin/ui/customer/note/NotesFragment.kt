@@ -39,6 +39,7 @@ class NotesFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 val file = it.toFile()
+                val mimeType = requireContext().contentResolver.getType(it)
             }
         }
 

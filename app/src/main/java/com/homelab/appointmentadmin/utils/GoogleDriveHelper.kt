@@ -37,34 +37,33 @@ object GoogleDriveHelper {
         }
     }
 
-    fun uploadImage(image: java.io.File, mime: String?, parents: List<String>) {
+    fun uploadImage(image: java.io.File, mime: String?, parent: String) {
         val gFile = File().apply {
             name = image.name
-            this.parents = parents
+            parents = listOf(parent)
         }
         val fileContent = FileContent(mime ?: "image/*", image)
 
         gDrive.Files().create(gFile, fileContent).execute()
     }
 
-    fun createFolderStructureIfNotExists(uid: String): List<String> {
+    fun createFolderStructureIfNotExists(uid: String): String {
         val userFolder = createFolderInNotExist(uid)
-        val userNotesFolder = createFolderInNotExist(NOTES_SUBFOLDER, listOf(userFolder))
 
-        return listOf(userFolder, userNotesFolder)
+        return createFolderInNotExist(NOTES_SUBFOLDER, userFolder)
     }
 
-    fun createFolderInNotExist(name: String, parents: List<String>? = null): String =
-        gDrive.folder(name)?.id ?: createFolder(name, parents)
+    fun createFolderInNotExist(name: String, parent: String? = null): String =
+        gDrive.folder(name)?.id ?: createFolder(name, parent)
 
 
-    private fun createFolder(name: String, parents: List<String>? = null): String =
+    private fun createFolder(name: String, parent: String? = null): String =
         gDrive.files().create(
             File().apply {
                 this.name = name
                 mimeType = MIME_TYPE_GDRIVE_FOLDER
-                parents?.let {
-                    this.parents = it
+                parent?.let {
+                    this.parents = listOf(it)
                 }
             }
         )

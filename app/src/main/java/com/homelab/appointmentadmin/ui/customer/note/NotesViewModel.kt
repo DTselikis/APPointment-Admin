@@ -49,15 +49,15 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private lateinit var file: File
     private lateinit var mime: String
-    private lateinit var parents: List<String>
-    private var noteFolderId: String? = null
-    get() {
-        if (field == null) {
-            field = GoogleDriveHelper.createFolderInNotExist(timestamp!!, parents)
-        }
+    private lateinit var notesFolder: String
+    private var noteFolder: String? = null
+        get() {
+            if (field == null) {
+                field = GoogleDriveHelper.createFolderInNotExist(timestamp!!, notesFolder)
+            }
 
-        return field
-    }
+            return field
+        }
 
     private var timestamp: String? = null
 
@@ -152,7 +152,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun initializeFolderStructure() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                parents = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
+                notesFolder = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
             } catch (e: UserRecoverableAuthIOException) {
                 _needsAuthorization.emit(e.intent)
             }
@@ -162,7 +162,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun uploadFile(image: File = file, mime: String? = this.mime) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                GoogleDriveHelper.uploadImage(image, mime, parents.plus(noteFolderId!!))
+                GoogleDriveHelper.uploadImage(image, mime, noteFolder!!)
             } catch (e: UserRecoverableAuthIOException) {
                 _needsAuthorization.emit(e.intent)
             }

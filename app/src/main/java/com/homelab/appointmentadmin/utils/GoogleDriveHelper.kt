@@ -11,6 +11,8 @@ import com.google.api.services.drive.DriveScopes
 import com.google.api.services.drive.model.File
 import com.homelab.appointmentadmin.R
 
+private const val MIME_TYPE_GDRIVE_FOLDER = "application/vnd.google-apps.folder"
+
 object GoogleDriveHelper {
     lateinit var gDrive: Drive
         private set
@@ -47,7 +49,7 @@ object GoogleDriveHelper {
 
     private fun Drive.folder(name: String): File? =
         files().list().apply {
-            q = "mimeType='application/vnd.google-apps.folder' and name='$name'"
+            q = "mimeType='$MIME_TYPE_GDRIVE_FOLDER' and name='$name'"
             spaces = "drive"
         }.execute().files.getOrNull(0)
 }

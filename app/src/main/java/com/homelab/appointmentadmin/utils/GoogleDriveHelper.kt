@@ -73,6 +73,25 @@ object GoogleDriveHelper {
             .execute()
             .id
 
+    fun getPhotosIfExist(name: String) {
+        gDrive.folder(name)?.id.let {
+            val photos = mutableListOf<String>()
+            var pageToken: String?
+            do {
+                gDrive.files().list().apply {
+                    q = "'$it' in parents"
+                    fields = "nextPageToken, files(id)"
+                    orderBy = "createdTime"
+                    pageToken = this.pageToken
+                }.execute().apply {
+                    photos.addAll(files.map { it.id })
+                    pageToken = nextPageToken
+                }
+
+            } while (pageToken != null)
+        }
+    }
+
     private fun Drive.folder(name: String): File? =
         files().list().apply {
             q = "mimeType='$MIME_TYPE_GDRIVE_FOLDER' and name='$name'"

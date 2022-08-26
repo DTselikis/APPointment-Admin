@@ -43,7 +43,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     val needsAuthorization: SharedFlow<Intent> = _needsAuthorization
 
     private val _imageUploaded = MutableSharedFlow<Boolean>()
-    val imageUploaded:SharedFlow<Boolean> = _imageUploaded
+    val imageUploaded: SharedFlow<Boolean> = _imageUploaded
 
     private lateinit var selectedNote: Note
     private var isNew = false
@@ -62,7 +62,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
             return field
         }
 
-    private var timestamp: String? = null
+    var timestamp: String? = null
+        private set
 
     fun fetchNotes() {
         Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()

@@ -21,6 +21,7 @@ import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 import com.homelab.appointmentadmin.utils.GoogleDriveHelper
+import com.homelab.appointmentadmin.utils.NotesImagesManager
 import kotlinx.coroutines.flow.collectLatest
 import java.io.File
 import java.io.FileOutputStream
@@ -41,7 +42,15 @@ class NotesFragment : Fragment() {
             uri?.let {
                 val file = it.toFile()
                 val mimeType = requireContext().contentResolver.getType(it)
-                viewModel.uploadFile(file!!, mimeType)
+                //viewModel.uploadFile(file!!, mimeType)
+                val image = NotesImagesManager.copyFileToInternalAppStorage(
+                    requireActivity(),
+                    requireContext(),
+                    uri,
+                    viewModel.timestamp!!
+                )
+                print(image)
+
             }
         }
 
@@ -90,6 +99,7 @@ class NotesFragment : Fragment() {
 
         GoogleDriveHelper.initialize(requireContext())
         viewModel.initializeFolderStructure()
+        NotesImagesManager.initialize(requireContext())
     }
 
     override fun onResume() {

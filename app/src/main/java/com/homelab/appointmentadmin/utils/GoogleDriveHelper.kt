@@ -10,7 +10,7 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import com.google.api.services.drive.model.File
 import com.homelab.appointmentadmin.R
-import java.io.FileOutputStream
+import java.io.ByteArrayOutputStream
 
 private const val MIME_TYPE_GDRIVE_FOLDER = "application/vnd.google-apps.folder"
 private const val NOTES_SUBFOLDER = "Notes"
@@ -97,9 +97,12 @@ object GoogleDriveHelper {
         return null
     }
 
-    fun downloadImage(id: String, file: FileOutputStream) {
-        gDrive.files().get(id).executeAndDownloadTo(file)
-    }
+    fun downloadImage(id: String) : ByteArrayOutputStream =
+        ByteArrayOutputStream().apply {
+            gDrive.files().get(id).executeAndDownloadTo(this)
+            close()
+        }
+
 
     private fun Drive.folder(name: String): File? =
         files().list().apply {

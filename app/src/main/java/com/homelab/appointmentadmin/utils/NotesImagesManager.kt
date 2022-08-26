@@ -46,11 +46,11 @@ object NotesImagesManager {
         if (!noteDir.isDirectory) noteDir.mkdir()
 
         photos.forEach { photo ->
-            val newImage = File(noteDir, photo.second)
+            val bytes = GoogleDriveHelper.downloadImage(photo.first)
 
-            val fileOutputStream = FileOutputStream(newImage)
-            GoogleDriveHelper.downloadImage(photo.first, fileOutputStream)
-            fileOutputStream.close()
+            File(noteDir, photo.second).apply {
+                writeBytes(bytes.toByteArray())
+            }
         }
     }
 

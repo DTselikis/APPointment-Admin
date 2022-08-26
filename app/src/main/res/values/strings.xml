@@ -53,4 +53,5 @@
     <string name="delete_success">Deletion success!</string>
     <string name="image_stored">Image stored!</string>
     <string name="image_not_stored">Image not stored!</string>
+    <string name="img_copy_err">Error handling image</string>
 </resources>

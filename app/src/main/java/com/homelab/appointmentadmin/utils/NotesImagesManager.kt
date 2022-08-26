@@ -25,7 +25,7 @@ object NotesImagesManager {
         context: Context,
         file: Uri,
         noteHash: String
-    ): String? {
+    ): File? {
         fragmentActivity.contentResolver.openInputStream(file)?.let { inputStream ->
             val fileName = context.getFileName(file)
             val noteDir = File(notesPath, noteHash).apply { mkdir() }
@@ -34,7 +34,7 @@ object NotesImagesManager {
             FileOutputStream(newImage).apply { inputStream.copyTo(this) }.close()
             inputStream.close()
 
-            return newImage.absolutePath
+            return newImage
         }
 
         return null

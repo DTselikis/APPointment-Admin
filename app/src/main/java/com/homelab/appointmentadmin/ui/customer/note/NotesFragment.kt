@@ -3,7 +3,6 @@ package com.homelab.appointmentadmin.ui.customer.note
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,8 +22,7 @@ import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 import com.homelab.appointmentadmin.utils.GoogleDriveHelper
 import com.homelab.appointmentadmin.utils.NotesImagesManager
 import kotlinx.coroutines.flow.collectLatest
-import java.io.File
-import java.io.FileOutputStream
+import java.io.IOException
 
 class NotesFragment : Fragment() {
 
@@ -40,17 +38,23 @@ class NotesFragment : Fragment() {
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
-                val file = it.toFile()
                 val mimeType = requireContext().contentResolver.getType(it)
-                //viewModel.uploadFile(file!!, mimeType)
-                val image = NotesImagesManager.copyFileToInternalAppStorage(
-                    requireActivity(),
-                    requireContext(),
-                    uri,
-                    viewModel.timestamp!!
-                )
-                print(image)
+                try {
+                    val image = NotesImagesManager.copyFileToInternalAppStorage(
+                        requireActivity(),
+                        requireContext(),
+                        uri,
+                        viewModel.timestamp!!
+                    )
 
+                    viewModel.uploadFile(image!!, mimeType)
+                } catch (e: IOException) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.img_copy_err),
+                        Toast.LENGTH_SHORT
+                    )
+                }
             }
         }
 
@@ -227,20 +231,5 @@ class NotesFragment : Fragment() {
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun Uri.toFile(): File? {
-        requireActivity().contentResolver.openInputStream(this)?.let { inputSteam ->
-            val tmpFile = File.createTempFile("note", "pic")
-            val fileOutputStream = FileOutputStream(tmpFile)
-
-            inputSteam.copyTo(fileOutputStream)
-            inputSteam.close()
-            fileOutputStream.close()
-
-            return tmpFile
-        }
-
-        return null
     }
 }

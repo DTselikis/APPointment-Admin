@@ -19,6 +19,8 @@ object GoogleDriveHelper {
         private set
 
     fun initialize(context: Context) {
+        if (this::gDrive.isInitialized) return
+
         GoogleSignIn.getLastSignedInAccount(context)?.let { googleAccount ->
             val credential =
                 GoogleAccountCredential.usingOAuth2(
@@ -37,14 +39,14 @@ object GoogleDriveHelper {
         }
     }
 
-    fun uploadImage(image: java.io.File, mime: String?, parent: String) {
+    fun uploadImage(image: java.io.File, mime: String?, parent: String): String {
         val gFile = File().apply {
             name = image.name
             parents = listOf(parent)
         }
         val fileContent = FileContent(mime ?: "image/*", image)
 
-        gDrive.Files().create(gFile, fileContent).execute()
+        return gDrive.Files().create(gFile, fileContent).execute().id
     }
 
     fun createFolderStructureIfNotExists(uid: String): String {

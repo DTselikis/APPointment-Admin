@@ -105,7 +105,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         val newNote =
             Note(
                 description = description.value,
-                photos = null,
+                photos = _photos,
                 title = title.value,
                 hash = timestamp
             )

@@ -42,6 +42,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _needsAuthorization = MutableSharedFlow<Intent>()
     val needsAuthorization: SharedFlow<Intent> = _needsAuthorization
 
+    private val _imageUploaded = MutableSharedFlow<Boolean>()
+    val imageUploaded:SharedFlow<Boolean> = _imageUploaded
+
     private lateinit var selectedNote: Note
     private var isNew = false
 
@@ -156,6 +159,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 GoogleDriveHelper.uploadImage(image, mime, noteFolder!!)
+                _imageUploaded.emit(true)
             } catch (e: UserRecoverableAuthIOException) {
                 _needsAuthorization.emit(e.intent)
             }

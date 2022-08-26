@@ -51,4 +51,6 @@
     <string name="delete_user_context_menu_item">Delete</string>
     <string name="delete_fail">Deletion failure!</string>
     <string name="delete_success">Deletion success!</string>
+    <string name="image_stored">Image stored!</string>
+    <string name="image_not_stored">Image not stored!</string>
 </resources>

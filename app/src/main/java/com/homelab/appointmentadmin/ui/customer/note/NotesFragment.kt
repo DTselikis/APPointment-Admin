@@ -86,6 +86,7 @@ class NotesFragment : Fragment() {
         observeChangedStoredtoDB()
         observeForNoteDeletion()
         observeNeedsAuthorization()
+        observeImageUploaded()
 
         GoogleDriveHelper.initialize(requireContext())
         viewModel.initializeFolderStructure()
@@ -202,6 +203,18 @@ class NotesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.needsAuthorization.collectLatest { requestAuthIntent ->
                 requestAuthorization.launch(requestAuthIntent)
+            }
+        }
+    }
+
+    private fun observeImageUploaded() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.imageUploaded.collectLatest { uploaded ->
+                val text =
+                    if (uploaded) getString(R.string.image_stored)
+                    else getString(R.string.image_not_stored)
+
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
             }
         }
     }

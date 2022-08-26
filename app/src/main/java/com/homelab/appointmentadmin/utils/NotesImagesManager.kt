@@ -7,6 +7,8 @@ import android.provider.OpenableColumns
 import androidx.fragment.app.FragmentActivity
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.file.Files
+import java.nio.file.attribute.BasicFileAttributes
 
 object NotesImagesManager {
     private const val NOTES_DIR = "Notes"
@@ -54,11 +56,16 @@ object NotesImagesManager {
         }
     }
 
-    fun getPhotos(noteHash: String): List<String>? {
+    fun getPhotosSorted(noteHash: String): List<String>? {
         val noteDir = File(notesPath, noteHash)
 
         return if (noteDir.isDirectory) {
-            noteDir.listFiles()?.map { it.absolutePath }
+            noteDir.listFiles()
+                ?.sortedByDescending {
+                    Files.readAttributes(it.toPath(), BasicFileAttributes::class.java)
+                        .creationTime().toMillis()
+                }
+                ?.map { it.absolutePath }
         } else {
             null
         }

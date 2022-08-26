@@ -77,7 +77,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 if (result.exists()) {
                     _notes.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
                         // TODO change to download if not exists
-                        entry.value.photos = NotesImagesManager.getPhotos(entry.value.hash!!)
+                        entry.value.photos = NotesImagesManager.getPhotosSorted(entry.value.hash!!)
                         entry.value
                     }.sortedByDescending { it.timestamp })
                     _notesForDisplay.value = _notes.map { it }
@@ -192,7 +192,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     }
 
     private fun getPhotosFromLocalStorage(): List<String>? =
-        NotesImagesManager.getPhotos(timestamp!!)
+        NotesImagesManager.getPhotosSorted(timestamp!!)
 
 
     private fun downloadPhotosFromGdrive() {

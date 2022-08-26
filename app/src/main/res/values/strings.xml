@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">APPointment Admin</string>
+    <string name="app_name">Admin</string>
     <string name="send_notification">Send notification</string>
     <string name="profile_contact_item">Contact</string>
     <string name="profile_notes_item">Notes</string>

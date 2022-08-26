@@ -76,6 +76,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .addOnSuccessListener { result ->
                 if (result.exists()) {
                     _notes.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
+                        // TODO change to download if not exists
+                        entry.value.photos = NotesImagesManager.getPhotos(entry.value.hash!!)
                         entry.value
                     }.sortedByDescending { it.timestamp })
                     _notesForDisplay.value = _notes.map { it }

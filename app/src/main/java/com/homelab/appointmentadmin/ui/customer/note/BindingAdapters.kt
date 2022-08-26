@@ -36,7 +36,7 @@ fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
 }
 
 @BindingAdapter("imgUrl")
-fun bindProfilePic(imageView: ImageView, url: String) {
+fun bindProfilePic(imageView: ImageView, url: String?) {
     imageView.load(url) {
         memoryCachePolicy(CachePolicy.ENABLED)
         diskCachePolicy(CachePolicy.ENABLED)

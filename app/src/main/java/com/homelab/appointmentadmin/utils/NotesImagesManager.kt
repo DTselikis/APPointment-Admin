@@ -40,6 +40,20 @@ object NotesImagesManager {
         return null
     }
 
+    fun copyAllToInternalAppStorage(noteHash: String, photos: List<Pair<String, String>>) {
+        val noteDir = File(notesPath, noteHash)
+
+        if (!noteDir.isDirectory) noteDir.mkdir()
+
+        photos.forEach { photo ->
+            val newImage = File(noteDir, photo.second)
+
+            val fileOutputStream = FileOutputStream(newImage)
+            GoogleDriveHelper.downloadImage(photo.first, fileOutputStream)
+            fileOutputStream.close()
+        }
+    }
+
     fun getPhotos(noteHash: String): List<String>? {
         val noteDir = File(notesPath, noteHash)
 

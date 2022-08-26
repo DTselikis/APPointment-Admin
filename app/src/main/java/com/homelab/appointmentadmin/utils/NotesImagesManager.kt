@@ -40,6 +40,17 @@ object NotesImagesManager {
         return null
     }
 
+    fun getPhotos(noteHash: String): List<String>? {
+        val noteDir = File(notesPath, noteHash)
+
+        return if (noteDir.isDirectory) {
+            noteDir.listFiles()?.map { it.absolutePath }
+        } else {
+            null
+        }
+    }
+
+
     private fun Context.getFileName(uri: Uri): String? = when (uri.scheme) {
         ContentResolver.SCHEME_CONTENT -> getContentFileName(uri)
         else -> uri.path?.let(::File)?.name

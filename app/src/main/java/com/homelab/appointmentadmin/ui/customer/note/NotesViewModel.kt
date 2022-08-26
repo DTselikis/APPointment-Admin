@@ -18,6 +18,7 @@ import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
 import com.homelab.appointmentadmin.utils.GoogleDriveHelper
+import com.homelab.appointmentadmin.utils.NotesImagesManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -177,6 +178,16 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _photosForDisplay.value = _photos.map { it }
     }
 
+    private fun showExistingNotePhotos() {
+        getPhotosFromLocalStorage()?.let {
+            _photos.addAll(it)
+            _photosForDisplay.value = _photos.map { it }
+        }
+    }
+
+    private fun getPhotosFromLocalStorage(): List<String>? =
+        NotesImagesManager.getPhotos(timestamp!!)
+
     fun setSelectedNote(note: Note) {
         selectedNote = note
         isNew = false
@@ -184,6 +195,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         description.value = note.description
         timestamp = note.hash
         _photos = mutableListOf()
+        showExistingNotePhotos()
     }
 
     fun setNewNoteState() {

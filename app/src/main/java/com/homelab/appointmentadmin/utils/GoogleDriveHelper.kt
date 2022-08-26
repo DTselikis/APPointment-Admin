@@ -13,7 +13,7 @@ import com.homelab.appointmentadmin.R
 import java.io.ByteArrayOutputStream
 
 private const val MIME_TYPE_GDRIVE_FOLDER = "application/vnd.google-apps.folder"
-private const val NOTES_SUBFOLDER = "Notes"
+private const val NOTES_SUBFOLDER = "notes"
 
 object GoogleDriveHelper {
     lateinit var gDrive: Drive

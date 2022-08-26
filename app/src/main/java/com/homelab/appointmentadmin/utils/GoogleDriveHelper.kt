@@ -75,23 +75,23 @@ object GoogleDriveHelper {
             .id
 
     fun getPhotosIfExist(name: String): List<Pair<String, String>>? {
-        gDrive.folder(name)?.id.let {
+        gDrive.folder(name)?.id?.let {
             val photos = mutableListOf<Pair<String, String>>()
             var pageToken: String?
-            do {
-                gDrive.files().list().apply {
-                    q = "'$it' in parents"
-                    fields = "nextPageToken, files(id, name)"
-                    orderBy = "createdTime"
-                    pageToken = this.pageToken
-                }.execute().apply {
-                    photos.addAll(files.map { Pair(it.id, it.name) })
-                    pageToken = nextPageToken
-                }
+                do {
+                    gDrive.files().list().apply {
+                        q = "'$it' in parents"
+                        fields = "nextPageToken, files(id, name)"
+                        orderBy = "createdTime"
+                        pageToken = this.pageToken
+                    }.execute().apply {
+                        photos.addAll(files.map { Pair(it.id, it.name) })
+                        pageToken = nextPageToken
+                    }
 
-            } while (pageToken != null)
+                } while (pageToken != null)
 
-            return photos
+                return photos
         }
 
         return null

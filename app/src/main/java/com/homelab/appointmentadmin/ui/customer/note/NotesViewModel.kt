@@ -93,7 +93,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
             Note(
                 title = title.value,
                 description = description.value,
-                photos = selectedNote.photos,
+                photos = _photos,
                 hash = selectedNote.hash
             )
         storeToDB(note, selectedNote.hash!!)
@@ -105,7 +105,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         val newNote =
             Note(
                 description = description.value,
-                photos = _photos,
+                photos = null,
                 title = title.value,
                 hash = timestamp
             )
@@ -144,6 +144,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     }
 
     private fun insertNoteToList(note: Note) {
+        note.photos = _photos
         _notes.add(0, note)
         _notesForDisplay.value = _notes.map { it }
     }

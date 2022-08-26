@@ -36,6 +36,11 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _updatesStored = MutableLiveData<Boolean>()
     val updatesStored: LiveData<Boolean> = _updatesStored
 
+    private val _photosForDisplay = MutableLiveData<List<String>>()
+    val photosForDisplay: LiveData<List<String>> = _photosForDisplay
+
+    private lateinit var _photos: MutableList<String>
+
     private val _noteDeleted = MutableSharedFlow<Boolean>()
     val noteDeleted: SharedFlow<Boolean> = _noteDeleted
 
@@ -167,12 +172,18 @@ class NotesViewModel(private val user: User) : ViewModel() {
         }
     }
 
+    fun addPhotoToNote(path: String) {
+        _photos.add(0, path)
+        _photosForDisplay.value = _photos.map { it }
+    }
+
     fun setSelectedNote(note: Note) {
         selectedNote = note
         isNew = false
         title.value = note.title
         description.value = note.description
         timestamp = note.hash
+        _photos = mutableListOf()
     }
 
     fun setNewNoteState() {
@@ -180,6 +191,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         description.value = null
         isNew = true
         timestamp = Timestamp.now().seconds.toString()
+        _photos = mutableListOf()
     }
 
     fun isNewNote(): Boolean = isNew

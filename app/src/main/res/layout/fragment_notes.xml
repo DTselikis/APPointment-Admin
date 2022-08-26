@@ -111,58 +111,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:text="@={viewModel.description}"
+                    app:layout_constraintBottom_toTopOf="@id/note_photos_rv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/frame_title_divider" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/note_photos_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frame_note_text"
+                    app:notePhotos="@{viewModel.photosForDisplay}"
+                    app:spanCount="2"
+                    tools:listitem="@layout/note_photo_item" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_photo_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/add_note_yellow"
+                    android:onClick="@{() -> notesFragment.addPhoto()}"
+                    android:src="@drawable/ic_add_photo_alternate_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.92"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.97" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/photos_bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <FrameLayout
-                style="?attr/bottomSheetStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/note_photos_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent"
-                        app:spanCount="2"
-                        tools:listitem="@layout/note_photo_item" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/add_photo_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/add_note_yellow"
-                        android:onClick="@{() -> notesFragment.addPhoto()}"
-                        android:src="@drawable/ic_add_photo_alternate_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.92"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.97" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>

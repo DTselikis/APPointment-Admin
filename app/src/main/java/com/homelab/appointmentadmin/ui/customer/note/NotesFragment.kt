@@ -47,7 +47,9 @@ class NotesFragment : Fragment() {
                         viewModel.timestamp!!
                     )
 
-                    viewModel.uploadFile(image!!, mimeType)
+                    viewModel.addPhotoToNote(image!!.absolutePath)
+
+                    viewModel.uploadFile(image, mimeType)
                 } catch (e: IOException) {
                     Toast.makeText(
                         requireContext(),
@@ -118,6 +120,7 @@ class NotesFragment : Fragment() {
 
     fun showNote() {
         viewModel.setNoteVisible(true)
+        binding.notePhotosRv.adapter = NoteImagesAdapter()
 
         binding.cardFrame.apply {
             scaleX = 0f
@@ -126,7 +129,6 @@ class NotesFragment : Fragment() {
             visibility = View.VISIBLE
         }
         binding.newNoteBtn.visibility = View.GONE
-        binding.photosBottomSheet.visibility = View.VISIBLE
 
         val scaleX = PropertyValuesHolder.ofFloat("scaleX", 1f)
         val scaleY = PropertyValuesHolder.ofFloat("scaleY", 1f)
@@ -148,7 +150,6 @@ class NotesFragment : Fragment() {
 
             override fun onAnimationEnd(p0: Animator?) {
                 binding.cardFrame.visibility = View.GONE
-                binding.photosBottomSheet.visibility = View.GONE
                 binding.newNoteBtn.visibility = View.VISIBLE
                 updateAdapter()
             }

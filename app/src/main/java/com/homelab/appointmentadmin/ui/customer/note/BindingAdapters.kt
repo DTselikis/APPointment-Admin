@@ -18,6 +18,15 @@ fun bindNotes(recyclerView: RecyclerView, notes: List<Note>?) {
     adapter.submitList(notes)
 }
 
+@BindingAdapter("notePhotos")
+fun bindNotePhotos(recyclerView: RecyclerView, photos: List<String>?) {
+    recyclerView.adapter?.let {
+        val adapter = it as NoteImagesAdapter
+
+        adapter.submitList(photos)
+    }
+}
+
 @BindingAdapter("date")
 fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
     timestamp?.let {
@@ -29,7 +38,7 @@ fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
 @BindingAdapter("imgUrl")
 fun bindProfilePic(imageView: ImageView, url: String) {
     imageView.load(url) {
-            memoryCachePolicy(CachePolicy.ENABLED)
-            diskCachePolicy(CachePolicy.ENABLED)
-        }
+        memoryCachePolicy(CachePolicy.ENABLED)
+        diskCachePolicy(CachePolicy.ENABLED)
     }
+}

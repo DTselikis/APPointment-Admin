@@ -180,13 +180,27 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private fun showExistingNotePhotos() {
         getPhotosFromLocalStorage()?.let {
-            _photos.addAll(it)
+            _photos.addAll(0, it)
             _photosForDisplay.value = _photos.map { it }
+
+            return
         }
+        downloadPhotosFromGdrive()
     }
 
     private fun getPhotosFromLocalStorage(): List<String>? =
         NotesImagesManager.getPhotos(timestamp!!)
+
+
+    private fun downloadPhotosFromGdrive() {
+        viewModelScope.launch(Dispatchers.IO) {
+            GoogleDriveHelper.getPhotosIfExist(timestamp!!)?.let { photos ->
+                NotesImagesManager.copyAllToInternalAppStorage(timestamp!!, photos)
+                _photos.addAll(0, getPhotosFromLocalStorage()!!)
+                _photosForDisplay.postValue(_photos.map { it })
+            }
+        }
+    }
 
     fun setSelectedNote(note: Note) {
         selectedNote = note

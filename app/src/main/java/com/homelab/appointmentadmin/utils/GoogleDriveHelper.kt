@@ -10,6 +10,7 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import com.google.api.services.drive.model.File
 import com.homelab.appointmentadmin.R
+import java.io.FileOutputStream
 
 private const val MIME_TYPE_GDRIVE_FOLDER = "application/vnd.google-apps.folder"
 private const val NOTES_SUBFOLDER = "Notes"
@@ -73,23 +74,31 @@ object GoogleDriveHelper {
             .execute()
             .id
 
-    fun getPhotosIfExist(name: String) {
+    fun getPhotosIfExist(name: String): List<Pair<String, String>>? {
         gDrive.folder(name)?.id.let {
-            val photos = mutableListOf<String>()
+            val photos = mutableListOf<Pair<String, String>>()
             var pageToken: String?
             do {
                 gDrive.files().list().apply {
                     q = "'$it' in parents"
-                    fields = "nextPageToken, files(id)"
+                    fields = "nextPageToken, files(id, name)"
                     orderBy = "createdTime"
                     pageToken = this.pageToken
                 }.execute().apply {
-                    photos.addAll(files.map { it.id })
+                    photos.addAll(files.map { Pair(it.id, it.name) })
                     pageToken = nextPageToken
                 }
 
             } while (pageToken != null)
+
+            return photos
         }
+
+        return null
+    }
+
+    fun downloadImage(id: String, file: FileOutputStream) {
+        gDrive.files().get(id).executeAndDownloadTo(file)
     }
 
     private fun Drive.folder(name: String): File? =

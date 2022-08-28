@@ -195,7 +195,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_card"
             app:strokeColor="@color/notification_cyan"
-            app:strokeWidth="0.5dp">
+            app:strokeWidth="0.5dp"
+            app:visibility="@{sharedViewModel.user.token}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

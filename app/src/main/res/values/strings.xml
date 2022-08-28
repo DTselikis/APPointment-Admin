@@ -54,4 +54,8 @@
     <string name="image_stored">Image stored!</string>
     <string name="image_not_stored">Image not stored!</string>
     <string name="img_copy_err">Error handling image</string>
+    <string name="notify_for">Notify for</string>
+    <string name="notify_customer_for">Notify customer for:</string>
+    <string name="custom_notification_hint">Message</string>
+    <string name="send_notification_btn">Send notification</string>
 </resources>

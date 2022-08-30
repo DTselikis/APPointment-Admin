@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentSendNotificationBinding
+import kotlinx.coroutines.flow.collectLatest
 
 class SendNotificationFragment : BottomSheetDialogFragment() {
 
@@ -37,9 +40,22 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
             sendNotificationFragment = this@SendNotificationFragment
             viewModel = this@SendNotificationFragment.viewModel
         }
+
+        observeNotificationSent()
     }
 
     fun sendNotification() {
         viewModel.sendNotification(args.token)
+    }
+
+    private fun observeNotificationSent() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.notificationSent.collectLatest { sent ->
+                val text =
+                    if (sent) getString(R.string.notification_sent) else getString(R.string.notification_not_sent)
+
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

@@ -59,4 +59,6 @@
     <string name="custom_notification_message_hint">Message</string>
     <string name="custom_notification_title_hint">Title</string>
     <string name="send_notification_btn">Send notification</string>
+    <string name="notification_sent">Notification sent!</string>
+    <string name="notification_not_sent">Notification not sent!</string>
 </resources>

@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentSendNotificationBinding
 
 class SendNotificationFragment : BottomSheetDialogFragment() {
+
+    private val viewModel: SendNotificationViewModel by viewModels()
 
     private lateinit var binding: FragmentSendNotificationBinding
 
@@ -26,6 +29,14 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            sendNotificationFragment = this@SendNotificationFragment
+            viewModel = this@SendNotificationFragment.viewModel
+        }
+    }
+
+    fun sendNotification() {
+
     }
 }

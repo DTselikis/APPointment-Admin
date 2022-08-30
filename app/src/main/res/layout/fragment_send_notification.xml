@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.homelab.appointmentadmin.ui.customer.contact.SendNotificationViewModel" />
+
+        <variable
             name="sendNotificationFragment"
             type="com.homelab.appointmentadmin.ui.customer.contact.SendNotificationFragment" />
     </data>
@@ -67,6 +71,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/custom_notification_title_hint"
+                android:text="@={viewModel.notificationTitle}"
                 tools:text="Free spot" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,6 +89,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/custom_notification_message_hint"
+                android:text="@={viewModel.notificationMessage}"
                 tools:text="There is a free spot at 5:00 PM" />
         </com.google.android.material.textfield.TextInputLayout>
 

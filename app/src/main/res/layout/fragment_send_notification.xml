@@ -51,6 +51,7 @@
             app:layout_constraintTop_toBottomOf="@id/select_notification_label">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/pre_made_notifications_menu"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:inputType="none"

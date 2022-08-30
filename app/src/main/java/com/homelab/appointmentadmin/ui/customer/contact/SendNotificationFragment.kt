@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -39,6 +40,13 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
             lifecycleOwner = viewLifecycleOwner
             sendNotificationFragment = this@SendNotificationFragment
             viewModel = this@SendNotificationFragment.viewModel
+            preMadeNotificationsMenu.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    resources.getStringArray(R.array.pre_made_notifications)
+                )
+            )
         }
 
         observeNotificationSent()

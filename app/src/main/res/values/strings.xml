@@ -61,4 +61,8 @@
     <string name="send_notification_btn">Send notification</string>
     <string name="notification_sent">Notification sent!</string>
     <string name="notification_not_sent">Notification not sent!</string>
+    
+    <string-array name="pre_made_notifications">
+        <item>Appointment cancellation</item>
+    </string-array>
 </resources>

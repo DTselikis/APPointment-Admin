@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.homelab.appointmentadmin.R
@@ -79,6 +80,10 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
         observeNotificationSent()
     }
 
+    private fun closeDialog() {
+        findNavController().navigateUp()
+    }
+
     fun sendNotification() {
         binding.sendNotificationBtn.isEnabled = false
         viewModel.sendNotification(args.token)
@@ -87,15 +92,15 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
     private fun observeNotificationSent() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.notificationSent.collectLatest { sent ->
-                val text =
-                    if (sent)
-                        getString(R.string.notification_sent)
-                    else {
-                        binding.sendNotificationBtn.isEnabled = true
-                        getString(R.string.notification_not_sent)
-                    }
-
-                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                if (sent) {
+                    val text = getString(R.string.notification_sent)
+                    Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                    closeDialog()
+                } else {
+                    binding.sendNotificationBtn.isEnabled = true
+                    val text = getString(R.string.notification_not_sent)
+                    Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

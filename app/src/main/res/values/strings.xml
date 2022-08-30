@@ -64,6 +64,7 @@
 
     <string-array name="pre_made_notifications">
         <item>Appointment cancellation</item>
+        <item>Custom</item>
     </string-array>
 
     <string name="appointment_cancellation_title">Appointment cancellation</string>

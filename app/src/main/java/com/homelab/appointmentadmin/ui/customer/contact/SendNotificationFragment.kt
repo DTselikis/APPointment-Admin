@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -54,23 +53,22 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
                         resources.getStringArray(R.array.pre_made_notifications)
                     )
                 )
-                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        p0: AdapterView<*>?,
-                        p1: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        customNotificationGroup.visibility = View.VISIBLE
-                        customNotificationTitleText.setText(getString(R.string.appointment_cancellation_title))
-                        customNotificationMessageText.setText(getString(R.string.appointment_cancellation_message))
+
+                setOnItemClickListener { _, _, position, _ ->
+                    val (title, message) = when (position) {
+                        NotificationItem.CANCELLATION.code -> {
+                            customNotificationGroup.visibility = View.GONE
+                            Pair(getString(R.string.appointment_cancellation_title), getString(R.string.appointment_cancellation_message))
+                        }
+                        NotificationItem.CUSTOM.code -> {
+                            customNotificationGroup.visibility = View.VISIBLE
+                            Pair("", "")
+                        }
+                        else -> Pair("", "")
                     }
 
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-                        customNotificationGroup.visibility = View.GONE
-                        customNotificationTitleText.setText("")
-                        customNotificationMessageText.setText("")
-                    }
+                    customNotificationTitleText.setText(title)
+                    customNotificationMessageText.setText(message)
                 }
             }
         }

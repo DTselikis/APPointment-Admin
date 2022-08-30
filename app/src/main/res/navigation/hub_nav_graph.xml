@@ -28,6 +28,9 @@
         <argument
             android:name="user"
             app:argType="com.homelab.appointmentadmin.data.User" />
+        <action
+            android:id="@+id/action_customerProfileFragment_to_sendNotificationFragment"
+            app:destination="@id/sendNotificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/createCustomerFragment"
@@ -57,4 +60,13 @@
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <dialog
+        android:id="@+id/sendNotificationFragment"
+        android:name="com.homelab.appointmentadmin.ui.customer.contact.SendNotificationFragment"
+        android:label="SendNotificationFragment"
+        tools:layout="@layout/fragment_send_notification">
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </dialog>
 </navigation>

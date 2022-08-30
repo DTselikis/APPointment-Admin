@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentSendNotificationBinding
 
 class SendNotificationFragment : BottomSheetDialogFragment() {
+
+    private val args: SendNotificationFragmentArgs by navArgs<SendNotificationFragmentArgs>()
 
     private val viewModel: SendNotificationViewModel by viewModels()
 
@@ -37,6 +40,6 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
     }
 
     fun sendNotification() {
-
+        viewModel.sendNotification(args.token)
     }
 }

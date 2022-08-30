@@ -5,12 +5,22 @@
 
     <data>
 
+        <variable
+            name="sendNotificationFragment"
+            type="com.homelab.appointmentadmin.ui.customer.contact.SendNotificationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.customer.contact.SendNotificationFragment">
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="custom_notification_title, custom_notification_message"
+            tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/select_notification_label"
@@ -31,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/notify_for"
-            app:layout_constraintBottom_toTopOf="@id/custom_notification"
+            app:layout_constraintBottom_toTopOf="@id/custom_notification_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/select_notification_label">
@@ -44,21 +54,36 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/custom_notification"
+            android:id="@+id/custom_notification_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/notify_menu"
             app:layout_constraintStart_toStartOf="@id/notify_menu"
-            app:layout_constraintTop_toBottomOf="@id/notify_menu"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@id/notify_menu">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/custom_notification_hint"
+                android:hint="@string/custom_notification_title_hint"
+                tools:text="Free spot" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/custom_notification_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@id/custom_notification_title"
+            app:layout_constraintStart_toStartOf="@id/custom_notification_title"
+            app:layout_constraintTop_toBottomOf="@id/custom_notification_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/custom_notification_message_hint"
                 tools:text="There is a free spot at 5:00 PM" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,10 +92,11 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:onClick="@{() -> sendNotificationFragment.sendNotification()}"
             android:text="@string/send_notification_btn"
-            app:layout_constraintEnd_toEndOf="@id/custom_notification"
-            app:layout_constraintStart_toStartOf="@id/custom_notification"
-            app:layout_constraintTop_toBottomOf="@id/custom_notification" />
+            app:layout_constraintEnd_toEndOf="@id/custom_notification_message"
+            app:layout_constraintStart_toStartOf="@id/custom_notification_message"
+            app:layout_constraintTop_toBottomOf="@id/custom_notification_message" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

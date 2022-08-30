@@ -56,6 +56,7 @@
     <string name="img_copy_err">Error handling image</string>
     <string name="notify_for">Notify for</string>
     <string name="notify_customer_for">Notify customer for:</string>
-    <string name="custom_notification_hint">Message</string>
+    <string name="custom_notification_message_hint">Message</string>
+    <string name="custom_notification_title_hint">Title</string>
     <string name="send_notification_btn">Send notification</string>
 </resources>

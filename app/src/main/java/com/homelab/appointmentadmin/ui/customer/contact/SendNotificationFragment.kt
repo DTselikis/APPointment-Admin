@@ -18,6 +18,11 @@ import kotlinx.coroutines.flow.collectLatest
 
 class SendNotificationFragment : BottomSheetDialogFragment() {
 
+    enum class NotificationItem(val code: Int) {
+        CANCELLATION(0),
+        CUSTOM(1)
+    }
+
     private val args: SendNotificationFragmentArgs by navArgs<SendNotificationFragmentArgs>()
 
     private val viewModel: SendNotificationViewModel by viewModels()

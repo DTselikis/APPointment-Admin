@@ -58,7 +58,10 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
                     val (title, message) = when (position) {
                         NotificationItem.CANCELLATION.code -> {
                             customNotificationGroup.visibility = View.GONE
-                            Pair(getString(R.string.appointment_cancellation_title), getString(R.string.appointment_cancellation_message))
+                            Pair(
+                                getString(R.string.appointment_cancellation_title),
+                                getString(R.string.appointment_cancellation_message)
+                            )
                         }
                         NotificationItem.CUSTOM.code -> {
                             customNotificationGroup.visibility = View.VISIBLE
@@ -77,6 +80,7 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
     }
 
     fun sendNotification() {
+        binding.sendNotificationBtn.isEnabled = false
         viewModel.sendNotification(args.token)
     }
 
@@ -84,7 +88,12 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.notificationSent.collectLatest { sent ->
                 val text =
-                    if (sent) getString(R.string.notification_sent) else getString(R.string.notification_not_sent)
+                    if (sent)
+                        getString(R.string.notification_sent)
+                    else {
+                        binding.sendNotificationBtn.isEnabled = true
+                        getString(R.string.notification_not_sent)
+                    }
 
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
             }

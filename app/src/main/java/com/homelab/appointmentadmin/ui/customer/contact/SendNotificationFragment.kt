@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -40,13 +41,33 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
             lifecycleOwner = viewLifecycleOwner
             sendNotificationFragment = this@SendNotificationFragment
             viewModel = this@SendNotificationFragment.viewModel
-            preMadeNotificationsMenu.setAdapter(
-                ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_dropdown_item_1line,
-                    resources.getStringArray(R.array.pre_made_notifications)
+            preMadeNotificationsMenu.apply {
+                setAdapter(
+                    ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_dropdown_item_1line,
+                        resources.getStringArray(R.array.pre_made_notifications)
+                    )
                 )
-            )
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        p0: AdapterView<*>?,
+                        p1: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        customNotificationGroup.visibility = View.VISIBLE
+                        customNotificationTitleText.setText(getString(R.string.appointment_cancellation_title))
+                        customNotificationMessageText.setText(getString(R.string.appointment_cancellation_message))
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                        customNotificationGroup.visibility = View.GONE
+                        customNotificationTitleText.setText("")
+                        customNotificationMessageText.setText("")
+                    }
+                }
+            }
         }
 
         observeNotificationSent()

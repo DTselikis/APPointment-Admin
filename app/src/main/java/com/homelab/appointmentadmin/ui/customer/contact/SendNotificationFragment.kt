@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 class SendNotificationFragment : BottomSheetDialogFragment() {
 
-    enum class NotificationItem(val code: Int) {
+    enum class NotificationType(val code: Int) {
         CANCELLATION(0),
         CUSTOM(1)
     }
@@ -57,14 +57,14 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
 
                 setOnItemClickListener { _, _, position, _ ->
                     val (title, message) = when (position) {
-                        NotificationItem.CANCELLATION.code -> {
+                        NotificationType.CANCELLATION.code -> {
                             customNotificationGroup.visibility = View.GONE
                             Pair(
                                 getString(R.string.appointment_cancellation_title),
                                 getString(R.string.appointment_cancellation_message)
                             )
                         }
-                        NotificationItem.CUSTOM.code -> {
+                        NotificationType.CUSTOM.code -> {
                             customNotificationGroup.visibility = View.VISIBLE
                             Pair("", "")
                         }

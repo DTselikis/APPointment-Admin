@@ -70,7 +70,8 @@ class CustomerContactFragment : Fragment() {
     fun navigateToSendNotification() {
         val action =
             CustomerProfileFragmentDirections.actionCustomerProfileFragmentToSendNotificationFragment(
-                sharedViewModel.user.value!!.token!!
+                sharedViewModel.user.value!!.token!!,
+                sharedViewModel.user.value!!.uid!!
             )
         findNavController().navigate(action)
     }

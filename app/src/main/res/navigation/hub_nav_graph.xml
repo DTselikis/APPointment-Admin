@@ -68,5 +68,8 @@
         <argument
             android:name="token"
             app:argType="string" />
+        <argument
+            android:name="uid"
+            app:argType="string" />
     </dialog>
 </navigation>

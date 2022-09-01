@@ -61,22 +61,24 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
                 )
 
                 setOnItemClickListener { _, _, position, _ ->
-                    val (title, message) = when (position) {
+                    val (title, message, type) = when (position) {
                         NotificationType.CANCELLATION.code -> {
                             customNotificationGroup.visibility = View.GONE
-                            Pair(
+                            Triple(
                                 getString(R.string.appointment_cancellation_title),
-                                getString(R.string.appointment_cancellation_message)
+                                getString(R.string.appointment_cancellation_message),
+                                NotificationType.CANCELLATION.code
                             )
                         }
                         NotificationType.CUSTOM.code -> {
                             customNotificationGroup.visibility = View.VISIBLE
-                            Pair("", "")
+                            Triple("", "", NotificationType.CUSTOM.code)
                         }
-                        else -> Pair("", "")
+                        else -> Triple("", "", -1)
                     }
 
                     customNotificationTitleText.setText(title)
+                    customNotificationTitle.tag = type
                     customNotificationMessageText.setText(message)
                 }
             }
@@ -91,6 +93,7 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
 
     fun sendNotification() {
         binding.sendNotificationBtn.isEnabled = false
+        viewModel.storeNotificationToFirestore(args.uid, binding.customNotificationTitle.tag as Int)
         viewModel.sendNotification(args.token)
     }
 

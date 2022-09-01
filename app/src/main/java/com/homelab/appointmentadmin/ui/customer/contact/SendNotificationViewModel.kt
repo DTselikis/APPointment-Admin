@@ -3,7 +3,10 @@ package com.homelab.appointmentadmin.ui.customer.contact
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Transaction
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.NOTIFICATIONS_COLLECTION
@@ -25,7 +28,7 @@ class SendNotificationViewModel : ViewModel() {
     private val _notificationSent = MutableSharedFlow<Boolean>()
     val notificationSent: SharedFlow<Boolean> = _notificationSent
 
-    fun sendNotification(token: String) =
+    fun sendNotification(token: String, uid: String, type: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             val response = FcmApi.pushNotificationClient.sentNotification(
                 PushNotification(
@@ -34,10 +37,12 @@ class SendNotificationViewModel : ViewModel() {
                 )
             )
 
+            storeNotificationToFirestore(uid, type)
+
             _notificationSent.emit(response.isSuccessful)
         }
 
-    fun storeNotificationToFirestore(uid: String, type: Int) {
+    private fun storeNotificationToFirestore(uid: String, type: Int) {
         val notification = Notification(
             notificationTitle.value,
             notificationMessage.value,
@@ -46,5 +51,45 @@ class SendNotificationViewModel : ViewModel() {
         )
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
             .update(NOTIFICATION_FIELD, FieldValue.arrayUnion(notification))
+            .addOnFailureListener {
+                if (it is FirebaseFirestoreException) {
+                    Firebase.firestore.runTransaction { transaction ->
+                        val userNotificationsDocRef =
+                            createUserNotificationDocument(transaction, uid)
+                        storeNotificationToFirestore(
+                            transaction,
+                            userNotificationsDocRef,
+                            notification
+                        )
+                    }
+                }
+            }
+    }
+
+    private fun createUserNotificationDocument(
+        transaction: Transaction,
+        uid: String
+    ): DocumentReference {
+        val userNotificationsDocRef =
+            Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
+
+        transaction.set(
+            userNotificationsDocRef,
+            mapOf(NOTIFICATION_FIELD to emptyList<Notification>())
+        )
+
+        return userNotificationsDocRef
+    }
+
+    private fun storeNotificationToFirestore(
+        transaction: Transaction,
+        userNotificationDocRef: DocumentReference,
+        notification: Notification
+    ) {
+        transaction.update(
+            userNotificationDocRef,
+            NOTIFICATION_FIELD,
+            FieldValue.arrayUnion(notification)
+        )
     }
 }

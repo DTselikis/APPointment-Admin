@@ -93,8 +93,7 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
 
     fun sendNotification() {
         binding.sendNotificationBtn.isEnabled = false
-        viewModel.storeNotificationToFirestore(args.uid, binding.customNotificationTitle.tag as Int)
-        viewModel.sendNotification(args.token)
+        viewModel.sendNotification(args.token, args.uid, binding.customNotificationTitle.tag as Int)
     }
 
     private fun observeNotificationSent() {

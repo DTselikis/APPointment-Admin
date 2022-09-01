@@ -1,6 +1,7 @@
 package com.homelab.appointmentadmin.data
 
 const val USERS_COLLECTION = "users"
+const val NOTIFICATIONS_COLLECTION = "users_notifications"
 const val USERS_NOTES_COLLECTION = "users_notes"
 const val USER_NAV_KEY = "user"
 const val NEW_USER_NAV_KEY = "new_user"

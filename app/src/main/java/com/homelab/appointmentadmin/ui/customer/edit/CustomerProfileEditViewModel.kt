@@ -54,7 +54,7 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
     fun isModified(): Boolean {
         val changes = getChanges()
 
-        return !changes.isEmpty()
+        return changes.isNotEmpty()
     }
 
     fun revertChanges() {

@@ -1,9 +1,7 @@
 package com.homelab.appointmentadmin.ui.customer.edit
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -112,10 +110,10 @@ class CustomerProfileEditFragment : Fragment() {
 
             if (saved) {
                 text = getString(R.string.save_successful)
-                color = Color.parseColor(getString(R.color.teal_200))
+                color = resources.getColor(R.color.teal_200, requireActivity().theme)
             } else {
                 text = getString(R.string.save_failed)
-                color = Color.parseColor(getString(R.color.email_red))
+                color = resources.getColor(R.color.email_red, requireActivity().theme)
             }
 
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)

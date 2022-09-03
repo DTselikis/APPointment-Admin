@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/phone_background"
+            app:strokeColor="@color/phone_green"
             app:strokeWidth="0.5dp"
             app:visibility="@{sharedViewModel.user.phone}">
 
@@ -44,7 +44,7 @@
                     android:id="@+id/phone_img"
                     android:layout_width="30dp"
                     android:layout_height="40dp"
-                    android:background="@color/phone_background"
+                    android:background="@color/phone_green"
                     android:src="@drawable/ic_phone_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
                     android:id="@+id/phone_right_divider"
                     android:layout_width="6dp"
                     android:layout_height="40dp"
-                    android:background="@color/phone_background"
+                    android:background="@color/phone_green"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

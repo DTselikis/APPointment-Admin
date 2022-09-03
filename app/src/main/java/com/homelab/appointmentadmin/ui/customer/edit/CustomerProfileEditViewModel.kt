@@ -63,12 +63,12 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
     }
 
     fun revertChanges() {
-        firstname.value = user.firstname
-        lastname.value = user.lastname
-        nickname.value = user.nickname
-        phone.value = user.phone
-        email.value = user.email
-        fbName.value = user.fbName
+        firstname.value = user.firstname ?: ""
+        lastname.value = user.lastname ?: ""
+        nickname.value = user.nickname ?: ""
+        phone.value = user.phone ?: ""
+        email.value = user.email ?: ""
+        fbName.value = user.fbName ?: ""
     }
 
 }

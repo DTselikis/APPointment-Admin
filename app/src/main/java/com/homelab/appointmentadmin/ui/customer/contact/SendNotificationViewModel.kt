@@ -9,8 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Transaction
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.homelab.appointmentadmin.data.ACTIVE_NOTIFICATIONS_FIELD
 import com.homelab.appointmentadmin.data.NOTIFICATIONS_COLLECTION
 import com.homelab.appointmentadmin.data.NOTIFICATION_FIELD
+import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.model.Notification
 import com.homelab.appointmentadmin.model.network.pushnotification.PushNotification
 import com.homelab.appointmentadmin.model.network.pushnotification.PushNotificationData
@@ -49,21 +51,35 @@ class SendNotificationViewModel : ViewModel() {
             type,
             NotificationStatus.SENT.code
         )
-        Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
-            .update(NOTIFICATION_FIELD, FieldValue.arrayUnion(notification))
-            .addOnFailureListener {
-                if (it is FirebaseFirestoreException) {
-                    Firebase.firestore.runTransaction { transaction ->
-                        val userNotificationsDocRef =
-                            createUserNotificationDocument(transaction, uid)
-                        storeNotificationToFirestore(
-                            transaction,
-                            userNotificationsDocRef,
-                            notification
-                        )
-                    }
+
+        val db = Firebase.firestore
+        db.runTransaction { transaction ->
+            val userNotificationsDocRef = db.collection(NOTIFICATIONS_COLLECTION).document(uid)
+            val userDocRef = db.collection(USERS_COLLECTION).document(uid)
+
+            transaction.update(
+                userNotificationsDocRef,
+                NOTIFICATION_FIELD,
+                FieldValue.arrayUnion(notification)
+            )
+            transaction.update(userDocRef, ACTIVE_NOTIFICATIONS_FIELD, FieldValue.increment(1))
+        }.addOnFailureListener {
+            if (it is FirebaseFirestoreException) {
+                Firebase.firestore.runTransaction { transaction ->
+                    val userNotificationsDocRef =
+                        createUserNotificationDocument(transaction, uid)
+                    val userDocRef = db.collection(USERS_COLLECTION).document(uid)
+
+                    storeNotificationToFirestore(
+                        transaction,
+                        userNotificationsDocRef,
+                        notification
+                    )
+                    updateActiveNotificationsCount(transaction, userDocRef)
                 }
             }
+        }
+
     }
 
     private fun createUserNotificationDocument(
@@ -91,5 +107,12 @@ class SendNotificationViewModel : ViewModel() {
             NOTIFICATION_FIELD,
             FieldValue.arrayUnion(notification)
         )
+    }
+
+    private fun updateActiveNotificationsCount(
+        transaction: Transaction,
+        userDocRef: DocumentReference
+    ) {
+        transaction.update(userDocRef, ACTIVE_NOTIFICATIONS_FIELD, FieldValue.increment(1))
     }
 }

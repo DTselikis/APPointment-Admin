@@ -14,7 +14,6 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
     val nickname = MutableLiveData<String>(user.nickname)
     val phone = MutableLiveData<String>(user.phone)
     val email = MutableLiveData<String>(user.email)
-    val fbName = MutableLiveData<String>(user.fbName)
 
     private val _changesSaved = MutableLiveData<Boolean>()
     val changesSaved: LiveData<Boolean> = _changesSaved
@@ -26,7 +25,6 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
         nickname.value,
         phone.value,
         email.value,
-        fbName.value,
         user.token
     )
 
@@ -50,7 +48,6 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
         if (user.nickname != nickname.value) changes["nickname"] = nickname.value!!
         if (user.phone != phone.value) changes["phone"] = phone.value!!
         if (user.email != email.value) changes["email"] = email.value!!
-        if (user.fbName != fbName.value) changes["fbName"] = fbName.value!!
 
         return changes
     }
@@ -68,7 +65,6 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
         nickname.value = user.nickname ?: ""
         phone.value = user.phone ?: ""
         email.value = user.email ?: ""
-        fbName.value = user.fbName ?: ""
     }
 
 }

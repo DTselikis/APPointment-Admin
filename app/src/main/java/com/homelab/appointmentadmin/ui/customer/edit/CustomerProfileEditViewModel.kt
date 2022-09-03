@@ -18,14 +18,12 @@ class CustomerProfileEditViewModel(private var user: User) : ViewModel() {
     private val _changesSaved = MutableLiveData<Boolean>()
     val changesSaved: LiveData<Boolean> = _changesSaved
 
-    fun getUser(): User = User(
-        user.uid,
-        firstname.value,
-        lastname.value,
-        nickname.value,
-        phone.value,
-        email.value,
-        user.token
+    fun getUser(): User = user.copy(
+        firstname = firstname.value,
+        lastname = lastname.value,
+        nickname = nickname.value,
+        phone = phone.value,
+        email = email.value
     )
 
     fun storeChangesToDB() {

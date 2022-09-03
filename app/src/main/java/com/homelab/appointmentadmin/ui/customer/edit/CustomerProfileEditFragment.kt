@@ -1,13 +1,17 @@
 package com.homelab.appointmentadmin.ui.customer.edit
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -61,6 +65,15 @@ class CustomerProfileEditFragment : Fragment() {
             customerProfileEditFragment = this@CustomerProfileEditFragment
         }
 
+        if (sharedViewModel.user.value!!.registered) {
+            binding.emailEditText.apply {
+                isFocusableInTouchMode = false
+                setOnClickListener {
+                    showEmailWarningDialog()
+                }
+            }
+        }
+
     }
 
     override fun onResume() {
@@ -108,7 +121,7 @@ class CustomerProfileEditFragment : Fragment() {
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(color)
-                .setAction("Ok") {
+                .setAction(getString(R.string.ok)) {
                     sharedViewModel.setUser(viewModel.getUser())
                     closeEditsFragment()
                 }
@@ -151,5 +164,28 @@ class CustomerProfileEditFragment : Fragment() {
             }
                 .create()
         }?.show()
+    }
+
+    private fun showEmailWarningDialog() {
+        activity?.let {
+            AlertDialog.Builder(it).apply {
+                setTitle(getString(R.string.email_change_warning_title))
+                setMessage(getString(R.string.email_change_warning_message))
+                setPositiveButton(getString(R.string.ok)) { _, _ -> }
+                setOnDismissListener {
+                    binding.emailEditText.apply {
+                        isFocusableInTouchMode = true
+                        setOnClickListener { }
+                        requestFocus()
+
+                        val keyboard =
+                            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                        keyboard.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+                    }
+                }
+            }
+                .create()
+                .show()
+        }
     }
 }

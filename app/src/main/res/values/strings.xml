@@ -69,4 +69,7 @@
 
     <string name="appointment_cancellation_title">Appointment cancellation</string>
     <string name="appointment_cancellation_message">Your appointment have been canceled</string>
+    <string name="email_change_warning_title">User is registered</string>
+    <string name="email_change_warning_message">Because user is register it is highly recommended to change the email address on his own. Otherwise may loose ability to login to his account.</string>
+    <string name="ok">OK</string>
 </resources>

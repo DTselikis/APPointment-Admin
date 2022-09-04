@@ -7,17 +7,17 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointmentadmin.ui.customer.contact.SendNotificationViewModel" />
+            type="com.homelab.appointmentadmin.ui.customer.contact.notification.SendNotificationViewModel" />
 
         <variable
             name="sendNotificationFragment"
-            type="com.homelab.appointmentadmin.ui.customer.contact.SendNotificationFragment" />
+            type="com.homelab.appointmentadmin.ui.customer.contact.notification.SendNotificationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.customer.contact.SendNotificationFragment">
+        tools:context=".ui.customer.contact.notification.SendNotificationFragment">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/custom_notification_group"

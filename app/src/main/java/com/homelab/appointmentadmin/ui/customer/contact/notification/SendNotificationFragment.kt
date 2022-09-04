@@ -1,4 +1,4 @@
-package com.homelab.appointmentadmin.ui.customer.contact
+package com.homelab.appointmentadmin.ui.customer.contact.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater

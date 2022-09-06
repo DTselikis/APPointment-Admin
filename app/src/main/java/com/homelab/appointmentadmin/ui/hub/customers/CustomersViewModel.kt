@@ -8,6 +8,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointmentadmin.data.CustomerFilter
+import com.homelab.appointmentadmin.data.NOTIFICATIONS_COLLECTION
 import com.homelab.appointmentadmin.data.USERS_COLLECTION
 import com.homelab.appointmentadmin.data.User
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -63,9 +64,11 @@ class CustomersViewModel : ViewModel() {
         Firebase.firestore.runTransaction { transaction ->
             val userRef = Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
             val userNotesRef = Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            val userNotificationsRef = Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(user.uid!!)
 
             transaction.delete(userRef)
             transaction.delete(userNotesRef)
+            transaction.delete(userNotificationsRef)
         }.addOnCompleteListener { task ->
             val deleted =
                 if (task.isSuccessful) {

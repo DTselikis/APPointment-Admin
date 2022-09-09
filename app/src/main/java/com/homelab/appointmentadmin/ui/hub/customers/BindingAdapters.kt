@@ -22,7 +22,7 @@ fun bindUsersList(recyclerView: RecyclerView, users: List<User>?) {
 fun bindStroke(materialCardView: MaterialCardView, registered: Boolean?) {
     if (registered == true) {
         materialCardView.strokeColor =
-            materialCardView.resources.getColor(R.color.registered_stroke, null)
+            materialCardView.resources.getColor(R.color.md_theme_dark_primary, null)
         materialCardView.strokeWidth = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             1.1f,

@@ -33,7 +33,7 @@
                 android:id="@+id/customer_hub_pic"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                app:civ_circle_background_color="@color/purple_200"
+                app:civ_circle_background_color="@color/md_theme_dark_surfaceVariant"
                 app:imgUrl="@{user}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"

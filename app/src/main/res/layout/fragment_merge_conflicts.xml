@@ -47,6 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/conflict_msg"
             app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextAppearance.Material3.TitleLarge"
             tools:text="1/4" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -58,13 +59,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
+            app:layout_constraintVertical_bias="0.3"
+            style="@style/TextAppearance.Material3.TitleSmall"/>
 
         <RadioGroup
             android:id="@+id/conflicts_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/conflict_msg">
@@ -152,7 +155,7 @@
                     android:id="@+id/customer_pic"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    app:civ_circle_background_color="@color/purple_200"
+                    app:civ_circle_background_color="@color/md_theme_dark_surfaceVariant"
                     app:imgUrl="@{viewModel.profilePic}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

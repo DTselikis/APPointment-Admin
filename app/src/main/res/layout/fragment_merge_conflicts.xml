@@ -19,6 +19,16 @@
         android:layout_height="match_parent"
         tools:context=".ui.hub.merge.conflicts.MergeConflictsFragment">
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/merge_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/conflicts_group"
             android:layout_width="wrap_content"
@@ -40,6 +50,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/conflicts_progress"
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{@string/number_of_conflicts(viewModel.currentConflict, viewModel.numOfConflicts )}"
@@ -47,11 +58,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/conflict_msg"
             app:layout_constraintTop_toTopOf="parent"
-            style="@style/TextAppearance.Material3.TitleLarge"
             tools:text="1/4" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/conflict_msg"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choice_conflict"
@@ -59,8 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            style="@style/TextAppearance.Material3.TitleSmall"/>
+            app:layout_constraintVertical_bias="0.3" />
 
         <RadioGroup
             android:id="@+id/conflicts_radio_group"

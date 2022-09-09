@@ -86,6 +86,8 @@ class MergeConflictsFragment : Fragment() {
     }
 
     fun mergeUsers() {
+        binding.mergeProgress.show()
+
         if (isOnline()) {
             viewModel.storeMergedUserToDbTransaction()
         } else {
@@ -127,6 +129,8 @@ class MergeConflictsFragment : Fragment() {
 
     private fun observeStoreStatus() {
         viewModel.storeSucceeded.observe(viewLifecycleOwner) { succeeded ->
+            binding.mergeProgress.hide()
+
             val text: String
             val color: Int
 

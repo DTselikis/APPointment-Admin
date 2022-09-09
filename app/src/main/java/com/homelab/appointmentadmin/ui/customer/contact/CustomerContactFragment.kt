@@ -120,32 +120,6 @@ class CustomerContactFragment : Fragment() {
         return contactProviders.toList()
     }
 
-//    fun callCustomer() {
-//        val phone = Uri.parse("tel:${sharedViewModel.user.value!!.phone}")
-//        val phoneIntent = Intent(Intent.ACTION_DIAL, phone)
-//        phoneIntent.resolveActivity(requireContext().packageManager)?.let {
-//            try {
-//                startActivity(phoneIntent)
-//            } catch (e: ActivityNotFoundException) {
-//                showWarningDialog(getString(R.string.dial_app))
-//            }
-//
-//        }
-//    }
-//
-//    fun sendEmail() {
-//        val email = Uri.parse("mailto:${sharedViewModel.user.value!!.email}")
-//        val emailIntent = Intent(Intent.ACTION_SENDTO, email)
-//            .putExtra(Intent.EXTRA_TEXT, getString(R.string.email_signature))
-//        emailIntent.resolveActivity(requireContext().packageManager)?.let {
-//            try {
-//                startActivity(emailIntent)
-//            } catch (e: ActivityNotFoundException) {
-//                showWarningDialog("Email")
-//            }
-//        }
-//    }
-
     private fun copyTextToClipboard(text: String): Boolean {
         val clipboard =
             requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

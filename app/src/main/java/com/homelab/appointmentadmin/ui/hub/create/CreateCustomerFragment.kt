@@ -27,7 +27,6 @@ class CreateCustomerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("created")
     }
 
     override fun onCreateView(
@@ -84,6 +83,8 @@ class CreateCustomerFragment : Fragment() {
 
     fun saveCustomer() {
         if (isValid() && hasGender()) {
+            binding.createCustomerProgress.show()
+
             viewModel.createUser()
         }
     }
@@ -129,6 +130,8 @@ class CreateCustomerFragment : Fragment() {
 
     private fun observeStoredState() {
         viewModel.userStored.observe(viewLifecycleOwner) { stored ->
+            binding.createCustomerProgress.hide()
+
             val text: String
             val color: Int
 

@@ -14,190 +14,203 @@
             type="com.homelab.appointmentadmin.ui.hub.create.CreateCustomerFragment" />
     </data>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/create_customer_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.hub.create.CreateCustomerFragment">
+            android:indeterminate="true"
+            android:visibility="gone"/>
 
-            <ImageView
-                android:id="@+id/new_customer_back_btn"
-                android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:onClick="@{() -> customerProfileEditFragment.pressBack()}"
-                android:src="@drawable/ic_arrow_back_24"
-                app:layout_constraintBottom_toTopOf="@id/firstname"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:context=".ui.hub.create.CreateCustomerFragment">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/firstname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/new_customer_back_btn"
-                app:startIconDrawable="@drawable/ic_account_circle_36">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="@dimen/profile_edit_edit_text_width"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/firstname_hint"
-                    android:text="@={viewModel.firstname}"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Customer" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lastname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/firstname"
-                app:startIconDrawable="@drawable/ic_account_circle_36">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="@dimen/profile_edit_edit_text_width"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/lastname_hint"
-                    android:text="@={viewModel.lastname}"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Customer" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nickname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lastname"
-                app:startIconDrawable="@drawable/ic_account_circle_36">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="@dimen/profile_edit_edit_text_width"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/nickname_hint"
-                    android:text="@={viewModel.nickname}"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Customer" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nickname"
-                app:startIconDrawable="@drawable/ic_phone_36">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="@dimen/profile_edit_edit_text_width"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/phone_hint"
-                    android:text="@={viewModel.phone}"
-                    android:textSize="@dimen/text_size"
-                    tools:text="6985201472" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phone"
-                app:startIconDrawable="@drawable/ic_email_36">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="@dimen/profile_edit_edit_text_width"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/e_mail_hint"
-                    android:text="@={viewModel.email}"
-                    android:textSize="@dimen/text_size"
-                    tools:text="me@me.com" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/creation_gender_group"
-                android:layout_width="@dimen/profile_edit_edit_text_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email"
-                app:selectionRequired="true"
-                app:singleSelection="true" >
-
-                <Button
-                    android:id="@+id/creation_gender_female"
-                    style="?attr/materialButtonOutlinedStyle"
+                <ImageView
+                    android:id="@+id/new_customer_back_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/female_gender_btn" />
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> customerProfileEditFragment.pressBack()}"
+                    android:src="@drawable/ic_arrow_back_24"
+                    app:layout_constraintBottom_toTopOf="@id/firstname"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/creation_gender_male"
-                    style="?attr/materialButtonOutlinedStyle"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/firstname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/male_gender_btn" />
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/new_customer_back_btn"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
 
-                <Button
-                    android:id="@+id/creation_gender_any"
-                    style="?attr/materialButtonOutlinedStyle"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/firstname_hint"
+                        android:text="@={viewModel.firstname}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/any_gender_btn" />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/firstname"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/gender_err_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/select_gender_err"
-                android:textColor="@color/email_red"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@id/creation_gender_group"
-                app:layout_constraintStart_toStartOf="@id/creation_gender_group"
-                app:layout_constraintTop_toBottomOf="@id/creation_gender_group"
-                tools:visibility="visible" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lastname_hint"
+                        android:text="@={viewModel.lastname}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/save_info_btn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="@dimen/profile_edit_edit_text_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_items_margin_top"
-                android:onClick="@{() -> customerProfileEditFragment.saveCustomer()}"
-                android:text="@string/save_edits_btn_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/creation_gender_group" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nickname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lastname"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/nickname_hint"
+                        android:text="@={viewModel.nickname}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nickname"
+                    app:startIconDrawable="@drawable/ic_phone_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone_hint"
+                        android:text="@={viewModel.phone}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="6985201472" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/phone"
+                    app:startIconDrawable="@drawable/ic_email_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/e_mail_hint"
+                        android:text="@={viewModel.email}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="me@me.com" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/creation_gender_group"
+                    android:layout_width="@dimen/profile_edit_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/email"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/creation_gender_female"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female_gender_btn" />
+
+                    <Button
+                        android:id="@+id/creation_gender_male"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/male_gender_btn" />
+
+                    <Button
+                        android:id="@+id/creation_gender_any"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/any_gender_btn" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/gender_err_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_gender_err"
+                    android:textColor="@color/email_red"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@id/creation_gender_group"
+                    app:layout_constraintStart_toStartOf="@id/creation_gender_group"
+                    app:layout_constraintTop_toBottomOf="@id/creation_gender_group"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_info_btn"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="@dimen/profile_edit_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    android:onClick="@{() -> customerProfileEditFragment.saveCustomer()}"
+                    android:text="@string/save_edits_btn_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/creation_gender_group" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

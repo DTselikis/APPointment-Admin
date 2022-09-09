@@ -1,10 +1,8 @@
 package com.homelab.appointmentadmin.ui.customer.contact
 
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
+import android.content.*
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -89,7 +87,7 @@ class CustomerContactFragment : Fragment() {
                         try {
                             ContactProvider.sendEmail(requireContext(), it)
                         } catch (e: ActivityNotFoundException) {
-                            showWarningDialog("email")
+                            showWarningDialog("mail")
                         }
                     }
                 )
@@ -134,14 +132,25 @@ class CustomerContactFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun showWarningDialog(appName: String) {
-        val builder: AlertDialog.Builder? = activity?.let {
-            AlertDialog.Builder(it)
+    private fun searchOnPlayStore(query: String) {
+        val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("http://play.google.com/store/search?q=$query&c=apps")
         }
-        builder?.setMessage(getString(R.string.opening_app_problem, appName))
-            ?.setPositiveButton(getString(R.string.dismiss_warning_dialog)) { dialog, id ->
-                dialog.dismiss()
-            }
-            ?.create()?.show()
+
+        startActivity(playStoreIntent)
+    }
+
+    private fun showWarningDialog(appType: String) {
+        activity?.let {
+            AlertDialog.Builder(it)
+                .setTitle(getString(R.string.missing_app))
+                .setMessage(getString(R.string.install_missing_app))
+                .setPositiveButton(getString(R.string.dialog_yes_btn)) { _, _ ->
+                    searchOnPlayStore(appType)
+                }
+                .setNegativeButton(getString(R.string.dialog_no_btn)) { _, _ -> }
+                .create()
+                .show()
+        }
     }
 }

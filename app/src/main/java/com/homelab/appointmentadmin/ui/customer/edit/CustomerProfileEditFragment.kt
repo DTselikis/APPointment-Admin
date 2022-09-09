@@ -90,6 +90,7 @@ class CustomerProfileEditFragment : Fragment() {
 
     fun saveChanges() {
         if (viewModel.isModified()) {
+            binding.saveEditsProgress.show()
             viewModel.storeChangesToDB()
         } else {
             Toast.makeText(requireContext(), getString(R.string.no_edits_made), Toast.LENGTH_SHORT)
@@ -105,6 +106,8 @@ class CustomerProfileEditFragment : Fragment() {
 
     private fun observeSaveStatus() {
         viewModel.changesSaved.observe(viewLifecycleOwner) { saved ->
+            binding.saveEditsProgress.hide()
+
             val text: String
             val color: Int
 

@@ -132,11 +132,11 @@ class MergeConflictsFragment : Fragment() {
 
             if (succeeded) {
                 text = getString(R.string.save_successful)
-                color = R.color.teal_200
+                color = R.color.md_theme_dark_secondary
                 setReturnValue(viewModel.getMergedUser())
             } else {
                 text = getString(R.string.save_failed)
-                color = R.color.email_red
+                color = R.color.md_theme_dark_errorContainer
                 setReturnValue(null)
             }
 

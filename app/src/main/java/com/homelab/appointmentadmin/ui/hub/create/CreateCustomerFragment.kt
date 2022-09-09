@@ -137,11 +137,11 @@ class CreateCustomerFragment : Fragment() {
 
             if (stored) {
                 text = getString(R.string.user_creation_success)
-                color = R.color.teal_200
+                color = R.color.md_theme_dark_secondary
                 informForNewUser()
             } else {
                 text = getString(R.string.user_creation_err)
-                color = R.color.email_red
+                color = R.color.md_theme_dark_errorContainer
             }
 
             Snackbar.make(binding.saveInfoBtn, text, Snackbar.LENGTH_LONG)

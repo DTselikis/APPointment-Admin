@@ -110,10 +110,10 @@ class CustomerProfileEditFragment : Fragment() {
 
             if (saved) {
                 text = getString(R.string.save_successful)
-                color = resources.getColor(R.color.teal_200, requireActivity().theme)
+                color = resources.getColor(R.color.md_theme_dark_secondary, requireActivity().theme)
             } else {
                 text = getString(R.string.save_failed)
-                color = resources.getColor(R.color.email_red, requireActivity().theme)
+                color = resources.getColor(R.color.md_theme_dark_errorContainer, requireActivity().theme)
             }
 
             Snackbar.make(binding.saveEditsBtn, text, Snackbar.LENGTH_LONG)

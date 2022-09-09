@@ -56,8 +56,7 @@
             app:layout_constraintBottom_toBottomOf="@id/filter_btn"
             app:layout_constraintStart_toEndOf="@id/filter_btn"
             app:layout_constraintTop_toTopOf="@id/filter_btn"
-            tools:alpha="1"
-            tools:visibility="gone">
+            tools:alpha="1">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/show_all_filter"
@@ -65,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:onClick="@{() -> fragmentCustomers.showAllCustomers()}"
-                app:cardBackgroundColor="@color/selected_filter"
+                app:cardBackgroundColor="@color/md_theme_dark_primaryContainer"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp">
 

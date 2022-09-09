@@ -230,19 +230,19 @@ class CustomersFragment : Fragment() {
         binding.apply {
             showAllFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.white,
+                    android.R.color.transparent,
                     requireActivity().theme
                 )
             )
             showUnregisteredFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.white,
+                    android.R.color.transparent,
                     requireActivity().theme
                 )
             )
             showRegisteredFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.selected_filter,
+                    R.color.md_theme_dark_primaryContainer,
                     requireActivity().theme
                 )
             )
@@ -254,19 +254,19 @@ class CustomersFragment : Fragment() {
         binding.apply {
             showAllFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.white,
+                    android.R.color.transparent,
                     requireActivity().theme
                 )
             )
             showUnregisteredFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.selected_filter,
+                    R.color.md_theme_dark_primaryContainer,
                     requireActivity().theme
                 )
             )
             showRegisteredFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.white,
+                    android.R.color.transparent,
                     requireActivity().theme
                 )
             )
@@ -278,19 +278,19 @@ class CustomersFragment : Fragment() {
         binding.apply {
             showAllFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.selected_filter,
+                    R.color.md_theme_dark_primaryContainer,
                     requireActivity().theme
                 )
             )
             showRegisteredFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.white,
+                    android.R.color.transparent,
                     requireActivity().theme
                 )
             )
             showUnregisteredFilter.setCardBackgroundColor(
                 resources.getColor(
-                    R.color.white,
+                    android.R.color.transparent,
                     requireActivity().theme
                 )
             )

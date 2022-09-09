@@ -73,16 +73,7 @@ class CustomerContactFragment : Fragment() {
                         it,
                         null,
                         { copyTextToClipboard(it) }
-                    ) {
-                        try {
-                            ContactProvider.openFacebookChat(
-                                requireContext(),
-                                customer.fbProfileId!!
-                            )
-                        } catch (e: ActivityNotFoundException) {
-                            showWarningDialog("Facebook")
-                        }
-                    }
+                    ) { ContactProvider.chatOnFacebook(requireContext(), customer.fbProfileId!!) }
                 )
             }
 

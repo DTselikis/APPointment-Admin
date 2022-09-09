@@ -92,12 +92,15 @@ class SendNotificationFragment : BottomSheetDialogFragment() {
     }
 
     fun sendNotification() {
+        binding.sendNotificationProgress.show()
         binding.sendNotificationBtn.isEnabled = false
         viewModel.sendNotification(args.token, args.uid, binding.customNotificationTitle.tag as Int)
     }
 
     private fun observeNotificationSent() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            binding.sendNotificationProgress.hide()
+
             viewModel.notificationSent.collectLatest { sent ->
                 if (sent) {
                     val text = getString(R.string.notification_sent)

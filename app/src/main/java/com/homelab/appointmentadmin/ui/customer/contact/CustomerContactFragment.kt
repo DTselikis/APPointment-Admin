@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -67,9 +68,12 @@ class CustomerContactFragment : Fragment() {
                 contactProviders.add(
                     ContactProviderInfo(
                         R.color.fb_blue,
-                        R.drawable.facebook_logo,
+                        R.drawable.fb_messenger_logo,
                         it,
-                        null,
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.fb_messenger_background
+                        ),
                         { copyTextToClipboard(it) }
                     ) { ContactProvider.chatOnFacebook(requireContext(), customer.fbProfileId!!) }
                 )

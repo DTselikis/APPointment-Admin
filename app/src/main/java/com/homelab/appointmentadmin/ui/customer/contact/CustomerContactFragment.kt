@@ -2,10 +2,14 @@ package com.homelab.appointmentadmin.ui.customer.contact
 
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -54,10 +58,10 @@ class CustomerContactFragment : Fragment() {
                     ContactProviderInfo(
                         R.color.phone_green,
                         R.drawable.ic_phone_24,
-                        it
-                    ) {
-                        ContactProvider.callCustomer(requireContext(), it)
-                    }
+                        it,
+                        null,
+                        { copyTextToClipboard(it) }
+                    ) { ContactProvider.callCustomer(requireContext(), it) }
                 )
             }
 
@@ -66,10 +70,15 @@ class CustomerContactFragment : Fragment() {
                     ContactProviderInfo(
                         R.color.fb_blue,
                         R.drawable.facebook_logo,
-                        it
+                        it,
+                        null,
+                        { copyTextToClipboard(it) }
                     ) {
                         try {
-                            ContactProvider.openFacebookChat(requireContext(), customer.fbProfileId!!)
+                            ContactProvider.openFacebookChat(
+                                requireContext(),
+                                customer.fbProfileId!!
+                            )
                         } catch (e: ActivityNotFoundException) {
                             showWarningDialog("Facebook")
                         }
@@ -82,7 +91,9 @@ class CustomerContactFragment : Fragment() {
                     ContactProviderInfo(
                         R.color.email_red,
                         R.drawable.ic_email_white_24,
-                        it
+                        it,
+                        null,
+                        { copyTextToClipboard(it) }
                     ) {
                         try {
                             ContactProvider.sendEmail(requireContext(), it)
@@ -98,10 +109,10 @@ class CustomerContactFragment : Fragment() {
                     ContactProviderInfo(
                         R.color.notification_cyan,
                         R.drawable.ic_notifications_24,
-                        getString(R.string.send_notification)
-                    ) {
-                        navigateToSendNotification()
-                    }
+                        getString(R.string.send_notification),
+                        null,
+                        { copyTextToClipboard(it) }
+                    ) { navigateToSendNotification() }
                 )
             }
         }
@@ -134,6 +145,20 @@ class CustomerContactFragment : Fragment() {
 //            }
 //        }
 //    }
+
+    private fun copyTextToClipboard(text: String): Boolean {
+        val clipboard =
+            requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText("social info", text))
+
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.copied_to_clipboard),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        return true
+    }
 
     fun navigateToSendNotification() {
         val action =

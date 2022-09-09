@@ -72,4 +72,5 @@
     <string name="email_change_warning_title">User is registered</string>
     <string name="email_change_warning_message">Because user is register it is highly recommended to change the email address on his own. Otherwise may loose ability to login to his account.</string>
     <string name="ok">OK</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
 </resources>

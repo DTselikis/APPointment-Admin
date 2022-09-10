@@ -56,7 +56,7 @@ class NoteAdapter(
         itemView.setOnCreateContextMenuListener { contextMenu, view, _ ->
             contextMenu.add(view.context.getString(R.string.delete_user_context_menu_item))
                 .setOnMenuItemClickListener {
-                    //notesFragment.deleteNote(note)
+                    notesFragment.deleteNote(note)
                     true
                 }
         }

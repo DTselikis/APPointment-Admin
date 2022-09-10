@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -44,6 +45,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _newNoteStored = MutableSharedFlow<Boolean>()
     val newNoteStored: SharedFlow<Boolean> = _newNoteStored
 
+    private val _noteDeleted = MutableSharedFlow<Boolean>()
+    val noteDeleted: SharedFlow<Boolean> = _noteDeleted
+
     val noteTitle = MutableLiveData<String>()
     val noteText = MutableLiveData<String>()
 
@@ -76,6 +80,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
         updateExistingNoteToFirebase(updatedNote)
     }
 
+    fun deleteNote(existingNote: Note) {
+        deleteExistingNoteFromFirebase(existingNote)
+    }
+
     private fun storeNewNoteToFirebase(note: Note) {
         val data = mapOf(NOTES_FIELD_VALUE to mapOf(note.hash to note))
 
@@ -105,6 +113,18 @@ class NotesViewModel(private val user: User) : ViewModel() {
             }
     }
 
+    private fun deleteExistingNoteFromFirebase(existingNote: Note) {
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!)
+            .update(mapOf("$NOTES_FIELD_VALUE.${existingNote.hash}" to FieldValue.delete()))
+            .addOnCompleteListener { task ->
+                viewModelScope.launch { _noteDeleted.emit(task.isSuccessful) }
+
+                if (task.isSuccessful) {
+                    deleteExistingNoteFromList(existingNote)
+                }
+            }
+    }
+
     private fun addNewNoteToList(note: Note) {
         _notes.add(0, note)
 
@@ -115,6 +135,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _notes.replace(currentNote, updatedNote)
 
         _notesForDisplay.value = _notes.toList()
+    }
+
+    private fun deleteExistingNoteFromList(existingNote: Note) {
+        _notes.remove(existingNote)
     }
 
     fun newNoteMode() {

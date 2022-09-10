@@ -47,6 +47,7 @@ class NotesFragment : Fragment() {
         viewModel.gDriveInitialize(requireContext())
 
         observeNewNoteStored()
+        observeNoteDeleted()
     }
 
     fun createNote() {
@@ -67,6 +68,12 @@ class NotesFragment : Fragment() {
         } else {
             viewModel.saveChanges()
         }
+    }
+
+    fun deleteNote(existingNote: Note) {
+        binding.notesProgress.show()
+
+        viewModel.deleteNote(existingNote)
     }
 
     private fun showNote() {
@@ -90,6 +97,19 @@ class NotesFragment : Fragment() {
                         hideNote()
                         getString(R.string.note_saved)
                     } else getString(R.string.note_not_saved)
+
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observeNoteDeleted() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.noteDeleted.collectLatest { deleted ->
+                binding.notesProgress.hide()
+
+                val text =
+                    if (deleted) getString(R.string.note_deleted) else getString(R.string.note_not_deleted)
 
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
             }

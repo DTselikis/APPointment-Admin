@@ -185,6 +185,12 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _photosForDisplay.postValue(_photos.map { it.localUri!! })
     }
 
+    private fun addPhotosToNote(notePhotos: List<NotePhoto>) {
+        _photos.addAll(notePhotos)
+
+        _photosForDisplay.value = _photos.map { it.localUri!! }
+    }
+
     fun uploadPhoto(photo: File = this.photo, mimeType: String = this.mimeType) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -215,7 +221,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         currentNote = note
 
         note.photos?.let {
-            _photos.addAll(it)
+            addPhotosToNote(it)
         }
     }
 

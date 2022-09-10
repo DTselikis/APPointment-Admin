@@ -31,6 +31,20 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private val _notes = mutableListOf<Note>()
 
+    init {
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
+            .addOnSuccessListener { result ->
+                if (result.exists()) {
+                    _notes.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
+                        // TODO change to download if not exists
+                        entry.value.photos = NotesImagesManager.getPhotosSorted(entry.value.hash!!)
+                        entry.value
+                    }.sortedByDescending { it.timestamp })
+                    _notesForDisplay.value = _notes.map { it }
+                }
+            }
+    }
+
     val title = MutableLiveData<String?>()
     val description = MutableLiveData<String?>()
 
@@ -70,20 +84,6 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     var timestamp: String? = null
         private set
-
-    fun fetchNotes() {
-        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!).get()
-            .addOnSuccessListener { result ->
-                if (result.exists()) {
-                    _notes.addAll(result.toObject<Notes>()!!.notes!!.map { entry ->
-                        // TODO change to download if not exists
-                        entry.value.photos = NotesImagesManager.getPhotosSorted(entry.value.hash!!)
-                        entry.value
-                    }.sortedByDescending { it.timestamp })
-                    _notesForDisplay.value = _notes.map { it }
-                }
-            }
-    }
 
     fun isModified(): Boolean =
         title.value != selectedNote.title || description.value != selectedNote.description

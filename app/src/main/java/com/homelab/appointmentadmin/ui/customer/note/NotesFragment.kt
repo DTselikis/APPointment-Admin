@@ -96,8 +96,6 @@ class NotesFragment : Fragment() {
             notesFragment = this@NotesFragment
         }
 
-        viewModel.fetchNotes()
-
         observeChangedStoredtoDB()
         observeForNoteDeletion()
         observeNeedsAuthorization()

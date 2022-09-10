@@ -56,7 +56,7 @@ object NotesImagesManager {
         }
     }
 
-    fun fileExists(context: Context, noteHash: String, path: String,): Boolean {
+    fun fileExists(context: Context, noteHash: String, path: String): Boolean {
         val fileName = context.getFileName(Uri.parse(path))
         val noteDir = File(notesPath, noteHash)
 

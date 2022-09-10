@@ -1,5 +1,6 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTION
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.helping.Notes
+import com.homelab.appointmentadmin.utils.GoogleDriveHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -31,6 +33,13 @@ class NotesViewModel(private val user: User) : ViewModel() {
                         _notesForDisplay.value = _notes.toList()
                     }
                 }
+        }
+    }
+
+    fun gDriveInitialize(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            GoogleDriveHelper.initialize(context)
+            GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
         }
     }
 }

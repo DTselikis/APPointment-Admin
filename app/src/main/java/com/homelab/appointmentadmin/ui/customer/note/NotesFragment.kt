@@ -38,6 +38,8 @@ class NotesFragment : Fragment() {
             viewModel = this@NotesFragment.viewModel
             notesRv.adapter = NoteAdapter(this@NotesFragment)
         }
+
+        viewModel.gDriveInitialize(requireContext())
     }
 
 }

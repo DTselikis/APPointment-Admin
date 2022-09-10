@@ -159,6 +159,8 @@ class NotesFragment : Fragment() {
     }
 
     fun deleteNote(note: Note) {
+        binding.notesProgress.show()
+
         viewModel.deleteNote(note)
     }
 
@@ -184,8 +186,10 @@ class NotesFragment : Fragment() {
     private fun updateAdapter() {
         viewModel.apply {
             if (isNewNote()) {
+                binding.notesProgress.show()
                 storeNewNoteToDB()
             } else if (isModified()) {
+                binding.notesProgress.show()
                 storeChangesToDB()
             }
         }
@@ -193,6 +197,8 @@ class NotesFragment : Fragment() {
 
     private fun observeChangedStoredtoDB() {
         viewModel.updatesStored.observe(viewLifecycleOwner) { stored ->
+            binding.notesProgress.hide()
+
             val msg =
                 if (stored) getString(R.string.note_saved) else getString(R.string.note_not_saved)
 
@@ -203,6 +209,8 @@ class NotesFragment : Fragment() {
     private fun observeForNoteDeletion() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.noteDeleted.collectLatest { deleted ->
+                binding.notesProgress.hide()
+
                 val text = if (deleted) {
                     getString(R.string.delete_success)
                 } else getString(R.string.delete_fail)
@@ -223,6 +231,8 @@ class NotesFragment : Fragment() {
     private fun observeImageUploaded() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.imageUploaded.collectLatest { uploaded ->
+                binding.notesProgress.hide()
+
                 val text =
                     if (uploaded) getString(R.string.image_stored)
                     else getString(R.string.image_not_stored)

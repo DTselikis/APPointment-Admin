@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hub_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/startupFragment">
 
     <fragment
         android:id="@+id/customersFragment"
@@ -41,7 +41,7 @@
         android:id="@+id/mergeConflictsFragment"
         android:name="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsFragment"
         android:label="fragment_merge_conflicts"
-        tools:layout="@layout/fragment_merge_conflicts" >
+        tools:layout="@layout/fragment_merge_conflicts">
         <argument
             android:name="userToBeMerged"
             app:argType="com.homelab.appointmentadmin.data.User" />
@@ -53,7 +53,7 @@
         android:id="@+id/loginFragment"
         android:name="com.homelab.appointmentadmin.ui.auth.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_customersFragment"
             app:destination="@id/customersFragment"
@@ -72,4 +72,15 @@
             android:name="uid"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/startupFragment"
+        android:name="com.homelab.appointmentadmin.StartupFragment"
+        android:label="StartupFragment"
+        tools:layout="@layout/fragment_startup">
+        <action
+            android:id="@+id/action_startupFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/startupFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

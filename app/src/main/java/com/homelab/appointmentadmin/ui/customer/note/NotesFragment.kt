@@ -109,11 +109,13 @@ class NotesFragment : Fragment() {
             reset()
             show(200)
         }
+        binding.newNoteBtn.visibility = View.GONE
     }
 
     private fun hideNote() {
         binding.notesProgress.hide()
         binding.cardFrame.hide(200)
+        binding.newNoteBtn.visibility = View.VISIBLE
     }
 
     private fun observeNewNoteStored() {

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,7 +17,9 @@ import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
 import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
+import com.homelab.appointmentadmin.utils.NotesImagesManager
 import kotlinx.coroutines.flow.collectLatest
+import java.io.IOException
 
 class NotesFragment : Fragment() {
 
@@ -27,6 +30,34 @@ class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
 
     private lateinit var backPressedCallback: OnBackPressedCallback
+
+    private val openGallery =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                val mimeType = requireContext().contentResolver.getType(it)
+                try {
+                    val image = NotesImagesManager.copyFileToInternalAppStorage(
+                        requireActivity(),
+                        requireContext(),
+                        uri,
+                        viewModel.getCurrentNotesHash()
+                    )
+
+                    viewModel.uploadPhoto(image!!, mimeType!!)
+                } catch (e: IOException) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.img_copy_err),
+                        Toast.LENGTH_SHORT
+                    )
+                }
+            }
+        }
+
+    private val requestAuthorization =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            viewModel.uploadPhoto()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +94,11 @@ class NotesFragment : Fragment() {
         }
 
         viewModel.gDriveInitialize(requireContext())
+        NotesImagesManager.initialize(requireContext())
 
         observeNewNoteStored()
         observeNoteDeleted()
+        observeNeedsAuthorization()
     }
 
     override fun onResume() {
@@ -104,6 +137,10 @@ class NotesFragment : Fragment() {
         viewModel.deleteNote(existingNote)
     }
 
+    fun addPhotoToNote() {
+        openGallery.launch("image/*")
+    }
+
     private fun showNote() {
         binding.cardFrame.apply {
             reset()
@@ -139,6 +176,14 @@ class NotesFragment : Fragment() {
                     if (deleted) getString(R.string.note_deleted) else getString(R.string.note_not_deleted)
 
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observeNeedsAuthorization() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.needsAuthorization.collectLatest { requestAuthIntent ->
+                requestAuthorization.launch(requestAuthIntent)
             }
         }
     }

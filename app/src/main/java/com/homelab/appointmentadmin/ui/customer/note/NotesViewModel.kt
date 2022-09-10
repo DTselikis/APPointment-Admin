@@ -1,10 +1,12 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
@@ -21,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 class NotesViewModel(private val user: User) : ViewModel() {
     private val _notesForDisplay = MutableLiveData<List<Note>>()
@@ -48,6 +51,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _noteDeleted = MutableSharedFlow<Boolean>()
     val noteDeleted: SharedFlow<Boolean> = _noteDeleted
 
+    private val _needsAuthorization = MutableSharedFlow<Intent>()
+    val needsAuthorization: SharedFlow<Intent> = _needsAuthorization
+
     val noteTitle = MutableLiveData<String>()
     val noteText = MutableLiveData<String>()
 
@@ -59,10 +65,23 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private lateinit var currentNote: Note
 
+    private lateinit var userNotesFolder: String
+    private var noteFolder: String? = null
+        get() {
+            if (field == null) {
+                field =
+                    GoogleDriveHelper.createFolderIfNotExist(getCurrentNotesHash(), userNotesFolder)
+            }
+
+            return field
+        }
+    private lateinit var photo: File
+    private lateinit var mimeType: String
+
     fun gDriveInitialize(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             GoogleDriveHelper.initialize(context)
-            GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
+            userNotesFolder = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
         }
     }
 
@@ -151,6 +170,17 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _notes.remove(existingNote)
     }
 
+    fun uploadPhoto(photo: File = this.photo, mimeType: String = this.mimeType) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                GoogleDriveHelper.uploadImage(photo, mimeType, noteFolder!!)
+            } catch (e: UserRecoverableAuthIOException) {
+                saveFileInfo(photo, mimeType)
+                _needsAuthorization.emit(e.intent)
+            }
+        }
+    }
+
     fun newNoteMode() {
         noteTitle.value = ""
         noteText.value = ""
@@ -174,14 +204,21 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun isNoteVisible(): Boolean = isInNewNoteMode || isInEditNoteMode
 
+    fun getCurrentNotesHash(): String =
+        if (isInNewNoteMode) currentNote.timestamp!!.seconds.toString() else currentNote.hash!!
+
+    private fun saveFileInfo(photo: File, mimeType: String) {
+        this.photo = photo
+        this.mimeType = mimeType
+    }
+
     private fun createNewNote(): Note {
-        val timestamp = Timestamp.now()
+        val timestamp = currentNote.timestamp
 
         return currentNote.copy(
             title = noteTitle.value!!,
             description = noteText.value!!,
-            timestamp = timestamp,
-            hash = timestamp.seconds.toString()
+            hash = timestamp!!.seconds.toString()
             //TODO add photos
         )
     }

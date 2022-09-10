@@ -21,7 +21,7 @@ class NoteAdapter(
         fun bind(note: Note) {
             binding.note = note
             binding.itemCard.setOnClickListener {
-                notesFragment.editNote(note)
+                //notesFragment.editNote(note)
             }
         }
     }
@@ -56,7 +56,7 @@ class NoteAdapter(
         itemView.setOnCreateContextMenuListener { contextMenu, view, _ ->
             contextMenu.add(view.context.getString(R.string.delete_user_context_menu_item))
                 .setOnMenuItemClickListener {
-                    notesFragment.deleteNote(note)
+                    //notesFragment.deleteNote(note)
                     true
                 }
         }

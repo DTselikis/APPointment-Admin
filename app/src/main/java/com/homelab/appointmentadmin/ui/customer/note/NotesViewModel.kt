@@ -66,18 +66,28 @@ class NotesViewModel(private val user: User) : ViewModel() {
         }
     }
 
-    fun saveNewNote() {
-        if (!hasNoteModified()) return
+    fun saveNewNote(): Boolean? {
+        if (!hasNoteModified()) {
+            isInNewNoteMode = false
+            return false
+        }
 
         val note = createNewNote()
         storeNewNoteToFirebase(note)
+
+        return null
     }
 
-    fun saveChanges() {
-        if (!hasNoteModified()) return
+    fun saveChanges(): Boolean? {
+        if (!hasNoteModified()) {
+            isInEditNoteMode = false
+            return false
+        }
 
         val updatedNote = updateExistingNote(currentNote)
         updateExistingNoteToFirebase(updatedNote)
+
+        return null
     }
 
     fun deleteNote(existingNote: Note) {

@@ -92,9 +92,9 @@ class NotesFragment : Fragment() {
         binding.notesProgress.show()
 
         if (viewModel.isInNewNoteMode) {
-            viewModel.saveNewNote()
+            viewModel.saveNewNote()?.let { hideNote() }
         } else {
-            viewModel.saveChanges()
+            viewModel.saveChanges()?.let { hideNote() }
         }
     }
 
@@ -112,14 +112,13 @@ class NotesFragment : Fragment() {
     }
 
     private fun hideNote() {
+        binding.notesProgress.hide()
         binding.cardFrame.hide(200)
     }
 
     private fun observeNewNoteStored() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.newNoteStored.collectLatest { stored ->
-                binding.notesProgress.hide()
-
                 val text =
                     if (stored) {
                         hideNote()
@@ -134,8 +133,6 @@ class NotesFragment : Fragment() {
     private fun observeNoteDeleted() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.noteDeleted.collectLatest { deleted ->
-                binding.notesProgress.hide()
-
                 val text =
                     if (deleted) getString(R.string.note_deleted) else getString(R.string.note_not_deleted)
 

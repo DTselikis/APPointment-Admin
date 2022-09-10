@@ -162,6 +162,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
             || currentNote.description != noteText.value
     // TODO add photo check
 
+    fun isNoteVisible(): Boolean = isInNewNoteMode || isInEditNoteMode
+
     private fun createNewNote(): Note {
         val timestamp = Timestamp.now()
 

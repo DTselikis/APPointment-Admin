@@ -77,7 +77,7 @@
                     android:id="@+id/card_frame_back_btn_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:onClick="@{() -> notesFragment.saveNote()}"
                     android:src="@drawable/ic_arrow_back_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

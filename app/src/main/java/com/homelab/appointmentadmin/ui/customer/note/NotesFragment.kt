@@ -1,8 +1,5 @@
 package com.homelab.appointmentadmin.ui.customer.note
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -125,37 +122,24 @@ class NotesFragment : Fragment() {
             scaleY = 0f
             alpha = 0f
             visibility = View.VISIBLE
+            animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .alpha(1f)
         }
         binding.newNoteBtn.visibility = View.GONE
-
-        val scaleX = PropertyValuesHolder.ofFloat("scaleX", 1f)
-        val scaleY = PropertyValuesHolder.ofFloat("scaleY", 1f)
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 1f)
-        val animator =
-            ObjectAnimator.ofPropertyValuesHolder(binding.cardFrame, scaleX, scaleY, alpha)
-        animator.start()
     }
 
     private fun hideNote() {
-        val scaleX = PropertyValuesHolder.ofFloat("scaleX", 0f)
-        val scaleY = PropertyValuesHolder.ofFloat("scaleY", 0f)
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f)
-        val animator =
-            ObjectAnimator.ofPropertyValuesHolder(binding.cardFrame, scaleX, scaleY, alpha)
-        animator.start()
-        animator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(p0: Animator?) {}
-
-            override fun onAnimationEnd(p0: Animator?) {
+        binding.cardFrame.animate()
+            .scaleX(0f)
+            .scaleY(0f)
+            .alpha(0f)
+            .withEndAction {
                 binding.cardFrame.visibility = View.GONE
                 binding.newNoteBtn.visibility = View.VISIBLE
                 updateAdapter()
             }
-
-            override fun onAnimationCancel(p0: Animator?) {}
-
-            override fun onAnimationRepeat(p0: Animator?) {}
-        })
     }
 
     fun deleteNote(note: Note) {

@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class NotesFragment : Fragment() {
 
@@ -41,6 +44,8 @@ class NotesFragment : Fragment() {
         }
 
         viewModel.gDriveInitialize(requireContext())
+
+        observeNewNoteStored()
     }
 
     fun createNote() {
@@ -48,10 +53,31 @@ class NotesFragment : Fragment() {
         showNote()
     }
 
+    fun saveNote() {
+        binding.notesProgress.show()
+
+        if (viewModel.isInNewNoteMode) {
+            viewModel.saveNewNote()
+        }
+    }
+
     private fun showNote() {
         binding.cardFrame.apply {
             reset()
             show(200)
+        }
+    }
+
+    private fun observeNewNoteStored() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.newNoteStored.collectLatest { stored ->
+                binding.notesProgress.hide()
+
+                val text =
+                    if (stored) getString(R.string.note_saved) else getString(R.string.note_not_saved)
+
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

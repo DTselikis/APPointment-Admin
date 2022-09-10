@@ -90,7 +90,7 @@
                     android:id="@+id/save_note_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:onClick="@{() -> notesFragment.saveNote()}"
                     android:src="@drawable/ic_save_24"
                     app:layout_constraintBottom_toBottomOf="@id/card_frame_back_btn_icon"
                     app:layout_constraintEnd_toEndOf="parent"

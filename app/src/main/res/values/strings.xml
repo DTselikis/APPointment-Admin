@@ -26,8 +26,8 @@
     <string name="unsaved_merging_warning_msg">Proceed without merging?</string>
     <string name="dialog_yes_btn">Yes</string>
     <string name="dialog_no_btn">No</string>
-    <string name="note_saved">Saved</string>
-    <string name="note_not_saved">Not saved</string>
+    <string name="note_saved">Note saved</string>
+    <string name="note_not_saved">Note not saved</string>
     <string name="fill_field_error_msg">Please fill this field</string>
     <string name="one_field_requited_err_msg">At least one of the two fields must be filled</string>
     <string name="user_creation_success">User created successfully</string>

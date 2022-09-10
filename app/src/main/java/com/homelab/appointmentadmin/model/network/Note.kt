@@ -4,10 +4,10 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ServerTimestamp
 
 data class Note(
-    val description: String? = null,
+    val description: String = "",
     var photos: List<NotePhoto>? = null,
     @ServerTimestamp
     val timestamp: Timestamp? = Timestamp.now(),
-    val title: String? = null,
+    val title: String = "",
     val hash: String? = null
 )

@@ -53,12 +53,12 @@ object GoogleDriveHelper {
     }
 
     fun createFolderStructureIfNotExists(uid: String): String {
-        val userFolder = createFolderInNotExist(uid)
+        val userFolder = createFolderIfNotExist(uid)
 
-        return createFolderInNotExist(NOTES_SUBFOLDER, userFolder)
+        return createFolderIfNotExist(NOTES_SUBFOLDER, userFolder)
     }
 
-    fun createFolderInNotExist(name: String, parent: String? = null): String =
+    fun createFolderIfNotExist(name: String, parent: String? = null): String =
         gDrive.folder(name)?.id ?: createFolder(name, parent)
 
 

@@ -43,6 +43,7 @@
                 android:layout_height="1dp"
                 android:alpha="0.8"
                 android:background="@color/md_theme_dark_primary"
+                android:visibility="@{note.photos == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toTopOf="@id/note_thumbnail_codes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

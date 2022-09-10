@@ -56,6 +56,13 @@ object NotesImagesManager {
         }
     }
 
+    fun fileExists(context: Context, noteHash: String, path: String,): Boolean {
+        val fileName = context.getFileName(Uri.parse(path))
+        val noteDir = File(notesPath, noteHash)
+
+        return File(noteDir, fileName!!).exists()
+    }
+
     fun getPhotosSorted(noteHash: String): List<String>? {
         val noteDir = File(notesPath, noteHash)
 

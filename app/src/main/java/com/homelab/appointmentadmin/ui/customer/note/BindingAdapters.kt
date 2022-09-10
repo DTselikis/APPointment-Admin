@@ -8,6 +8,7 @@ import coil.request.CachePolicy
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.homelab.appointmentadmin.model.network.Note
+import com.homelab.appointmentadmin.utils.NotesImagesManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,10 +36,17 @@ fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
     }
 }
 
-@BindingAdapter("imgUrl")
-fun bindProfilePic(imageView: ImageView, url: String?) {
-    imageView.load(url) {
-        memoryCachePolicy(CachePolicy.ENABLED)
-        diskCachePolicy(CachePolicy.ENABLED)
+@BindingAdapter("noteCover")
+fun bindProfilePic(imageView: ImageView, note: Note?) {
+    note?.let {
+        note.photos?.sortedByDescending { it.photoUploaded }?.get(0)?.localUri?.let {
+            if (NotesImagesManager.fileExists(imageView.context, note.hash!!, it)) {
+                imageView.load(it) {
+                    memoryCachePolicy(CachePolicy.ENABLED)
+                    diskCachePolicy(CachePolicy.ENABLED)
+                }
+            }
+        }
     }
+
 }

@@ -30,11 +30,11 @@
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:visibility="@{note.photos == null ? View.GONE : View.VISIBLE}"
-
                 app:layout_constraintBottom_toTopOf="@id/note_thumbnail_codes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:noteCover="@{note}"
                 tools:src="@drawable/haircut_sample" />
 
             <View

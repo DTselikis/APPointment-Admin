@@ -80,6 +80,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private fun addNewNoteToList(note: Note) {
         _notes.add(0, note)
+
+        _notesForDisplay.value = _notes.toList()
     }
 
     fun newNoteMode() {

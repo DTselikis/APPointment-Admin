@@ -63,11 +63,11 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/note_thumbnail_image_timestamp"
+                style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="3dp"
-                style="@style/TextAppearance.Material3.LabelSmall"
                 android:gravity="center"
                 app:date="@{note.timestamp}"
                 app:layout_constraintBottom_toBottomOf="parent"

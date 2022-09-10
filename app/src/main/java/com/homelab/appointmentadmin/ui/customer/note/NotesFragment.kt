@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.homelab.appointmentadmin.R
 import com.homelab.appointmentadmin.databinding.FragmentNotesBinding
+import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -53,11 +54,18 @@ class NotesFragment : Fragment() {
         showNote()
     }
 
+    fun editNote(note: Note) {
+        viewModel.editNoteMode(note)
+        showNote()
+    }
+
     fun saveNote() {
         binding.notesProgress.show()
 
         if (viewModel.isInNewNoteMode) {
             viewModel.saveNewNote()
+        } else {
+            viewModel.saveChanges()
         }
     }
 

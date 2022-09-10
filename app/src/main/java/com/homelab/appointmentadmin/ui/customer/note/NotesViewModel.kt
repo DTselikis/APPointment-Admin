@@ -50,6 +50,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     var isInNewNoteMode = false
         private set
 
+    var isInEditNoteMode = false
+        private set
+
     private lateinit var currentNote: Note
 
     fun gDriveInitialize(context: Context) {
@@ -67,6 +70,14 @@ class NotesViewModel(private val user: User) : ViewModel() {
         storeNewNoteToFirebase(note)
     }
 
+    fun saveChanges() {
+        if (!hasNoteModified()) return
+
+        val updatedNote = updateExistingNote(currentNote)
+        updateNoteInList(updatedNote)
+        updateExistingNoteToFirebase(updatedNote)
+    }
+
     private fun storeNewNoteToFirebase(note: Note) {
         val data = mapOf(NOTES_FIELD_VALUE to mapOf(note.hash to note))
 
@@ -74,9 +85,20 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .set(data, SetOptions.merge())
             .addOnCompleteListener { task ->
                 viewModelScope.launch { _newNoteStored.emit(task.isSuccessful) }
-                isInNewNoteMode = false
+                if (task.isSuccessful) isInNewNoteMode = false
             }
+    }
 
+    private fun updateExistingNoteToFirebase(updatedNote: Note) {
+        val data = mapOf("$NOTES_FIELD_VALUE.${updatedNote.hash}" to updatedNote)
+
+        Firebase.firestore.collection(USERS_NOTES_COLLECTION).document(user.uid!!)
+            .update(data)
+            .addOnCompleteListener { task ->
+                viewModelScope.launch { _newNoteStored.emit(task.isSuccessful) }
+
+                if (task.isSuccessful) isInEditNoteMode = false
+            }
     }
 
     private fun addNewNoteToList(note: Note) {
@@ -85,11 +107,27 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _notesForDisplay.value = _notes.toList()
     }
 
+    private fun updateNoteInList(updatedNote: Note) {
+        _notes.replace(currentNote, updatedNote)
+
+        _notesForDisplay.value = _notes.toList()
+    }
+
     fun newNoteMode() {
         noteTitle.value = ""
         noteText.value = ""
+        //TODO photos
         isInNewNoteMode = true
         currentNote = Note()
+    }
+
+    fun editNoteMode(note: Note) {
+        noteTitle.value = note.title
+        noteText.value = note.description
+        //TODO photos
+        isInEditNoteMode = true
+        currentNote = note
+
     }
 
     private fun hasNoteModified(): Boolean = currentNote.title != noteTitle.value
@@ -106,5 +144,18 @@ class NotesViewModel(private val user: User) : ViewModel() {
             hash = timestamp.seconds.toString()
             //TODO add photos
         )
+    }
+
+    private fun updateExistingNote(existingNote: Note): Note =
+        existingNote.copy(
+            title = noteTitle.value!!,
+            description = noteText.value!!,
+            timestamp = Timestamp.now(),
+            // TODO photos
+        )
+
+    private fun MutableList<Note>.replace(existingNote: Note, updatedNote: Note) {
+        remove(existingNote)
+        add(0, updatedNote)
     }
 }

@@ -21,7 +21,7 @@ class NoteAdapter(
         fun bind(note: Note) {
             binding.note = note
             binding.itemCard.setOnClickListener {
-                //notesFragment.editNote(note)
+                notesFragment.editNote(note)
             }
         }
     }

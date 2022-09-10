@@ -17,6 +17,7 @@ import com.homelab.appointmentadmin.data.NOTES_FIELD_VALUE
 import com.homelab.appointmentadmin.data.USERS_NOTES_COLLECTION
 import com.homelab.appointmentadmin.data.User
 import com.homelab.appointmentadmin.model.network.Note
+import com.homelab.appointmentadmin.model.network.NotePhoto
 import com.homelab.appointmentadmin.model.network.helping.Notes
 import com.homelab.appointmentadmin.utils.GoogleDriveHelper
 import kotlinx.coroutines.Dispatchers
@@ -64,6 +65,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
         private set
 
     private lateinit var currentNote: Note
+
+    private lateinit var _photos: MutableList<NotePhoto>
 
     private lateinit var userNotesFolder: String
     private var noteFolder: String? = null
@@ -170,10 +173,15 @@ class NotesViewModel(private val user: User) : ViewModel() {
         _notes.remove(existingNote)
     }
 
+    private fun addPhotoToNote(notePhoto: NotePhoto) {
+        _photos.add(0, notePhoto)
+    }
+
     fun uploadPhoto(photo: File = this.photo, mimeType: String = this.mimeType) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                GoogleDriveHelper.uploadImage(photo, mimeType, noteFolder!!)
+                val photoId = GoogleDriveHelper.uploadImage(photo, mimeType, noteFolder!!)
+                addPhotoToNote(NotePhoto(photo.absolutePath, photoId))
             } catch (e: UserRecoverableAuthIOException) {
                 saveFileInfo(photo, mimeType)
                 _needsAuthorization.emit(e.intent)
@@ -184,7 +192,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun newNoteMode() {
         noteTitle.value = ""
         noteText.value = ""
-        //TODO photos
+        _photos = mutableListOf()
         isInNewNoteMode = true
         currentNote = Note()
     }
@@ -192,15 +200,20 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun editNoteMode(note: Note) {
         noteTitle.value = note.title
         noteText.value = note.description
-        //TODO photos
         isInEditNoteMode = true
         currentNote = note
+
+        if (note.photos != null) {
+            _photos.addAll(note.photos)
+        } else {
+            _photos = mutableListOf()
+        }
 
     }
 
     private fun hasNoteModified(): Boolean = currentNote.title != noteTitle.value
             || currentNote.description != noteText.value
-    // TODO add photo check
+            || _photos.containsAll(currentNote.photos)
 
     fun isNoteVisible(): Boolean = isInNewNoteMode || isInEditNoteMode
 
@@ -218,8 +231,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
         return currentNote.copy(
             title = noteTitle.value!!,
             description = noteText.value!!,
-            hash = timestamp!!.seconds.toString()
-            //TODO add photos
+            hash = timestamp!!.seconds.toString(),
+            photos = _photos.toList()
         )
     }
 
@@ -228,11 +241,27 @@ class NotesViewModel(private val user: User) : ViewModel() {
             title = noteTitle.value!!,
             description = noteText.value!!,
             timestamp = Timestamp.now(),
-            // TODO photos
+            photos = _photos.toList()
         )
 
     private fun MutableList<Note>.replace(existingNote: Note, updatedNote: Note) {
         remove(existingNote)
         add(0, updatedNote)
+    }
+
+    private fun MutableList<NotePhoto>.containsAll(notePhotoList: List<NotePhoto>?): Boolean {
+        if (notePhotoList == null) return true
+
+        forEach { notePhoto ->
+            var found = false
+
+            notePhotoList.forEach { photo ->
+                if (notePhoto.driveId == photo.driveId) found = true
+            }
+
+            if (found) return false
+        }
+
+        return true
     }
 }

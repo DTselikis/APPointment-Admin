@@ -5,7 +5,7 @@ import com.google.firebase.firestore.ServerTimestamp
 
 data class Note(
     val description: String = "",
-    var photos: List<NotePhoto>? = null,
+    val photos: List<NotePhoto>? = null,
     @ServerTimestamp
     val timestamp: Timestamp? = Timestamp.now(),
     val title: String = "",

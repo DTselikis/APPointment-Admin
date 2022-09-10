@@ -66,7 +66,6 @@ class NotesViewModel(private val user: User) : ViewModel() {
         if (!hasNoteModified()) return
 
         val note = createNewNote()
-        addNewNoteToList(note)
         storeNewNoteToFirebase(note)
     }
 
@@ -74,7 +73,6 @@ class NotesViewModel(private val user: User) : ViewModel() {
         if (!hasNoteModified()) return
 
         val updatedNote = updateExistingNote(currentNote)
-        updateNoteInList(updatedNote)
         updateExistingNoteToFirebase(updatedNote)
     }
 
@@ -85,7 +83,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .set(data, SetOptions.merge())
             .addOnCompleteListener { task ->
                 viewModelScope.launch { _newNoteStored.emit(task.isSuccessful) }
-                if (task.isSuccessful) isInNewNoteMode = false
+                if (task.isSuccessful) {
+                    isInNewNoteMode = false
+                    addNewNoteToList(note)
+                }
             }
     }
 
@@ -97,7 +98,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .addOnCompleteListener { task ->
                 viewModelScope.launch { _newNoteStored.emit(task.isSuccessful) }
 
-                if (task.isSuccessful) isInEditNoteMode = false
+                if (task.isSuccessful) {
+                    isInEditNoteMode = false
+                    updateNoteInList(updatedNote)
+                }
             }
     }
 

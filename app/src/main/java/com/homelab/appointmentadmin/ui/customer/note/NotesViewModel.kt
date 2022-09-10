@@ -74,6 +74,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
             .set(data, SetOptions.merge())
             .addOnCompleteListener { task ->
                 viewModelScope.launch { _newNoteStored.emit(task.isSuccessful) }
+                isInNewNoteMode = false
             }
 
     }

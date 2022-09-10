@@ -68,13 +68,20 @@ class NotesFragment : Fragment() {
         }
     }
 
+    private fun hideNote() {
+        binding.cardFrame.hide(200)
+    }
+
     private fun observeNewNoteStored() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.newNoteStored.collectLatest { stored ->
                 binding.notesProgress.hide()
 
                 val text =
-                    if (stored) getString(R.string.note_saved) else getString(R.string.note_not_saved)
+                    if (stored) {
+                        hideNote()
+                        getString(R.string.note_saved)
+                    } else getString(R.string.note_not_saved)
 
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
             }
@@ -94,6 +101,17 @@ class NotesFragment : Fragment() {
             .scaleY(1f)
             .alpha(1f)
             .duration = duration
+    }
+
+    private fun FrameLayout.hide(duration: Long) {
+        animate()
+            .scaleX(0f)
+            .scaleY(0f)
+            .alpha(0f)
+            .apply {
+                this.duration = duration
+                withEndAction { binding.cardFrame.visibility = View.GONE }
+            }
     }
 
 }

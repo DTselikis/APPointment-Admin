@@ -19,8 +19,8 @@ object GoogleDriveHelper {
     lateinit var gDrive: Drive
         private set
 
-    fun initialize(context: Context) {
-        if (this::gDrive.isInitialized) return
+    fun initialize(context: Context): Drive {
+        if (this::gDrive.isInitialized) return gDrive
 
         GoogleSignIn.getLastSignedInAccount(context)?.let { googleAccount ->
             val credential =
@@ -38,6 +38,8 @@ object GoogleDriveHelper {
                 .setApplicationName(context.getString(R.string.app_name))
                 .build()
         }
+
+        return gDrive
     }
 
     fun uploadImage(image: java.io.File, mime: String?, parent: String): String {

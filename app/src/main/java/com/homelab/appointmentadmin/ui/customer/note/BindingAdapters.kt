@@ -36,6 +36,13 @@ fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
     }
 }
 
+@BindingAdapter("notePhotoUrl")
+fun bindNotePhotoUrl(imageView: ImageView, path: String?) {
+    path?.let {
+        imageView.load(path)
+    }
+}
+
 @BindingAdapter("noteCover")
 fun bindProfilePic(imageView: ImageView, note: Note?) {
     note?.let {

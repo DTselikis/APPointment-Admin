@@ -55,6 +55,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _needsAuthorization = MutableSharedFlow<Intent>()
     val needsAuthorization: SharedFlow<Intent> = _needsAuthorization
 
+    private val _photoUploaded = MutableSharedFlow<Boolean>()
+    val photoUploaded: SharedFlow<Boolean> = _photoUploaded
+
     val noteTitle = MutableLiveData<String>()
     val noteText = MutableLiveData<String>()
 
@@ -65,6 +68,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
         private set
 
     private lateinit var currentNote: Note
+
+    private val _photosForDisplay = MutableLiveData<List<String>>()
+    val photosForDisplay: LiveData<List<String>> = _photosForDisplay
 
     private lateinit var _photos: MutableList<NotePhoto>
 
@@ -175,6 +181,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private fun addPhotoToNote(notePhoto: NotePhoto) {
         _photos.add(0, notePhoto)
+
+        _photosForDisplay.postValue(_photos.map { it.localUri!! })
     }
 
     fun uploadPhoto(photo: File = this.photo, mimeType: String = this.mimeType) {
@@ -182,6 +190,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
             try {
                 val photoId = GoogleDriveHelper.uploadImage(photo, mimeType, noteFolder!!)
                 addPhotoToNote(NotePhoto(photo.absolutePath, photoId))
+
+                viewModelScope.launch { _photoUploaded.emit(true) }
             } catch (e: UserRecoverableAuthIOException) {
                 saveFileInfo(photo, mimeType)
                 _needsAuthorization.emit(e.intent)
@@ -200,15 +210,13 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun editNoteMode(note: Note) {
         noteTitle.value = note.title
         noteText.value = note.description
+        _photos = mutableListOf()
         isInEditNoteMode = true
         currentNote = note
 
-        if (note.photos != null) {
-            _photos.addAll(note.photos)
-        } else {
-            _photos = mutableListOf()
+        note.photos?.let {
+            _photos.addAll(it)
         }
-
     }
 
     private fun hasNoteModified(): Boolean = currentNote.title != noteTitle.value

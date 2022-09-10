@@ -43,6 +43,7 @@ class NotesFragment : Fragment() {
                         viewModel.getCurrentNotesHash()
                     )
 
+                    binding.notesProgress.show()
                     viewModel.uploadPhoto(image!!, mimeType!!)
                 } catch (e: IOException) {
                     Toast.makeText(
@@ -91,6 +92,7 @@ class NotesFragment : Fragment() {
             notesFragment = this@NotesFragment
             viewModel = this@NotesFragment.viewModel
             notesRv.adapter = NoteAdapter(this@NotesFragment)
+            notePhotosRv.adapter = NoteImagesAdapter()
         }
 
         viewModel.gDriveInitialize(requireContext())
@@ -99,6 +101,7 @@ class NotesFragment : Fragment() {
         observeNewNoteStored()
         observeNoteDeleted()
         observeNeedsAuthorization()
+        observePhotoUploaded()
     }
 
     override fun onResume() {
@@ -184,6 +187,19 @@ class NotesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.needsAuthorization.collectLatest { requestAuthIntent ->
                 requestAuthorization.launch(requestAuthIntent)
+            }
+        }
+    }
+
+    private fun observePhotoUploaded() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.photoUploaded.collectLatest { uploaded ->
+                binding.notesProgress.hide()
+
+                val text =
+                    if (uploaded) getString(R.string.image_stored) else getString(R.string.image_not_stored)
+
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
             }
         }
     }

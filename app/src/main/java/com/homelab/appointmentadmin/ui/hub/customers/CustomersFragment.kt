@@ -303,14 +303,19 @@ class CustomersFragment : Fragment() {
             if (filters.visibility == View.VISIBLE) toggleFilters()
             mergeHint.visibility = View.GONE
 
-            searchText.visibility =
-                if (searchText.visibility == View.GONE) {
-                    View.VISIBLE
+            searchText.apply {
+                if (visibility == View.GONE) {
+                    visibility = View.VISIBLE
+                    animate().alpha(1f).duration = 300
                 } else {
-                    searchText.setText("")
-                    View.GONE
+                    animate().alpha(0f).apply {
+                        duration = 300
+                        withEndAction {
+                            visibility = View.GONE
+                        }
+                    }
                 }
+            }
         }
-
     }
 }

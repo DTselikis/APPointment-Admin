@@ -75,4 +75,6 @@
     <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="missing_app">Missing app</string>
     <string name="install_missing_app">No app found to complete this action. Do you want to download one?</string>
+    <string name="note_title_hint">Title</string>
+    <string name="note_note_hint">Note</string>
 </resources>

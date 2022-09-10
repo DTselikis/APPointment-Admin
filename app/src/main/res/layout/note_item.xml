@@ -35,28 +35,45 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_launcher_background" />
+                tools:src="@drawable/haircut_sample" />
+
+            <View
+                android:id="@+id/pic_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.8"
+                android:background="@color/md_theme_dark_primary"
+                app:layout_constraintBottom_toTopOf="@id/note_thumbnail_codes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/note_thumbnail_image" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/note_thumbnail_codes"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@{note.title}"
                 app:layout_constraintBottom_toTopOf="@id/note_thumbnail_image_timestamp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_thumbnail_image"
+                app:layout_constraintTop_toBottomOf="@id/pic_divider"
                 tools:text="8.12 - 11.0 - 3.44- 9.99 - 2.22 - 22/2" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/note_thumbnail_image_timestamp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                style="@style/TextAppearance.Material3.LabelSmall"
                 android:gravity="center"
                 app:date="@{note.timestamp}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/note_thumbnail_codes"
                 tools:text="12/4/2022" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

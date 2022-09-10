@@ -38,7 +38,6 @@
             android:id="@+id/new_note_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/add_note_yellow"
             android:onClick="@{() -> notesFragment.createNote()}"
             android:src="@drawable/ic_add_40"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +51,7 @@
             android:id="@+id/card_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="?attr/colorSurface"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +79,6 @@
                     android:id="@+id/save_note_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/add_note_yellow"
                     android:onClick="@{() -> notesFragment.back()}"
                     android:src="@drawable/ic_save_24"
                     app:layout_constraintBottom_toBottomOf="@id/card_frame_back_btn_icon"
@@ -93,7 +91,8 @@
                     android:id="@+id/frame_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.title}"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/note_title_hint"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_frame_back_btn_icon" />
@@ -108,13 +107,27 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/frame_note_text"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:gravity="top"
+                    android:hint="@string/note_note_hint"
                     android:text="@={viewModel.description}"
-                    app:layout_constraintBottom_toTopOf="@id/note_photos_rv"
+                    app:layout_constraintBottom_toTopOf="@id/note_divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/frame_title_divider" />
+
+                <View
+                    android:id="@+id/note_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.8"
+                    android:background="@color/md_theme_dark_primary"
+                    app:layout_constraintBottom_toTopOf="@id/note_photos_rv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frame_note_text" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/note_photos_rv"
@@ -124,7 +137,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/frame_note_text"
+                    app:layout_constraintTop_toBottomOf="@id/note_divider"
                     app:notePhotos="@{viewModel.photosForDisplay}"
                     app:spanCount="2"
                     tools:listitem="@layout/note_photo_item" />
@@ -133,7 +146,6 @@
                     android:id="@+id/add_photo_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/add_note_yellow"
                     android:onClick="@{() -> notesFragment.addPhoto()}"
                     android:src="@drawable/ic_add_photo_alternate_24"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -49,7 +49,7 @@
             android:id="@+id/new_note_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:onClick="@{() -> notesFragment.createNote()}"
             android:src="@drawable/ic_add_40"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,6 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="@string/note_title_hint"
+                    android:text="@={viewModel.noteTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_frame_back_btn_icon" />
@@ -123,7 +124,7 @@
                     android:layout_height="0dp"
                     android:gravity="top"
                     android:hint="@string/note_note_hint"
-
+                    android:text="@={viewModel.noteText}"
                     app:layout_constraintBottom_toTopOf="@id/note_divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="parent"

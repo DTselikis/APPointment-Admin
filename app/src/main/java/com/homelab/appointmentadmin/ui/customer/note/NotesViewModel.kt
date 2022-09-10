@@ -36,10 +36,22 @@ class NotesViewModel(private val user: User) : ViewModel() {
         }
     }
 
+    val noteTitle = MutableLiveData<String>()
+    val noteText = MutableLiveData<String>()
+
+    var isInNewNoteMode = false
+        private set
+
     fun gDriveInitialize(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             GoogleDriveHelper.initialize(context)
             GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
         }
+    }
+
+    fun newNoteMode() {
+        noteTitle.value = ""
+        noteText.value = ""
+        isInNewNoteMode = true
     }
 }

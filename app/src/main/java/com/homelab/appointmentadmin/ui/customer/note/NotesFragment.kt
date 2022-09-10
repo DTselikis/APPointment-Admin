@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -40,6 +41,33 @@ class NotesFragment : Fragment() {
         }
 
         viewModel.gDriveInitialize(requireContext())
+    }
+
+    fun createNote() {
+        viewModel.newNoteMode()
+        showNote()
+    }
+
+    private fun showNote() {
+        binding.cardFrame.apply {
+            reset()
+            show(200)
+        }
+    }
+
+    private fun FrameLayout.reset() {
+        scaleX = 0f
+        scaleY = 0f
+        alpha = 0f
+        visibility = View.VISIBLE
+    }
+
+    private fun FrameLayout.show(duration: Long) {
+        animate()
+            .scaleX(1f)
+            .scaleY(1f)
+            .alpha(1f)
+            .duration = duration
     }
 
 }

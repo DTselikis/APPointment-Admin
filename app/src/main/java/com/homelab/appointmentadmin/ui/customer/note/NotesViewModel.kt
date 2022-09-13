@@ -227,7 +227,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private fun hasNoteModified(): Boolean = currentNote.title != noteTitle.value
             || currentNote.description != noteText.value
-            || _photos.containsAll(currentNote.photos)
+            || _photos.notContainsAll(currentNote.photos)
 
     fun isNoteVisible(): Boolean = isInNewNoteMode || isInEditNoteMode
 
@@ -263,19 +263,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         add(0, updatedNote)
     }
 
-    private fun MutableList<NotePhoto>.containsAll(notePhotoList: List<NotePhoto>?): Boolean {
-        if (notePhotoList == null) return true
+    private fun MutableList<NotePhoto>.notContainsAll(notePhotoList: List<NotePhoto>?): Boolean =
+        this.toSet() != (notePhotoList?.toSet() ?: setOf<NotePhoto>())
 
-        forEach { notePhoto ->
-            var found = false
-
-            notePhotoList.forEach { photo ->
-                if (notePhoto.driveId == photo.driveId) found = true
-            }
-
-            if (found) return false
-        }
-
-        return true
-    }
 }

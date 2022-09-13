@@ -44,9 +44,9 @@ fun bindNotePhotoUrl(imageView: ImageView, path: String?) {
 }
 
 @BindingAdapter("noteCover")
-fun bindProfilePic(imageView: ImageView, note: Note?) {
+fun bindNoteCover(imageView: ImageView, note: Note?) {
     note?.let {
-        note.photos?.sortedByDescending { it.photoUploaded }?.get(0)?.localUri?.let {
+        note.photos?.sortedByDescending { it.photoUploaded }?.getOrNull(0)?.localUri?.let {
             if (NotesImagesManager.fileExists(imageView.context, note.hash!!, it)) {
                 imageView.load(it) {
                     memoryCachePolicy(CachePolicy.ENABLED)
@@ -55,5 +55,4 @@ fun bindProfilePic(imageView: ImageView, note: Note?) {
             }
         }
     }
-
 }

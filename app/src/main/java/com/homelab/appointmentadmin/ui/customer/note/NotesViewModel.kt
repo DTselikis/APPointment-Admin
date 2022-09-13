@@ -69,8 +69,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private lateinit var currentNote: Note
 
-    private val _photosForDisplay = MutableLiveData<List<String>>()
-    val photosForDisplay: LiveData<List<String>> = _photosForDisplay
+    private val _photosForDisplay = MutableLiveData<List<NotePhoto>>()
+    val photosForDisplay: LiveData<List<NotePhoto>> = _photosForDisplay
 
     private lateinit var _photos: MutableList<NotePhoto>
 
@@ -182,13 +182,13 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private fun addPhotoToNote(notePhoto: NotePhoto) {
         _photos.add(0, notePhoto)
 
-        _photosForDisplay.postValue(_photos.map { it.localUri!! })
+        _photosForDisplay.postValue(_photos.map { it })
     }
 
     private fun addPhotosToNote(notePhotos: List<NotePhoto>) {
         _photos.addAll(notePhotos)
 
-        _photosForDisplay.value = _photos.map { it.localUri!! }
+        _photosForDisplay.value = _photos.map { it }
     }
 
     fun uploadPhoto(photo: File = this.photo, mimeType: String = this.mimeType) {
@@ -209,6 +209,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         noteTitle.value = ""
         noteText.value = ""
         _photos = mutableListOf()
+        _photosForDisplay.value = _photos
         isInNewNoteMode = true
         currentNote = Note()
     }
@@ -217,6 +218,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
         noteTitle.value = note.title
         noteText.value = note.description
         _photos = mutableListOf()
+        _photosForDisplay.value = _photos
         isInEditNoteMode = true
         currentNote = note
 

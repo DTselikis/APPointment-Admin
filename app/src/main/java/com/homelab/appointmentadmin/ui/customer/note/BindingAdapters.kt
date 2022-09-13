@@ -8,6 +8,7 @@ import coil.request.CachePolicy
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.Timestamp
 import com.homelab.appointmentadmin.model.network.Note
+import com.homelab.appointmentadmin.model.network.NotePhoto
 import com.homelab.appointmentadmin.utils.NotesImagesManager
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,7 +21,7 @@ fun bindNotes(recyclerView: RecyclerView, notes: List<Note>?) {
 }
 
 @BindingAdapter("notePhotos")
-fun bindNotePhotos(recyclerView: RecyclerView, photos: List<String>?) {
+fun bindNotePhotos(recyclerView: RecyclerView, photos: List<NotePhoto>?) {
     recyclerView.adapter?.let {
         val adapter = it as NoteImagesAdapter
 

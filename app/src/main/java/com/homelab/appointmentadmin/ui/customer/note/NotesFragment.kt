@@ -88,7 +88,7 @@ class NotesFragment : Fragment() {
             notesFragment = this@NotesFragment
             viewModel = this@NotesFragment.viewModel
             notesRv.adapter = NoteAdapter(this@NotesFragment)
-            notePhotosRv.adapter = NoteImagesAdapter()
+            notePhotosRv.adapter = NoteImagesAdapter(this@NotesFragment.viewModel)
         }
 
         viewModel.gDriveInitialize(requireContext())

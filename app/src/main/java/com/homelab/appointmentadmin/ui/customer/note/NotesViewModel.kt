@@ -2,10 +2,13 @@ package com.homelab.appointmentadmin.ui.customer.note
 
 import android.content.Context
 import android.content.Intent
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.load
+import coil.request.CachePolicy
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
@@ -20,6 +23,7 @@ import com.homelab.appointmentadmin.model.network.Note
 import com.homelab.appointmentadmin.model.network.NotePhoto
 import com.homelab.appointmentadmin.model.network.helping.Notes
 import com.homelab.appointmentadmin.utils.GoogleDriveHelper
+import com.homelab.appointmentadmin.utils.NotesImagesManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -267,5 +271,32 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private fun MutableList<NotePhoto>.notContainsAll(notePhotoList: List<NotePhoto>?): Boolean =
         this.toSet() != (notePhotoList?.toSet() ?: setOf<NotePhoto>())
+
+    fun bindNotePhoto(imageView: ImageView, notePhoto: NotePhoto) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val uri =
+                if (NotesImagesManager.fileExists(
+                        imageView.context,
+                        currentNote.timestamp?.seconds.toString(),
+                        notePhoto.localUri!!
+                    )
+                ) {
+                    notePhoto.localUri
+                } else {
+                    val imageBytes = GoogleDriveHelper.downloadImage(notePhoto.driveId!!)
+                    NotesImagesManager.copyFileToInternalAppStorage(
+                        imageView.context,
+                        imageBytes,
+                        notePhoto.localUri,
+                        currentNote.timestamp?.seconds.toString()
+                    )
+                }
+
+            imageView.load(uri) {
+                memoryCachePolicy(CachePolicy.ENABLED)
+                diskCachePolicy(CachePolicy.ENABLED)
+            }
+        }
+    }
 
 }

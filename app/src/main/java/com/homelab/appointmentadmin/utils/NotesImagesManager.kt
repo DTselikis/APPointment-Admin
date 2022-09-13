@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.fragment.app.FragmentActivity
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.file.Files
@@ -40,6 +41,21 @@ object NotesImagesManager {
         }
 
         return null
+    }
+
+    fun copyFileToInternalAppStorage(
+        context: Context,
+        imageBytes: ByteArrayOutputStream,
+        oldPath: String,
+        noteHash: String,
+    ): String {
+        val fileName = context.getFileName(Uri.parse(oldPath))
+        val noteDir = File(notesPath, noteHash)
+        noteDir.createDirectoryIfNotExists()
+
+        return File(noteDir, fileName!!).apply {
+            writeBytes(imageBytes.toByteArray())
+        }.absolutePath
     }
 
     fun copyAllToInternalAppStorage(noteHash: String, photos: List<Pair<String, String>>) {
@@ -91,4 +107,8 @@ object NotesImagesManager {
                 .let(cursor::getString)
         }
     }.getOrNull()
+
+    private fun File.createDirectoryIfNotExists() {
+        if (!exists()) mkdir()
+    }
 }

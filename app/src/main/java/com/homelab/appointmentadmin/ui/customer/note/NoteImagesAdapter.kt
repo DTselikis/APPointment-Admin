@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.homelab.appointmentadmin.databinding.NotePhotoItemBinding
 import com.homelab.appointmentadmin.model.network.NotePhoto
 
-class NoteImagesAdapter :
+class NoteImagesAdapter(private val notesViewModel: NotesViewModel) :
     ListAdapter<NotePhoto, NoteImagesAdapter.NoteImagesViewHolder>(DiffCallback) {
 
     inner class NoteImagesViewHolder(
         private val binding: NotePhotoItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(notePhoto: NotePhoto) {
-            binding.photoUrl = notePhoto.localUri
+            notesViewModel.bindNotePhoto(binding.notePhoto, notePhoto)
         }
     }
 

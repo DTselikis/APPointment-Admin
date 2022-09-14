@@ -252,7 +252,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
             title = noteTitle.value!!,
             description = noteText.value!!,
             hash = timestamp!!.seconds.toString(),
-            photos = _photos.toList()
+            photos = if (_photos.isNotEmpty()) _photos.toList() else null
         )
     }
 

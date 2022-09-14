@@ -269,15 +269,26 @@ class NotesViewModel(private val user: User) : ViewModel() {
         add(0, updatedNote)
     }
 
+    private fun NotePhoto.extractNoteHash(parent: String): String =
+        localUri?.let {
+            return@let it.substring(
+                it.indexOf(parent).plus(parent.length),
+                it.lastIndexOf('/')
+            )
+        }!!
+
+
     private fun MutableList<NotePhoto>.notContainsAll(notePhotoList: List<NotePhoto>?): Boolean =
         this.toSet() != (notePhotoList?.toSet() ?: setOf<NotePhoto>())
 
     fun bindNotePhoto(imageView: ImageView, notePhoto: NotePhoto) {
         viewModelScope.launch(Dispatchers.IO) {
+            val noteHash = notePhoto.extractNoteHash("Notes/")
+
             val uri =
                 if (NotesImagesManager.fileExists(
                         imageView.context,
-                        currentNote.timestamp?.seconds.toString(),
+                        noteHash,
                         notePhoto.localUri!!
                     )
                 ) {
@@ -288,7 +299,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
                         imageView.context,
                         imageBytes,
                         notePhoto.localUri,
-                        currentNote.timestamp?.seconds.toString()
+                        noteHash
                     )
                 }
 

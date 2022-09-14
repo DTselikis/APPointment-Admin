@@ -90,7 +90,7 @@ class NotesFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             notesFragment = this@NotesFragment
             viewModel = this@NotesFragment.viewModel
-            notesRv.adapter = NoteAdapter(this@NotesFragment)
+            notesRv.adapter = NoteAdapter(this@NotesFragment, this@NotesFragment.viewModel)
             notePhotosRv.adapter = NoteImagesAdapter(this@NotesFragment.viewModel)
         }
 

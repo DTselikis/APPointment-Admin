@@ -11,7 +11,8 @@ import com.homelab.appointmentadmin.databinding.NoteItemBinding
 import com.homelab.appointmentadmin.model.network.Note
 
 class NoteAdapter(
-    private val notesFragment: NotesFragment
+    private val notesFragment: NotesFragment,
+    private val notesViewModel: NotesViewModel
 ) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(Diffcallback) {
 
     inner class NoteViewHolder(
@@ -23,6 +24,12 @@ class NoteAdapter(
             binding.itemCard.setOnClickListener {
                 notesFragment.editNote(note)
             }
+            note.photos
+                ?.sortedByDescending { it.photoUploaded }
+                ?.getOrNull(0)
+                ?.let { noteCover ->
+                    notesViewModel.bindNotePhoto(binding.noteThumbnailImage, noteCover)
+                }
         }
     }
 

@@ -62,6 +62,16 @@ class CustomerContactFragment : Fragment() {
                         { copyTextToClipboard(it) }
                     ) { ContactProvider.callCustomer(requireContext(), it) }
                 )
+
+                contactProviders.add(
+                    ContactProviderInfo(
+                        R.color.sms_blue,
+                        R.drawable.ic_sms_24,
+                        it,
+                        null,
+                        { copyTextToClipboard(it) }
+                    ) { ContactProvider.sendSms(requireContext(), it) }
+                )
             }
 
             customer.fbName?.let {

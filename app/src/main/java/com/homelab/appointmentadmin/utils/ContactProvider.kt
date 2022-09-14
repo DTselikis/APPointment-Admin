@@ -16,6 +16,15 @@ object ContactProvider {
         }
     }
 
+
+    fun sendSms(context: Context, phone: String) {
+        val phoneUri = Uri.parse("smsto:$phone")
+        val smsIntent = Intent(Intent.ACTION_VIEW, phoneUri)
+        smsIntent.resolveActivity(context.packageManager)?.let {
+            context.startActivity(smsIntent)
+        }
+    }
+
     fun sendEmail(context: Context, email: String) {
         val emailUri = Uri.parse("mailto:")
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {

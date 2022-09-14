@@ -75,7 +75,10 @@ class NotesFragment : Fragment() {
                 }
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedCallback)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            backPressedCallback
+        )
 
         return binding.root
     }

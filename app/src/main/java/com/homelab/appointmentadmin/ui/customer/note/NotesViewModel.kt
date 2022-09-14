@@ -76,7 +76,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _photosForDisplay = MutableLiveData<List<NotePhoto>>()
     val photosForDisplay: LiveData<List<NotePhoto>> = _photosForDisplay
 
-    private lateinit var _photos: MutableList<NotePhoto>
+    private val _photos = mutableListOf<NotePhoto>()
 
     private lateinit var userNotesFolder: String
     private var noteFolder: String? = null
@@ -101,23 +101,29 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun saveNewNote(): Boolean? {
         if (!hasNoteModified()) {
             isInNewNoteMode = false
+            clearPhotosLists()
             return false
         }
 
         val note = createNewNote()
         storeNewNoteToFirebase(note)
 
+        clearPhotosLists()
+
         return null
     }
 
     fun saveChanges(): Boolean? {
         if (!hasNoteModified()) {
+            clearPhotosLists()
             isInEditNoteMode = false
             return false
         }
 
         val updatedNote = updateExistingNote(currentNote)
         updateExistingNoteToFirebase(updatedNote)
+
+        clearPhotosLists()
 
         return null
     }
@@ -186,13 +192,13 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private fun addPhotoToNote(notePhoto: NotePhoto) {
         _photos.add(0, notePhoto)
 
-        _photosForDisplay.postValue(_photos.map { it })
+        _photosForDisplay.postValue(_photos.toList())
     }
 
     private fun addPhotosToNote(notePhotos: List<NotePhoto>) {
         _photos.addAll(notePhotos)
 
-        _photosForDisplay.value = _photos.map { it }
+        _photosForDisplay.value = _photos.toList()
     }
 
     fun uploadPhoto(photo: File = this.photo, mimeType: String = this.mimeType) {
@@ -212,8 +218,6 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun newNoteMode() {
         noteTitle.value = ""
         noteText.value = ""
-        _photos = mutableListOf()
-        _photosForDisplay.value = _photos
         isInNewNoteMode = true
         currentNote = Note()
     }
@@ -221,8 +225,6 @@ class NotesViewModel(private val user: User) : ViewModel() {
     fun editNoteMode(note: Note) {
         noteTitle.value = note.title
         noteText.value = note.description
-        _photos = mutableListOf()
-        _photosForDisplay.value = _photos
         isInEditNoteMode = true
         currentNote = note
 
@@ -263,6 +265,11 @@ class NotesViewModel(private val user: User) : ViewModel() {
             timestamp = Timestamp.now(),
             photos = _photos.toList()
         )
+
+    private fun clearPhotosLists() {
+        _photos.clear()
+        _photosForDisplay.value = _photos.toList()
+    }
 
     private fun MutableList<Note>.replace(existingNote: Note, updatedNote: Note) {
         remove(existingNote)

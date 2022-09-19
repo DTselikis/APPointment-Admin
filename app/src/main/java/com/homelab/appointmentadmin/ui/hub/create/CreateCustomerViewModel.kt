@@ -46,7 +46,8 @@ class CreateCustomerViewModel : ViewModel() {
             phone.value,
             email.value,
             gender = gender.code,
-            registered = false
+            registered = false,
+            activeNotifications = 0
         ).also {
             it.uid = "${it.hashCode()}_${Timestamp.now().seconds}"
         }

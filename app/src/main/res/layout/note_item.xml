@@ -9,7 +9,7 @@
 
         <variable
             name="note"
-            type="com.homelab.appointmentadmin.model.network.Note" />
+            type="gr.evasscissors.appointmentadmin.model.network.Note" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

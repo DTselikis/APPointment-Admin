@@ -11,7 +11,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.homelab.appointmentadmin"
+        applicationId "gr.evasscissors.appointmentadmin"
         minSdk 28
         targetSdk 33
         versionCode 1
@@ -36,7 +36,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    namespace 'com.homelab.appointmentadmin'
+    namespace 'gr.evasscissors.appointmentadmin'
 }
 
 dependencies {

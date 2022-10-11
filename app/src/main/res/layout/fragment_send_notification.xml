@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointmentadmin.ui.customer.contact.notification.SendNotificationViewModel" />
+            type="gr.evasscissors.appointmentadmin.ui.customer.contact.notification.SendNotificationViewModel" />
 
         <variable
             name="sendNotificationFragment"
-            type="com.homelab.appointmentadmin.ui.customer.contact.notification.SendNotificationFragment" />
+            type="gr.evasscissors.appointmentadmin.ui.customer.contact.notification.SendNotificationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

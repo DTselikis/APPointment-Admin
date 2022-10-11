@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointmentadmin.ui.hub.customers.CustomersViewModel" />
+            type="gr.evasscissors.appointmentadmin.ui.hub.customers.CustomersViewModel" />
 
         <variable
             name="fragmentCustomers"
-            type="com.homelab.appointmentadmin.ui.hub.customers.CustomersFragment" />
+            type="gr.evasscissors.appointmentadmin.ui.hub.customers.CustomersFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

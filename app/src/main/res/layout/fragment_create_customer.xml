@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointmentadmin.ui.hub.create.CreateCustomerViewModel" />
+            type="gr.evasscissors.appointmentadmin.ui.hub.create.CreateCustomerViewModel" />
 
         <variable
             name="customerProfileEditFragment"
-            type="com.homelab.appointmentadmin.ui.hub.create.CreateCustomerFragment" />
+            type="gr.evasscissors.appointmentadmin.ui.hub.create.CreateCustomerFragment" />
     </data>
 
     <LinearLayout

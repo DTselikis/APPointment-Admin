@@ -7,11 +7,11 @@
 
         <variable
             name="user"
-            type="com.homelab.appointmentadmin.data.User" />
+            type="gr.evasscissors.appointmentadmin.data.User" />
 
         <variable
             name="customerFragment"
-            type="com.homelab.appointmentadmin.ui.hub.customers.CustomersFragment" />
+            type="gr.evasscissors.appointmentadmin.ui.hub.customers.CustomersFragment" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

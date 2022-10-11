@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/customersFragment"
-        android:name="com.homelab.appointmentadmin.ui.hub.customers.CustomersFragment"
+        android:name="gr.evasscissors.appointmentadmin.ui.hub.customers.CustomersFragment"
         android:label="CustomersFragment"
         tools:layout="@layout/fragment_customers">
         <action
@@ -22,36 +22,36 @@
     </fragment>
     <fragment
         android:id="@+id/customerProfileFragment"
-        android:name="com.homelab.appointmentadmin.ui.customer.CustomerProfileFragment"
+        android:name="gr.evasscissors.appointmentadmin.ui.customer.CustomerProfileFragment"
         android:label="CustomerProfileFragment"
         tools:layout="@layout/fragment_customer_profile">
         <argument
             android:name="user"
-            app:argType="com.homelab.appointmentadmin.data.User" />
+            app:argType="gr.evasscissors.appointmentadmin.data.User" />
         <action
             android:id="@+id/action_customerProfileFragment_to_sendNotificationFragment"
             app:destination="@id/sendNotificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/createCustomerFragment"
-        android:name="com.homelab.appointmentadmin.ui.hub.create.CreateCustomerFragment"
+        android:name="gr.evasscissors.appointmentadmin.ui.hub.create.CreateCustomerFragment"
         android:label="CreateCustomerFragment"
         tools:layout="@layout/fragment_create_customer" />
     <fragment
         android:id="@+id/mergeConflictsFragment"
-        android:name="com.homelab.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsFragment"
+        android:name="gr.evasscissors.appointmentadmin.ui.hub.merge.conflicts.MergeConflictsFragment"
         android:label="fragment_merge_conflicts"
         tools:layout="@layout/fragment_merge_conflicts">
         <argument
             android:name="userToBeMerged"
-            app:argType="com.homelab.appointmentadmin.data.User" />
+            app:argType="gr.evasscissors.appointmentadmin.data.User" />
         <argument
             android:name="usetToBeMergedWith"
-            app:argType="com.homelab.appointmentadmin.data.User" />
+            app:argType="gr.evasscissors.appointmentadmin.data.User" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.homelab.appointmentadmin.ui.auth.LoginFragment"
+        android:name="gr.evasscissors.appointmentadmin.ui.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <dialog
         android:id="@+id/sendNotificationFragment"
-        android:name="com.homelab.appointmentadmin.ui.customer.contact.notification.SendNotificationFragment"
+        android:name="gr.evasscissors.appointmentadmin.ui.customer.contact.notification.SendNotificationFragment"
         android:label="SendNotificationFragment"
         tools:layout="@layout/fragment_send_notification">
         <argument
@@ -74,7 +74,7 @@
     </dialog>
     <fragment
         android:id="@+id/startupFragment"
-        android:name="com.homelab.appointmentadmin.StartupFragment"
+        android:name="gr.evasscissors.appointmentadmin.StartupFragment"
         android:label="StartupFragment"
         tools:layout="@layout/fragment_startup">
         <action

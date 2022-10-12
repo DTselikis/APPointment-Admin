@@ -14,8 +14,14 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
+
+# Generate full report of all the rules that R8 applies
+-printconfiguration "tmp/full-r8-config.txt"
+
+# Generate a report of removed (or kept) code
+-printusage "tmp/removed_code.txt"

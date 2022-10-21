@@ -26,7 +26,7 @@ object GoogleDriveHelper {
             val credential =
                 GoogleAccountCredential.usingOAuth2(
                     context,
-                    listOf(DriveScopes.DRIVE_FILE, DriveScopes.DRIVE)
+                    listOf(DriveScopes.DRIVE_FILE)
                 )
             credential.selectedAccount = googleAccount.account
 

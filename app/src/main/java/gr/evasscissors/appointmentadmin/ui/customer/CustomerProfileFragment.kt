@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -86,7 +86,7 @@ class CustomerProfileFragment : Fragment() {
     }
 
     fun exitProfileEdit() {
-        requireActivity().onBackPressed()
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     private fun observeCustomButtons() {

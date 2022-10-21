@@ -227,7 +227,7 @@ class NotesFragment : Fragment() {
                             setMessage(message)
                             setPositiveButton(getString(R.string.ok)) {_, _ ->}
                             setOnDismissListener {
-                                sharedViewModel.pressBackBtn()
+                                requireActivity().onBackPressedDispatcher.onBackPressed()
                             }
                         }
                             .show()

@@ -16,6 +16,7 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import gr.evasscissors.appointmentadmin.data.GDriveOperation
 import gr.evasscissors.appointmentadmin.data.NOTES_FIELD_VALUE
 import gr.evasscissors.appointmentadmin.data.USERS_NOTES_COLLECTION
 import gr.evasscissors.appointmentadmin.data.User
@@ -56,8 +57,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _noteDeleted = MutableSharedFlow<Boolean>()
     val noteDeleted: SharedFlow<Boolean> = _noteDeleted
 
-    private val _needsAuthorization = MutableSharedFlow<Intent>()
-    val needsAuthorization: SharedFlow<Intent> = _needsAuthorization
+    private val _needsAuthorization = MutableSharedFlow<Pair<GDriveOperation, Intent>>()
+    val needsAuthorization: SharedFlow<Pair<GDriveOperation, Intent>> = _needsAuthorization
 
     private val _photoUploaded = MutableSharedFlow<Boolean>()
     val photoUploaded: SharedFlow<Boolean> = _photoUploaded
@@ -93,8 +94,12 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     fun gDriveInitialize(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            GoogleDriveHelper.initialize(context)
-            userNotesFolder = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
+            try {
+                GoogleDriveHelper.initialize(context)
+                userNotesFolder = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
+            } catch (e: UserRecoverableAuthIOException) {
+                _needsAuthorization.emit(Pair(GDriveOperation.INITIALIZE, e.intent))
+            }
         }
     }
 
@@ -210,7 +215,7 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 viewModelScope.launch { _photoUploaded.emit(true) }
             } catch (e: UserRecoverableAuthIOException) {
                 saveFileInfo(photo, mimeType)
-                _needsAuthorization.emit(e.intent)
+                _needsAuthorization.emit(Pair(GDriveOperation.PHOTO_UPLOAD, e.intent))
             }
         }
     }

@@ -30,3 +30,8 @@ enum class ConflictChoice(val code: Int) {
     UNREGISTERD(0),
     REGISTERED(1)
 }
+
+enum class GDriveOperation() {
+    INITIALIZE,
+    PHOTO_UPLOAD
+}

@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import gr.evasscissors.appointmentadmin.R
+import gr.evasscissors.appointmentadmin.data.GDriveOperation
 import gr.evasscissors.appointmentadmin.databinding.FragmentNotesBinding
 import gr.evasscissors.appointmentadmin.model.network.Note
 import gr.evasscissors.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
@@ -30,6 +31,8 @@ class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
 
     private lateinit var backPressedCallback: OnBackPressedCallback
+
+    private lateinit var gDriveOperation: GDriveOperation
 
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -57,7 +60,11 @@ class NotesFragment : Fragment() {
 
     private val requestAuthorization =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            viewModel.uploadPhoto()
+            if (gDriveOperation == GDriveOperation.INITIALIZE) {
+                viewModel.gDriveInitialize(requireContext())
+            } else {
+                viewModel.uploadPhoto()
+            }
         }
 
     override fun onCreateView(
@@ -184,8 +191,9 @@ class NotesFragment : Fragment() {
 
     private fun observeNeedsAuthorization() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.needsAuthorization.collectLatest { requestAuthIntent ->
-                requestAuthorization.launch(requestAuthIntent)
+            viewModel.needsAuthorization.collectLatest { requestAuth ->
+                gDriveOperation = requestAuth.first
+                requestAuthorization.launch(requestAuth.second)
             }
         }
     }

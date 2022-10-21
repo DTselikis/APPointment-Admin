@@ -200,6 +200,8 @@ class NotesViewModel(private val user: User) : ViewModel() {
 
     private fun deleteExistingNoteFromList(existingNote: Note) {
         _notes.remove(existingNote)
+
+        _notesForDisplay.value = _notes.toList()
     }
 
     private fun addPhotoToNote(notePhoto: NotePhoto) {

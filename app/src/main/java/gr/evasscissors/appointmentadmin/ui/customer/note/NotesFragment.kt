@@ -186,6 +186,8 @@ class NotesFragment : Fragment() {
     private fun observeNoteDeleted() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.noteDeleted.collectLatest { deleted ->
+                binding.notesProgress.hide()
+
                 val text =
                     if (deleted) getString(R.string.note_deleted) else getString(R.string.note_not_deleted)
 

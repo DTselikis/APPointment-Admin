@@ -79,4 +79,5 @@
     <string name="install_missing_app">No app found to complete this action. Do you want to download one?</string>
     <string name="note_title_hint">Title</string>
     <string name="note_note_hint">Note</string>
+    <string name="gdrive_api_disabled_title">Google Drive API</string>
 </resources>

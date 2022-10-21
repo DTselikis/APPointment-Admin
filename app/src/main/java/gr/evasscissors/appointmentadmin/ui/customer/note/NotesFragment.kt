@@ -1,5 +1,6 @@
 package gr.evasscissors.appointmentadmin.ui.customer.note
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import gr.evasscissors.appointmentadmin.R
 import gr.evasscissors.appointmentadmin.data.GDriveOperation
@@ -20,6 +23,7 @@ import gr.evasscissors.appointmentadmin.model.network.Note
 import gr.evasscissors.appointmentadmin.ui.customer.CustomerProfileSharedViewModel
 import gr.evasscissors.appointmentadmin.utils.NotesImagesManager
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 class NotesFragment : Fragment() {
@@ -108,6 +112,7 @@ class NotesFragment : Fragment() {
         observeNoteDeleted()
         observeNeedsAuthorization()
         observePhotoUploaded()
+        observeGDriveApiDisabled()
     }
 
     override fun onResume() {
@@ -208,6 +213,26 @@ class NotesFragment : Fragment() {
 
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun observeGDriveApiDisabled() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.gDriveApiDisabled
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { message ->
+                    activity?.let {
+                        AlertDialog.Builder(requireContext()).apply {
+                            setTitle(getString(R.string.gdrive_api_disabled_title))
+                            setMessage(message)
+                            setPositiveButton(getString(R.string.ok)) {_, _ ->}
+                            setOnDismissListener {
+                                sharedViewModel.pressBackBtn()
+                            }
+                        }
+                            .show()
+                    }
+                }
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import coil.load
 import coil.request.CachePolicy
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
+import com.google.api.client.googleapis.json.GoogleJsonResponseException
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
@@ -60,6 +61,9 @@ class NotesViewModel(private val user: User) : ViewModel() {
     private val _needsAuthorization = MutableSharedFlow<Pair<GDriveOperation, Intent>>()
     val needsAuthorization: SharedFlow<Pair<GDriveOperation, Intent>> = _needsAuthorization
 
+    private val _gDriveApiDisabled = MutableSharedFlow<String>()
+    val gDriveApiDisabled: SharedFlow<String> = _gDriveApiDisabled
+
     private val _photoUploaded = MutableSharedFlow<Boolean>()
     val photoUploaded: SharedFlow<Boolean> = _photoUploaded
 
@@ -99,6 +103,10 @@ class NotesViewModel(private val user: User) : ViewModel() {
                 userNotesFolder = GoogleDriveHelper.createFolderStructureIfNotExists(user.uid!!)
             } catch (e: UserRecoverableAuthIOException) {
                 _needsAuthorization.emit(Pair(GDriveOperation.INITIALIZE, e.intent))
+            } catch (e: GoogleJsonResponseException) {
+                if (e.statusCode == 403) {
+                    _gDriveApiDisabled.emit(e.details.message)
+                }
             }
         }
     }

@@ -107,7 +107,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-
+                android:clickable="false"
                 android:hint="@string/firstname_conflict_unregistered"
                 android:text="@{viewModel.unregisteredText}"
                 android:textSize="@dimen/text_size"
@@ -127,6 +127,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:hint="@string/firstname_conflict_registered"
                 android:text="@{viewModel.registeredText}"
                 android:textSize="@dimen/text_size"
@@ -189,6 +190,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/firstname_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
                         android:text="@={viewModel.firstname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
@@ -210,6 +213,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/lastname_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
                         android:text="@={viewModel.lastname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
@@ -231,6 +236,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/nickname_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
                         android:text="@={viewModel.nickname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
@@ -252,6 +259,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/phone_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
                         android:text="@={viewModel.phone}"
                         android:textSize="@dimen/text_size"
                         tools:text="6985201472" />
@@ -273,6 +282,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
                         android:text="@={viewModel.email}"
                         android:textSize="@dimen/text_size"
                         tools:text="me@me.com" />
@@ -295,6 +306,8 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:hint="@string/fb_profile_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
                         android:text="@{viewModel.fbName}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer Customer" />

@@ -94,6 +94,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/nickname_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
                         android:text="@={viewModel.nickname}"
                         android:textSize="@dimen/text_size"
                         tools:text="Customer" />
@@ -115,6 +117,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/phone_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
                         android:text="@={viewModel.phone}"
                         android:textSize="@dimen/text_size"
                         tools:text="6985201472" />
@@ -137,6 +141,8 @@
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
                         android:text="@={viewModel.email}"
                         android:textSize="@dimen/text_size"
                         tools:text="me@me.com" />

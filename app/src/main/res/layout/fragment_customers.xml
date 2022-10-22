@@ -137,6 +137,7 @@
             android:alpha="0"
             android:completionThreshold="2"
             android:hint="@string/search_customer_hint"
+            android:imeOptions="actionSearch"
             android:inputType="textPersonName"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/search_btn"

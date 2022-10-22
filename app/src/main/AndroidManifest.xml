@@ -6,6 +6,30 @@
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
 
+    <queries>
+        <package android:name="com.facebook.orca" />
+        <package android:name="com.facebook.mlite" />
+
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.APP_MESSAGING" />
+            <data android:scheme="smsto" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <category android:name="android.intent.category.APP_EMAIL" />
+            <data android:scheme="mailto" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

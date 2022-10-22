@@ -2,7 +2,10 @@ package gr.evasscissors.appointmentadmin.utils
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import gr.evasscissors.appointmentadmin.R
 import gr.evasscissors.appointmentadmin.data.FB_MESSENGER_LITE_PACKAGE_NAME
 import gr.evasscissors.appointmentadmin.data.FB_MESSENGER_PACKAGE_NAME
@@ -40,7 +43,7 @@ object ContactProvider {
     fun chatOnFacebook(context: Context, fbProfileId: String) {
         val packageManager = context.packageManager
 
-        val installedApps = packageManager.getInstalledPackages(0)
+        val installedApps = packageManager.getInstalledPackagesCustom(0)
 
         val messengerUri = when (installedApps.find {
             it.packageName == FB_MESSENGER_PACKAGE_NAME ||
@@ -57,4 +60,11 @@ object ContactProvider {
             }
         }
     }
+
+    private fun PackageManager.getInstalledPackagesCustom(flags: Int): List<PackageInfo> =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getInstalledPackages(PackageManager.PackageInfoFlags.of(flags.toLong()))
+        } else {
+            getInstalledPackages(0)
+        }
 }

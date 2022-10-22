@@ -85,7 +85,7 @@ class CustomerContactFragment : Fragment() {
                             R.drawable.fb_messenger_background
                         ),
                         { copyTextToClipboard(it) }
-                    ) { ContactProvider.chatOnFacebook(requireContext(), customer.fbProfileId!!) }
+                    ) {  }
                 )
             }
 

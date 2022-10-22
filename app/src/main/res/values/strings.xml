@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Admin</string>
+    <string name="app_name" translatable="false">Admin</string>
     <string name="send_notification">Send notification</string>
     <string name="profile_contact_item">Contact</string>
     <string name="profile_notes_item">Notes</string>
 
-    <string name="email_signature">\n\nSalon Litsa\n2102717756\nΕλ Αλαμέιν 46</string>
+    <string name="email_signature">\n\nSalon Litsa\n2102717756\nEl Alamein 46</string>
 
     <string name="opening_app_problem">Something went wrong! Ensure that you are logged in to %s and try again</string>
     <string name="dismiss_warning_dialog">Dismiss</string>
@@ -13,7 +13,7 @@
     <string name="lastname_hint">Lastname</string>
     <string name="nickname_hint">Nickname</string>
     <string name="phone_hint">Phone</string>
-    <string name="e_mail_hint">E-mail</string>
+    <string name="e_mail_hint" translatable="false">E-mail</string>
     <string name="fb_profile_hint">FB Profile</string>
     <string name="save_edits_btn_text">Save</string>
 
@@ -37,7 +37,7 @@
     <string name="all_filter">All</string>
     <string name="registered_filter">Registered</string>
     <string name="unregistered_filter">Unregistered</string>
-    <string name="search_customer_hint">Dimitriakos</string>
+    <string name="search_customer_hint" translatable="false">Dimitriakos</string>
     <string name="female_gender_btn">Female</string>
     <string name="male_gender_btn">Male</string>
     <string name="any_gender_btn">Any</string>
@@ -48,7 +48,7 @@
     <string name="firstname_conflict_registered">Registered</string>
     <string name="save_btn">Save</string>
 
-    <string name="number_of_conflicts">%d/%d</string>
+    <string name="number_of_conflicts" translatable="false">%d/%d</string>
     <string name="choice_conflict">Choose one of the two</string>
     <string name="delete_user_context_menu_item">Delete</string>
     <string name="delete_fail">Deletion failure!</string>
@@ -73,11 +73,11 @@
     <string name="appointment_cancellation_message">Your appointment have been canceled</string>
     <string name="email_change_warning_title">User is registered</string>
     <string name="email_change_warning_message">Because user is register it is highly recommended to change the email address on his own. Otherwise may loose ability to login to his account.</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="missing_app">Missing app</string>
     <string name="install_missing_app">No app found to complete this action. Do you want to download one?</string>
     <string name="note_title_hint">Title</string>
     <string name="note_note_hint">Note</string>
-    <string name="gdrive_api_disabled_title">Google Drive API</string>
+    <string name="gdrive_api_disabled_title" translatable="false">Google Drive API</string>
 </resources>

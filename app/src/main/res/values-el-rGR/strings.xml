@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_notification">Αποστολη ειδοποιησης</string>
+    <string name="profile_contact_item">Επικοινωνία</string>
+    <string name="profile_notes_item">Σημειώσεις</string>
+    <string name="email_signature">\n\nSalon Litsa\n2102717756\nΕλ Αλαμέιν 46</string>
+    <string name="opening_app_problem">Κάτι πήγε στραβά! Σιγουρευτείτε ότι είστε συνδεδεμένοι με τον λογαριασμός %s και δοκιμάστε ξανά</string>
+    <string name="dismiss_warning_dialog">Απόκρυψη</string>
+    <string name="dial_app">Τηλέφωνο</string>
+    <string name="firstname_hint">Όνομα</string>
+    <string name="lastname_hint">Επώνυμο</string>
+    <string name="nickname_hint">Παρατσούκλι</string>
+    <string name="phone_hint">Τηλέφωνο</string>
+    <string name="fb_profile_hint">Προφίλ FB</string>
+    <string name="save_edits_btn_text">Αποθήκευση</string>
+    <string name="save_successful">Οι αλλαγές αποθηκεύτηκαν!</string>
+    <string name="save_failed">Οι αλλαγές δεν αποθηκεύτηκαν!</string>
+    <string name="profile_edit_item">Επεξεργασία</string>
+    <string name="no_edits_made">Δεν πραγματοποιήθηκαν αλλαγές</string>
+    <string name="unsaved_changes_warning_title">Υπάρχουν αλλαγές που δεν έχουν αποθηκευτεί</string>
+    <string name="unsaved_changes_warning_msg">Συνέχεια χωρίς αποθήκευση;</string>
+    <string name="unsaved_merging_warning_msg">Συνέχεια χωρίς συνένωση;</string>
+    <string name="dialog_yes_btn">Ναι</string>
+    <string name="dialog_no_btn">Οχι</string>
+    <string name="note_saved">Η σημείωση αποθηκεύτηκε</string>
+    <string name="note_not_saved">Η σημείωση δεν αποθηκεύτηκε</string>
+    <string name="note_deleted">Η σημείωση διεγράφη</string>
+    <string name="note_not_deleted">Η σημείωση δε διεγράφη</string>
+    <string name="fill_field_error_msg">Παρακαλούμε συμπληρώστε αυτό το πεδίο</string>
+    <string name="one_field_requited_err_msg">Τουλάχιστον ένα από αυτά τα δύο πεδία πρέπει να συμπληρωθεί</string>
+    <string name="user_creation_success">Ο χρήστης δημιουργήθηκε επιτυχώς</string>
+    <string name="user_creation_err">Ο χρήστης δεν αποθηκεύτηκε!</string>
+    <string name="all_filter">Όλοι</string>
+    <string name="registered_filter">Εγγεγραμμένοι</string>
+    <string name="unregistered_filter">Μη εγγεγραμμένοι</string>
+    <string name="female_gender_btn">Γυναίκα</string>
+    <string name="male_gender_btn">Άνδρας</string>
+    <string name="any_gender_btn">Άλλο</string>
+    <string name="select_gender_err">Πρέπει να επιλέξετε ένα φύλο</string>
+    <string name="merge_customers">Συνένωση</string>
+    <string name="merge_profile_hint">Συνένωση με</string>
+    <string name="firstname_conflict_unregistered">Μη εγγεγραμμένοι</string>
+    <string name="firstname_conflict_registered">Εγγεγραμμένοι</string>
+    <string name="save_btn">Αποθήκευση</string>
+    <string name="choice_conflict">Επιλέξτε ένα από τα δύο</string>
+    <string name="delete_user_context_menu_item">Διαγραφή</string>
+    <string name="delete_fail">Η διαγραφή απέτυχε!</string>
+    <string name="delete_success">Η διαγραφή ήταν επιτυχής!</string>
+    <string name="image_stored">Η εικόνα αποθηκεύτηκε!</string>
+    <string name="image_not_stored">Η εικόνα δεν αποθηκεύτηκε!</string>
+    <string name="img_copy_err">Πρόβλημα με την εικόνα</string>
+    <string name="notify_customer_for">Ειδοποίηση πελάτη για:</string>
+    <string name="notify_for">Ειδοποίηση για</string>
+    <string name="custom_notification_message_hint">Μήνυμα</string>
+    <string name="custom_notification_title_hint">Τίτλος</string>
+    <string name="send_notification_btn">Αποστολη ειδοποιησης</string>
+    <string name="notification_sent">Η ειδοποίηση εστάλη!</string>
+    <string name="notification_not_sent">Η ειδοποίηση δεν εστάλη!</string>
+
+    <string-array name="pre_made_notifications">
+        <item>Ακύρωση ραντεβού</item>
+        <item>Άλλο</item>
+    </string-array>
+
+    <string name="appointment_cancellation_title">Ακύρωση ραντεβού</string>
+    <string name="appointment_cancellation_message">Το ραντεβού σας ακυρώθηκε</string>
+    <string name="email_change_warning_title">Εγγεγραμμένος χρήστης</string>
+    <string name="email_change_warning_message">Επειδή ο χρήστης είναι εγγεγραμμένος συστήνεται η αλλαγή του email να γίνει από τον ίδιο. Σε διαφορετική περίπτωση ίσως χάσει την πρόσβαση στον λογαριασμό του.</string>
+    <string name="copied_to_clipboard">Αντιγράφτηκε στο πρόχειρο!</string>
+    <string name="missing_app">Δεν βρέθηκε εφαρμογή</string>
+    <string name="install_missing_app">Δε βρέθηκε εφαρμογή για αυτήν την ενέργεια. Θέλετε να κατεβάσετε μία;</string>
+    <string name="note_title_hint">Τίτλος</string>
+    <string name="note_note_hint">Σημείωση</string>
+</resources>

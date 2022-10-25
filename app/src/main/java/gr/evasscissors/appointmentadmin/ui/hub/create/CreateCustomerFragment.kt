@@ -144,12 +144,10 @@ class CreateCustomerFragment : Fragment() {
                 color = R.color.md_theme_dark_errorContainer
             }
 
-            Snackbar.make(binding.saveInfoBtn, text, Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.saveInfoBtn, text, Snackbar.LENGTH_SHORT)
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                 .setBackgroundTint(resources.getColor(color, requireActivity().theme))
-                .setAction("Ok") {
-                    if (stored) closeFragment()
-                }
+                .setAction("Ok") { }
                 .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     override fun onShown(transientBottomBar: Snackbar?) {
                         super.onShown(transientBottomBar)

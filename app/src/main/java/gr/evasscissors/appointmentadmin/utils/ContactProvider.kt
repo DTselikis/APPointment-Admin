@@ -32,7 +32,7 @@ object ContactProvider {
         val emailUri = Uri.parse("mailto:")
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = emailUri
-            putExtra(Intent.EXTRA_EMAIL, email)
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
             putExtra(Intent.EXTRA_TEXT, context.getString(R.string.email_signature))
         }
         emailIntent.resolveActivity(context.packageManager)?.let {

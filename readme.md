@@ -25,7 +25,7 @@ With the power of Firebase you can have your customer catalog wherever you go. Y
 ### Contact
 You can contact your customer choosing one of the available methods:
 -	Calling
--	Sms
+-	SMS
 -	Email
 -	Push notification
 
@@ -62,6 +62,7 @@ Those fields corresponds to properties at module level **build.gradle**\*\* file
 You need both .jks and keystore.properties files in order to sign the release build.
 
 <sup>\* *Be sure to check the official Firebase documentation*</sup>
+
 <sup>\** *keystore.properties file's path should also be changed inside build.gradle if the file is not located at project's root*</sup>
 
 - a "FCM_KEY" promerty in the local.properties file:
